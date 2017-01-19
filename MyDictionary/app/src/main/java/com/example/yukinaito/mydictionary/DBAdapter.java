@@ -70,8 +70,8 @@ public class DBAdapter {
     }
 
     //単語名の取得
-    public Cursor getWordName(){
-        return db.query(true, TABLE_NAME, new String[]{WORD_ID, WORD_NAME}, null, null, null, null, "_id DESC", null);
+    public Cursor getWordName(String wordClass){
+        return db.query(TABLE_NAME, new String[]{WORD_NAME, WORD_KANA}, WORD_CLASS + " = ?", new String[]{wordClass}, null, null, "_id DESC");
     }
 
     //単語情報の取得
