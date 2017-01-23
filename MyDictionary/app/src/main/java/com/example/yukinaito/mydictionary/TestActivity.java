@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class TestActivity extends AppCompatActivity {
     private SQLiteApplication sqLiteApplication;
@@ -51,6 +52,10 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                for(int j = 0 ; j < words.length; j++) {
+                    Log.d("TEST getWordInfo()送信", words[j].getId() + " " + words[j].getName() + " " + words[j].getKana());
+                    sqLiteApplication.Test_getWordInfo(words[j].getId());
+                }
             }
         });
 
@@ -72,6 +77,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                sqLiteApplication.deleteWord(Integer.parseInt(((EditText)findViewById(R.id.edittext)).getText().toString()));
             }
         });
     }

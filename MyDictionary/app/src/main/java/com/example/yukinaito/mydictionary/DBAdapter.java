@@ -66,17 +66,17 @@ public class DBAdapter {
 
     //分類名の取得
     public Cursor getWordClass(){
-        return db.query(true, TABLE_NAME, new String[]{WORD_CLASS}, null, null, null, null, "_id DESC", null);
+        return db.query(true, TABLE_NAME, new String[]{WORD_CLASS}, null, null, null, null, "_id ASC", null);
     }
 
     //単語名の取得
     public Cursor getWordName(String wordClass){
-        return db.query(TABLE_NAME, new String[]{WORD_NAME, WORD_KANA}, WORD_CLASS + " = ?", new String[]{wordClass}, null, null, "_id DESC");
+        return db.query(TABLE_NAME, new String[]{WORD_ID, WORD_NAME, WORD_KANA}, WORD_CLASS + " = ?", new String[]{wordClass}, null, null, "_id ASC");
     }
 
     //単語情報の取得
-    public Cursor getWordInfo(){
-        return db.query(true, TABLE_NAME, new String[]{WORD_ID, WORD_NAME}, null, null, null, null, "_id DESC", null);
+    public Cursor getWordInfo(String wordId){
+        return db.query(TABLE_NAME, new String[]{WORD_NAME, WORD_KANA, WORD_CLASS, WORD_MEAN, WORD_COUNT, WORD_LEASTCOUNT}, WORD_ID + " = ?", new String[]{wordId}, null, null, "_id ASC");
     }
 
     //行の削除
