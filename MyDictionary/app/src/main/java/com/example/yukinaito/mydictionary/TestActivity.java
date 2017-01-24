@@ -1,5 +1,6 @@
 package com.example.yukinaito.mydictionary;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,7 +60,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        //テスト 新規単語の挿入
+        //テスト 新規単語の挿入 成功
         ((Button)findViewById(R.id.button6)).setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -71,13 +72,27 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        //テスト 新規単語の挿入
+        //テスト 新規単語の削除 成功
         ((Button)findViewById(R.id.button7)).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 sqLiteApplication.deleteWord(Integer.parseInt(((EditText)findViewById(R.id.edittext)).getText().toString()));
+            }
+        });
+
+        //Activity呼び出し
+        ((Button)findViewById(R.id.button8)).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(data.length != 0) {
+                    Intent intent = new Intent(getApplicationContext(), SelectWordActivity.class);
+                    intent.putExtra("CLASS", data[0]);
+                    startActivity(intent);
+                }
             }
         });
     }
