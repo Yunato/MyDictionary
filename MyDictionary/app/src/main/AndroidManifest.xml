@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".SelectWordActivity" />
         <activity android:name=".DrawInfoActivity" />
-        <activity android:name=".AddEditWordActivity"></activity>
+        <activity android:name=".AddEditWordActivity" />
+        <activity android:name=".EditActivity"></activity>
     </application>
 
 </manifest>
