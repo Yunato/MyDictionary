@@ -99,6 +99,8 @@ public class SQLiteApplication extends Application {
                 cursor.getString(cursor.getColumnIndex("mean")),
                 cursor.getInt(cursor.getColumnIndex("accesscount")),
                 cursor.getInt(cursor.getColumnIndex("leastaccesscount")));
+        cursor.close();
+        dbAdapter.close();
         return word;
     }
 

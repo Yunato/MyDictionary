@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SelectWordActivity"></activity>
+        <activity android:name=".SelectWordActivity" />
+        <activity android:name=".DrawInfoActivity" />
+        <activity android:name=".AddEditWordActivity"></activity>
     </application>
 
 </manifest>
