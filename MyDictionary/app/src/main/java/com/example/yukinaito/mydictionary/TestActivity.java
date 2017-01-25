@@ -88,14 +88,14 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(getApplicationContext(), AddEditWordActivity.class);
-                startActivity(intent);
-                /*
                 if(data.length != 0) {
                     Intent intent = new Intent(getApplicationContext(), SelectWordActivity.class);
-                    //intent.putExtra("CLASS", data[0]);
+                    intent.putExtra("CLASS", data[0]);
                     startActivity(intent);
                 }
+                /*
+                Intent intent = new Intent(getApplicationContext(), SelectWordActivity.class);
+                startActivity(intent);
                 */
             }
         });
