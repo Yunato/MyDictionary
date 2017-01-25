@@ -106,12 +106,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/output_mean"
+                    android:id="@+id/input_mean"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="単語の意味を入力"
                     android:textSize="22sp"
-                    android:padding="10dp"/>
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:paddingTop="25px"
+                    android:paddingBottom="25px"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

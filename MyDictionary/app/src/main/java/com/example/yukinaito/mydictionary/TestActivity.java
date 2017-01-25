@@ -88,7 +88,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddEditWordActivity.class);
                 startActivity(intent);
                 /*
                 if(data.length != 0) {
