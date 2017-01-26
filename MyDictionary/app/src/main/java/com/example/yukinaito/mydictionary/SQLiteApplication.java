@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SQLiteApplication extends Application {
     static DBAdapter dbAdapter;
@@ -54,7 +55,6 @@ public class SQLiteApplication extends Application {
         dbAdapter.open();
         Cursor cursor = dbAdapter.getWordName(wordclass);
 
-        int i = 0;
         while(cursor.moveToNext()){
             Log.d("SQLApp getWordName()",cursor.getString(cursor.getColumnIndex("name")) + " " + cursor.getString(cursor.getColumnIndex("kana")));
             AdapterItem buf = new AdapterItem(cursor.getString(cursor.getColumnIndex("_id")),
@@ -64,6 +64,8 @@ public class SQLiteApplication extends Application {
         }
         cursor.close();
         dbAdapter.close();
+
+        Collections.sort(items, new WordComparator());
         return items;
     }
 

@@ -25,8 +25,8 @@ public class SelectWordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_word);
 
         ListView listView = (ListView)findViewById(R.id.listView);
-        //要素生成
-        DBAccess();
+        listView.setFastScrollEnabled(true);
+        listView.setFastScrollAlwaysVisible(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(),DrawInfoActivity.class);
@@ -34,6 +34,9 @@ public class SelectWordActivity extends AppCompatActivity {
                 startActivityForResult(intent, DRAW_CODE);
             }
         });
+
+        //要素生成
+        DBAccess();
 
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +55,11 @@ public class SelectWordActivity extends AppCompatActivity {
         ListView listView = (ListView)findViewById(R.id.listView);
 
         //リストビューの要素生成
+        //itemsの作成(セクションは抜き)
         items = sqLiteApplication.getWordName(getIntent().getStringExtra("CLASS"));
         WordNameAdapter adapter = new WordNameAdapter(this, items);
+        //itemsの再作成(セクションは有)
+        items = adapter.getItems();
         listView.setAdapter(adapter);
     }
 
