@@ -17,7 +17,7 @@ public class SelectClassActivity extends AppCompatActivity {
         SQLiteApplication sqLiteApplication = (SQLiteApplication)this.getApplication();
         ListView listView = (ListView)findViewById(R.id.listView);
 
-        ArrayAdapter<String> adapter = sqLiteApplication.getWordClass(this, R.layout.rowdata);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.rowdata, sqLiteApplication.getWordClass());
         listView.setAdapter(adapter);
     }
 }

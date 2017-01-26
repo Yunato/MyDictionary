@@ -3,8 +3,10 @@ package com.example.yukinaito.mydictionary;
 import android.content.ContentValues;
 import android.content.Context;
 
+import java.io.Serializable;
+
 //単語情報をすべて保持するクラス
-public class Word {
+public class Word implements Serializable{
     //単語の名前、読み方、分類、意味、アクセス数、どのくらいアクセスされていないか
     private String name;
     private String kana;

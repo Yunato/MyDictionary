@@ -96,4 +96,16 @@ public class DBAdapter {
         db.insertOrThrow(TABLE_NAME, null, values);
     }
 
+    //行の更新
+    public void updateWord(String wordId, Word word){
+        ContentValues values = new ContentValues();
+        values.put(WORD_NAME, word.getName());
+        values.put(WORD_KANA, word.getKana());
+        values.put(WORD_CLASS, word.getClassification());
+        values.put(WORD_MEAN, word.getMean());
+        values.put(WORD_COUNT, word.getAccesscount());
+        values.put(WORD_LEASTCOUNT, word.getLeastaccesscount());
+        db.update(TABLE_NAME, values, WORD_ID + " = " + wordId, null);
+    }
+
 }

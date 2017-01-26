@@ -33,10 +33,7 @@ public class EditActivity extends AppCompatActivity {
         if(id == R.id.finish_action) {
             //入力した文字列のチェック
             String send = new String();
-            if(((EditText)findViewById(R.id.input_mean)).getText().toString().equals(""))
-                send = "単語の意味を入力";
-            else
-                send = ((EditText)findViewById(R.id.input_mean)).getText().toString();
+            send = ((EditText)findViewById(R.id.input_mean)).getText().toString();
 
             //戻り値の生成 mean=単語の意味
             Intent intent = new Intent();

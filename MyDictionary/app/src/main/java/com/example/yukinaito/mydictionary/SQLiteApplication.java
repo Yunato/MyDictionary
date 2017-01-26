@@ -18,7 +18,7 @@ public class SQLiteApplication extends Application {
     }
 
     //分類選択画面Listの要素作成
-    public ArrayAdapter getWordClass(Context context, int resource){
+    public String[] getWordClass(){
         dbAdapter.open();
         Cursor cursor = dbAdapter.getWordClass();
 
@@ -28,7 +28,7 @@ public class SQLiteApplication extends Application {
             data[i++] = cursor.getString(cursor.getColumnIndex("classification"));
         cursor.close();
         dbAdapter.close();
-        return new ArrayAdapter<String>(context, resource, data);
+        return data;
     }
 
     //テスト用(分類のみ出力) 成功
@@ -123,6 +123,12 @@ public class SQLiteApplication extends Application {
     public void saveWord(Word word){
         dbAdapter.open();
         dbAdapter.saveWord(word);
+        dbAdapter.close();
+    }
+
+    public void updateWord(String wordId, Word word){
+        dbAdapter.open();
+        dbAdapter.updateWord(wordId, word);
         dbAdapter.close();
     }
 
