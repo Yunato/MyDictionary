@@ -76,6 +76,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                 }
                 (findViewById(R.id.input_kana)).setEnabled(true);
                 (findViewById(R.id.input_kana)).setFocusable(true);
+                (findViewById(R.id.input_kana)).setFocusableInTouchMode(true);
                 int id = AddEditWordActivity.this.getResources().getIdentifier("underline_white", "drawable", AddEditWordActivity.this.getPackageName());
                 Drawable back = ResourcesCompat.getDrawable(getResources(), id, null);
                 (findViewById(R.id.input_kana)).setBackground(back);
