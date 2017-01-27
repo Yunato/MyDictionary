@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
+import android.util.Log;
 
 public class DBAdapter {
-    static final String DATABASE_NAME = "sqlite_word.db";
+    static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/sample.db";
     static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_NAME = "words";
@@ -18,12 +20,14 @@ public class DBAdapter {
     public static final String WORD_MEAN = "mean";
     public static final String WORD_COUNT = "accesscount";
     public static final String WORD_LEASTCOUNT = "leastaccesscount";
+    public static final String WORD_DATE = "adddate";
 
     protected final Context context;
     protected DatabaseHelper dbHelper;
     protected SQLiteDatabase db;
 
     public DBAdapter(Context context){
+        Log.d("STORAGE",DATABASE_NAME);
         this.context = context;
         dbHelper = new DatabaseHelper(this.context);
     }
@@ -39,11 +43,12 @@ public class DBAdapter {
                     "CREATE TABLE " + TABLE_NAME + " ("
                             + WORD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                             + WORD_NAME + " TEXT NOT NULL,"
-                            + WORD_KANA + " TEXT NOT NULL,"
+                            + WORD_KANA + " ,"
                             + WORD_CLASS + " TEXT NOT NULL,"
                             + WORD_MEAN + " TEXT NOT NULL,"
                             + WORD_COUNT + " ,"
-                            + WORD_LEASTCOUNT + ");");
+                            + WORD_LEASTCOUNT + " ,"
+                            + WORD_DATE + ");");
         }
 
         @Override
@@ -76,11 +81,11 @@ public class DBAdapter {
 
     //単語情報の取得
     public Cursor getWordInfo(String wordId){
-        return db.query(TABLE_NAME, new String[]{WORD_NAME, WORD_KANA, WORD_CLASS, WORD_MEAN, WORD_COUNT, WORD_LEASTCOUNT}, WORD_ID + " = ?", new String[]{wordId}, null, null, "_id ASC");
+        return db.query(TABLE_NAME, new String[]{WORD_NAME, WORD_KANA, WORD_CLASS, WORD_MEAN, WORD_COUNT, WORD_LEASTCOUNT, WORD_DATE}, WORD_ID + " = ?", new String[]{wordId}, null, null, "_id ASC");
     }
 
     //行の削除
-    public boolean deleteWord(int id){
+    public boolean deleteWord(String id){
         return db.delete(TABLE_NAME, WORD_ID + "=" + id, null) > 0;
     }
 
@@ -93,6 +98,7 @@ public class DBAdapter {
         values.put(WORD_MEAN, word.getMean());
         values.put(WORD_COUNT, word.getAccesscount());
         values.put(WORD_LEASTCOUNT, word.getLeastaccesscount());
+        values.put(WORD_DATE, word.getDate());
         db.insertOrThrow(TABLE_NAME, null, values);
     }
 
@@ -105,6 +111,7 @@ public class DBAdapter {
         values.put(WORD_MEAN, word.getMean());
         values.put(WORD_COUNT, word.getAccesscount());
         values.put(WORD_LEASTCOUNT, word.getLeastaccesscount());
+        values.put(WORD_DATE, word.getDate());
         db.update(TABLE_NAME, values, WORD_ID + " = " + wordId, null);
     }
 

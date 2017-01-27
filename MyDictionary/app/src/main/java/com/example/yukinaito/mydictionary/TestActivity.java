@@ -67,7 +67,7 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //単語の名前、読み方、分類、意味、アクセス数、どのくらいアクセスされていないか
-                Word word = new Word("", "" , "", "", 0, 0);
+                Word word = new Word("", "" , "", "", 0, 0, 0);
                 sqLiteApplication.saveWord(word);
             }
         });
@@ -78,7 +78,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                sqLiteApplication.deleteWord(Integer.parseInt(((EditText)findViewById(R.id.edittext)).getText().toString()));
+                //sqLiteApplication.deleteWord(Integer.parseInt(((EditText)findViewById(R.id.edittext)).getText().toString()));
             }
         });
 

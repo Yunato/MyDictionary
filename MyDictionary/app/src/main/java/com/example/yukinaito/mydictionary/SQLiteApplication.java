@@ -100,7 +100,8 @@ public class SQLiteApplication extends Application {
                 cursor.getString(cursor.getColumnIndex("classification")),
                 cursor.getString(cursor.getColumnIndex("mean")),
                 cursor.getInt(cursor.getColumnIndex("accesscount")),
-                cursor.getInt(cursor.getColumnIndex("leastaccesscount")));
+                cursor.getInt(cursor.getColumnIndex("leastaccesscount")),
+                cursor.getInt(cursor.getColumnIndex("aadate")));
         cursor.close();
         dbAdapter.close();
         return word;
@@ -135,7 +136,7 @@ public class SQLiteApplication extends Application {
     }
 
     //テスト(単語情報をDBから削除)
-    public void deleteWord(int id){
+    public void deleteWord(String id){
         dbAdapter.open();
         dbAdapter.deleteWord(id);
         dbAdapter.close();

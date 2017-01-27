@@ -2,6 +2,7 @@ package com.example.yukinaito.mydictionary;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
             TextView textView = new TextView(context);
             textView.setTag("name");
             textView.setTextSize(22.0f);
+            textView.setTypeface(Typeface.DEFAULT_BOLD);
             textView.setPadding(22, 22, 22, 22);
             layout.addView(textView);
         }

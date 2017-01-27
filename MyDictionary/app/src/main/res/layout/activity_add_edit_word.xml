@@ -18,7 +18,7 @@
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="名前"
+            android:text="単語"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -40,7 +40,7 @@
             android:id="@+id/text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="分類"
+            android:text="分野"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -91,20 +91,22 @@
             android:imeOptions="actionDone"
             android:background="@drawable/underline_white"/>
 
-        <Spinner
+        <com.example.yukinaito.mydictionary.CustomSpinner
             android:id="@+id/input_class"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
             android:background="@drawable/underline_white"/>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/activity_add_edit_mean"
+                android:clickable="true">
                 <TextView
                     android:id="@+id/input_mean"
                     android:layout_width="match_parent"

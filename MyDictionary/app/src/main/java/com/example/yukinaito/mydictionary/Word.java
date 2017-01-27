@@ -14,14 +14,16 @@ public class Word implements Serializable{
     private String mean;
     private int accesscount;
     private int leastaccesscount;
+    private int date;
 
-    public Word(String name, String kana, String classification, String mean, int accesscount, int leastaccesscount){
+    public Word(String name, String kana, String classification, String mean, int accesscount, int leastaccesscount, int date){
         this.name = name;
         this.kana = kana;
         this.classification = classification;
         this.mean = mean;
         this.accesscount = accesscount;
         this.leastaccesscount = leastaccesscount;
+        this.date = date;
     }
 
     //名前の取得
@@ -52,5 +54,10 @@ public class Word implements Serializable{
     //どのくらいアクセスされていないか取得
     public int getLeastaccesscount(){
         return leastaccesscount;
+    }
+
+    //追加した日時を取得
+    public int getDate(){
+        return this.date;
     }
 }
