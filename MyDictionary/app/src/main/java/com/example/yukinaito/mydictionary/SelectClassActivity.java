@@ -13,8 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
-
 public class SelectClassActivity extends AppCompatActivity {
     private static final int VIEW_CODE = 1;
     private static final int ADD_CODE = 2;

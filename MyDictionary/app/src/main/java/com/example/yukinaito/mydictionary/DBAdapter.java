@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
-import android.util.Log;
 
 public class DBAdapter {
     static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/sample.db";
@@ -27,7 +26,6 @@ public class DBAdapter {
     protected SQLiteDatabase db;
 
     public DBAdapter(Context context){
-        Log.d("STORAGE",DATABASE_NAME);
         this.context = context;
         dbHelper = new DatabaseHelper(this.context);
     }

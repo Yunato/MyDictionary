@@ -1,10 +1,8 @@
 package com.example.yukinaito.mydictionary;
 
 import android.app.Application;
-import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +13,7 @@ public class SQLiteApplication extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
+        Log.d("Test","作成");
         dbAdapter = new DBAdapter(this);
     }
 
@@ -56,7 +55,6 @@ public class SQLiteApplication extends Application {
         Cursor cursor = dbAdapter.getWordName(wordclass);
 
         while(cursor.moveToNext()){
-            Log.d("SQLApp getWordName()",cursor.getString(cursor.getColumnIndex("name")) + " " + cursor.getString(cursor.getColumnIndex("kana")));
             AdapterItem buf = new AdapterItem(cursor.getString(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("name")),
                     cursor.getString(cursor.getColumnIndex("kana")));
@@ -101,7 +99,7 @@ public class SQLiteApplication extends Application {
                 cursor.getString(cursor.getColumnIndex("mean")),
                 cursor.getInt(cursor.getColumnIndex("accesscount")),
                 cursor.getInt(cursor.getColumnIndex("leastaccesscount")),
-                cursor.getInt(cursor.getColumnIndex("aadate")));
+                cursor.getInt(cursor.getColumnIndex("adddate")));
         cursor.close();
         dbAdapter.close();
         return word;

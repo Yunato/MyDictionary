@@ -2,24 +2,17 @@ package com.example.yukinaito.mydictionary;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.icu.lang.UCharacter;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -108,7 +101,6 @@ public class AddEditWordActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View viw, int position, long id) {
                 final CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_class);
                 if(spinner.isFocusable() == false) {
-                    Log.d("TEST","OK");
                     spinner.setFocusable(true);
                     return;
                 }else {
@@ -189,6 +181,7 @@ public class AddEditWordActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.input_name)).setText(update_word.getName());
             ((TextView)findViewById(R.id.input_kana)).setText(update_word.getKana());
             ((TextView)findViewById(R.id.input_mean)).setText(update_word.getMean());
+            meancheck = true;
             for(int i = 0; i < items.length; i++)
                 if(items[i] == update_word.getClassification()){
                     spinner.setSelection(i);
