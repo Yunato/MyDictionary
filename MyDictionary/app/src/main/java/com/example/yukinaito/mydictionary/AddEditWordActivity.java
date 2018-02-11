@@ -2,7 +2,9 @@ package com.example.yukinaito.mydictionary;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ import java.util.Set;
 
 public class AddEditWordActivity extends AppCompatActivity {
     private static final int EDIT_CODE = 1;
+    private static final int RESULT_BACK = -1;
     //"単語の意味を入力"を意味とするか判定 trueは許可
     private boolean meancheck = false;
     //単語の新規追加か修正か判定に使える nullのとき新規作成
@@ -41,6 +44,8 @@ public class AddEditWordActivity extends AppCompatActivity {
     }};
     //spinnerで選択しているindex
     private int spinner_index = -1;
+    //spinnerを一度もタップしていないか
+    private boolean touch_spinner = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,14 @@ public class AddEditWordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_word);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setElevation(0f);
+
+        //region 前画面に戻るボタンの生成
+        final Drawable upArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.abc_ic_ab_back_material, null);
+        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        //endregion
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         SQLiteApplication sqLiteApplication = (SQLiteApplication)this.getApplication();
@@ -68,9 +81,9 @@ public class AddEditWordActivity extends AppCompatActivity {
                     if (!japaneseUnicodeBlocks.contains(Character.UnicodeBlock.of(((EditText) findViewById(R.id.input_name)).getText().toString().charAt(0)))) {
                         (findViewById(R.id.input_kana)).setEnabled(false);
                         (findViewById(R.id.input_kana)).setFocusable(false);
-                        int id = AddEditWordActivity.this.getResources().getIdentifier("underline_gray", "drawable", AddEditWordActivity.this.getPackageName());
-                        Drawable back = ResourcesCompat.getDrawable(getResources(), id, null);
-                        (findViewById(R.id.input_kana)).setBackground(back);
+//                        int id = AddEditWordActivity.this.getResources().getIdentifier("underline_gray", "drawable", AddEditWordActivity.this.getPackageName());
+//                        Drawable back = ResourcesCompat.getDrawable(getResources(), id, null);
+//                        (findViewById(R.id.input_kana)).setBackground(back);
                         return;
                     }
                 }
@@ -86,9 +99,10 @@ public class AddEditWordActivity extends AppCompatActivity {
         //スピナーの要素設定
         final CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_class);
         final String[] buf = sqLiteApplication.getWordClass();
-        final String[] items = new String[buf.length + 1];
-        System.arraycopy(buf, 0, items, 0, buf.length);
-        items[buf.length] = "分野の追加...";
+        final String[] items = new String[buf.length + 2];
+        items[0] = "分野の選択[必須]";
+        System.arraycopy(buf, 0, items, 1, buf.length);
+        items[buf.length + 1] = "分野の追加...";
 
         //スピナーに要素を登録
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.rowdata, items);
@@ -123,6 +137,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                                 spinner.setSelection(buf.length);
                                 adapter.notifyDataSetChanged();
                                 spinner_index = buf.length;
+                                touch_spinner = false;
                             }
                         });
                         final AlertDialog dialog = builder.create();
@@ -184,7 +199,7 @@ public class AddEditWordActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.input_mean)).setText(update_word.getMean());
             meancheck = true;
             for(int i = 0; i < items.length; i++)
-                if(items[i] == update_word.getClassification()){
+                if(items[i].equals(update_word.getClassification())){
                     spinner.setSelection(i);
                     spinner_index = i;
                     break;
@@ -206,7 +221,15 @@ public class AddEditWordActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //入力情報の保持
+        if (id == android.R.id.home) {
+            //region 前画面に戻るボタンタップ
+            Intent intent = new Intent();
+            setResult(RESULT_BACK, intent);
+            finish();
+            //endregion
+        }
+
+            //入力情報の保持
         String name = ((EditText) findViewById(R.id.input_name)).getText().toString();
         String kana = ((EditText) findViewById(R.id.input_kana)).getText().toString();
         String classification = ((Spinner) findViewById(R.id.input_class)).getSelectedItem().toString();
@@ -218,7 +241,7 @@ public class AddEditWordActivity extends AppCompatActivity {
         int date = Integer.parseInt(simpleDateFormat.format(calendar.getTime()));
 
         //入力内容の比較用変数
-        boolean check_name = false, check_kana = false, check_mean = false;
+        boolean check_name = false, check_kana = false, check_class = false, check_mean = false;
 
         if (id == R.id.update_action || id == R.id.add_action) {
             //編集のとき、入力内容に変更があるか true 変更なし false 変更有
@@ -226,11 +249,14 @@ public class AddEditWordActivity extends AppCompatActivity {
                     update_word.getClassification().equals(classification) && update_word.getMean().equals(mean)) {
                 finish();
             }else {
-                //入力情報に不備がないか
+                //入力情報に不備がないか trueなら不備
                 check_name = name.equals("");
                 check_kana = (kana.equals("") && !check_name && japaneseUnicodeBlocks.contains(Character.UnicodeBlock.of(name.charAt(0))));
+                check_class = ((((SQLiteApplication)this.getApplication()).getWordClass()).length == 0 &&
+                        ((CustomSpinner)findViewById(R.id.input_class)).getSelectedItem().toString().equals("分野の追加...") && touch_spinner)
+                        || ((CustomSpinner)findViewById(R.id.input_class)).getSelectedItem().toString().equals("分野の選択[必須]");
                 check_mean = !meancheck;
-                if (!(check_name || check_kana || check_mean)) {
+                if (!(check_name ||check_kana ||check_class ||check_mean)) {
                     //追加/変更する単語情報
                     Word Word = new Word(name, kana, classification, mean, 0, -1, date);
 
@@ -251,6 +277,8 @@ public class AddEditWordActivity extends AppCompatActivity {
                         message += "追加する単語が入力されていません。\n";
                     if (check_kana)
                         message += "単語の読み方が入力されていません。\n";
+                    if (check_class)
+                        message += "単語を割り振る分野が入力されていません。\n";
                     if (check_mean)
                         message += "単語の意味が入力されていません\n";
 

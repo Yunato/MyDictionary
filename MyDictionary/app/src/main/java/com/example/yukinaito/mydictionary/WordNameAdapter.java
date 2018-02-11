@@ -16,12 +16,12 @@ import java.util.Iterator;
 import java.util.Locale;
 
 public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
-    private Context context;
+    private LayoutInflater inflater;
     private ArrayList<AdapterItem> items;
     private String[] sections;
 
     public WordNameAdapter(Context context, ArrayList<AdapterItem> objects){
-        this.context = context;
+        this.inflater = LayoutInflater.from(context);
         this.items = new ArrayList<AdapterItem>();
         sectionSetting(objects);
     }
@@ -77,26 +77,16 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
 
         //レイアウトの生成
         if (convertView == null) {
-            LinearLayout layout = new LinearLayout(context);
-            layout.setTag("layout");
-            layout.setOrientation(LinearLayout.VERTICAL);
-            convertView = layout;
-
-            TextView textView = new TextView(context);
-            textView.setTag("name");
-            textView.setTextSize(22.0f);
-            textView.setTypeface(Typeface.DEFAULT_BOLD);
-            textView.setPadding(22, 22, 22, 22);
-            layout.addView(textView);
+            convertView = this.inflater.inflate(R.layout.layout_wordname_item, null);
         }
 
         //値の指定
-        TextView name = (TextView)convertView.findViewWithTag("name");
+        TextView name = (TextView)convertView.findViewById(R.id.textView_Name);
         //TextView kana = (TextView)convertView.findViewById(R.id.textView_Kana);
         name.setText(item.getName());
         //kana.setText(item.getKana());
 
-        LinearLayout layout = (LinearLayout)convertView.findViewWithTag("layout");
+        LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.textView_Layout);
         if(!item.getVisible())
             layout.setBackgroundColor(Color.parseColor("#26A69A"));
         else

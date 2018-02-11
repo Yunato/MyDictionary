@@ -1,6 +1,10 @@
 package com.example.yukinaito.mydictionary;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -22,18 +26,32 @@ public class DrawInfoActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setElevation(0f);
 
+        //region 前画面に戻るボタンの生成
+        final Drawable upArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.abc_ic_ab_back_material, null);
+        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        //endregion
+
         DBAccess();
     }
 
     //DBへアクセスする 表示内容の更新
-    public void DBAccess(){
-        SQLiteApplication sqLiteApplication = (SQLiteApplication)this.getApplication();
+    public void DBAccess() {
+        SQLiteApplication sqLiteApplication = (SQLiteApplication) this.getApplication();
         word = sqLiteApplication.getWordInfo(getIntent().getStringExtra("ID"));
 
-        ((TextView)findViewById(R.id.output_name)).setText(word.getName());
-        ((TextView)findViewById(R.id.output_kana)).setText(word.getKana());
-        ((TextView)findViewById(R.id.output_class)).setText(word.getClassification());
-        ((TextView)findViewById(R.id.output_mean)).setText(word.getMean());
+        ((TextView) findViewById(R.id.output_name)).setText(word.getName());
+        ((TextView) findViewById(R.id.output_class)).setText(word.getClassification());
+        ((TextView) findViewById(R.id.output_mean)).setText(word.getMean());
+        if (!word.getKana().equals("")) {
+            ((TextView) findViewById(R.id.output_kana)).setText(word.getKana());
+        }else{
+            int id = DrawInfoActivity.this.getResources().getIdentifier("underline_gray", "drawable", DrawInfoActivity.this.getPackageName());
+            Drawable back = ResourcesCompat.getDrawable(getResources(), id, null);
+            (findViewById(R.id.output_kana)).setBackground(back);
+        }
     }
 
     @Override
@@ -46,7 +64,14 @@ public class DrawInfoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == R.id.edit_action) {
+        if (id == android.R.id.home) {
+            //region 前画面に戻るボタンタップ
+            Intent intent = new Intent();
+            intent.putExtra("update", update_check);
+            setResult(RESULT_OK, intent);
+            finish();
+            //endregion
+        }else if(id == R.id.edit_action) {
             //値を渡す
             Intent intent = new Intent(getApplicationContext(),AddEditWordActivity.class);
             intent.putExtra("word", word);

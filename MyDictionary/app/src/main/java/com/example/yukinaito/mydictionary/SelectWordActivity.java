@@ -2,10 +2,18 @@ package com.example.yukinaito.mydictionary;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,12 +32,23 @@ public class SelectWordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_word);
 
+        //region 前画面に戻るボタンの生成
+        final Drawable upArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.abc_ic_ab_back_material, null);
+        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        //endregion
+
         ListView listView = (ListView)findViewById(R.id.listView);
         listView.setFastScrollEnabled(true);
         listView.setFastScrollAlwaysVisible(true);
         //タップ時
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Drawable backColor = view.getBackground();
+                if(backColor instanceof ColorDrawable && (((ColorDrawable)backColor).getColor() != Color.parseColor("#ffffff")))
+                    return;
                 Intent intent = new Intent(getApplicationContext(),DrawInfoActivity.class);
                 intent.putExtra("ID", items.get(position).getId());
                 startActivityForResult(intent, DRAW_CODE);
@@ -121,5 +140,16 @@ public class SelectWordActivity extends AppCompatActivity {
                 DBAccess();
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            //region 前画面に戻るボタンタップ
+            finish();
+            //endregion
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

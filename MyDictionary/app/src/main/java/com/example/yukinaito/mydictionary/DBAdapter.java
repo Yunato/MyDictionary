@@ -8,7 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 
 public class DBAdapter {
-    static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/sample.db";
+    //]static final String DATABASE_NAME = "/storage/53EA-840B/MyDictionary.db";
+    static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
     static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_NAME = "words";
