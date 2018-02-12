@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -120,7 +121,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                     return;
                 }else {
                     //新しい分類名を追加していない場合
-                    if (spinner.getSelectedItemPosition() == buf.length && spinner.getSelectedItem().toString().equals("分野の追加...")) {
+                    if (spinner.getSelectedItemPosition() == items.length - 1 && spinner.getSelectedItem().toString().equals("分野の追加...")) {
                         //ダイアログ外をタップしたとき対策
                         spinner.setSelection(spinner_index);
                         adapter.notifyDataSetChanged();
