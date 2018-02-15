@@ -48,6 +48,23 @@ public class SQLiteApplication extends Application {
         return data;
     }
 
+    public ArrayList<AdapterItem> getWords(){
+        ArrayList<AdapterItem> items = new ArrayList<>();
+        dbAdapter.open();
+        Cursor cursor = dbAdapter.getWordName();
+
+        while(cursor.moveToNext()){
+            AdapterItem buf = new AdapterItem(cursor.getString(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("name")),
+                    cursor.getString(cursor.getColumnIndex("kana")));
+            items.add(0,buf);
+        }
+        cursor.close();
+        dbAdapter.close();
+
+        return items;
+    }
+
     //単語選択画面Listの要素作成
     public ArrayList<AdapterItem> getWordName(String wordclass){
         ArrayList<AdapterItem> items = new ArrayList<AdapterItem>();
