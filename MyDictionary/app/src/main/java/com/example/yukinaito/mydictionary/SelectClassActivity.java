@@ -1,11 +1,7 @@
 package com.example.yukinaito.mydictionary;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,7 +17,6 @@ import java.util.ArrayList;
 public class SelectClassActivity extends AppCompatActivity {
     private static final int VIEW_CODE = 1;
     private static final int ADD_CODE = 2;
-    private static final int REQUEST_WRITE_STORAGE = 3;
     //Activityの状態を示す。 true = 分野選択 false = 追加順
     private static boolean CONDITION = true;
 
@@ -30,11 +25,7 @@ public class SelectClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_class);
 
-        boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-        if(!hasPermission){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
-        }else
-            DBAccess();
+        DBAccess();
 
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -114,15 +105,6 @@ public class SelectClassActivity extends AppCompatActivity {
                 //AddEditWordActivityより
                 if(resultCode == RESULT_OK)
                     DBAccess();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == REQUEST_WRITE_STORAGE){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                DBAccess();
         }
     }
 }
