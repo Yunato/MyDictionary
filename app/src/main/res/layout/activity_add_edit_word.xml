@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_edit_word"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yukinaito.mydictionary.AddEditWordActivity">
+
+    <LinearLayout
+        android:id="@+id/linearlayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="単語"
+            android:textSize="22sp"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/underline"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="読み方"
+            android:textSize="22sp"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/underline"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="分野"
+            android:textSize="22sp"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/underline"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/text4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="意味"
+            android:textSize="22sp"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:background="@color/heading"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/linearlayout1">
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="単語を入力"
+            android:textSize="22sp"
+            android:padding="10dp"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:background="@drawable/underline_white"/>
+
+        <EditText
+            android:id="@+id/input_kana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="単語の読み方を入力"
+            android:textSize="22sp"
+            android:padding="10dp"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:background="@drawable/underline_white"/>
+
+        <com.example.yukinaito.mydictionary.CustomSpinner
+            android:id="@+id/input_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/underline_white"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/activity_add_edit_mean"
+                android:clickable="true">
+                <TextView
+                    android:id="@+id/input_mean"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="単語の意味を入力"
+                    android:textSize="22sp"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:paddingTop="25px"
+                    android:paddingBottom="25px"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</RelativeLayout>
