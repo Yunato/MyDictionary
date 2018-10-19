@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +23,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.yukinaito.mydictionary.ui.view.CustomSpinner;
+import com.example.yukinaito.mydictionary.R;
+import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
+import com.example.yukinaito.mydictionary.model.entity.Word;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

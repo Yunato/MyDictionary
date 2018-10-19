@@ -1,7 +1,4 @@
-package com.example.yukinaito.mydictionary;
-
-import android.content.ContentValues;
-import android.content.Context;
+package com.example.yukinaito.mydictionary.model.entity;
 
 import java.io.Serializable;
 

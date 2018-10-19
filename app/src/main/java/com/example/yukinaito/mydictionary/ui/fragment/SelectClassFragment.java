@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.fragment;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.yukinaito.mydictionary.R;
+import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
+import com.example.yukinaito.mydictionary.ui.adapter.WordsAdapter;
+import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
+import com.example.yukinaito.mydictionary.model.item.AdapterItem;
+
 import java.util.ArrayList;
 
 public class SelectClassFragment extends ListFragment {
@@ -26,7 +32,7 @@ public class SelectClassFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.activity_select_class, container, false);
+        return inflater.inflate(R.layout.fragment_select_class, container, false);
     }
 
     @Override
@@ -58,7 +64,7 @@ public class SelectClassFragment extends ListFragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    SelectWordActivity fragment = new SelectWordActivity();
+                    SelectWordFragment fragment = new SelectWordFragment();
                     transaction.replace(R.id.main_layout, fragment);
                     transaction.commit();
                     //Intent intent = new Intent(getActivity().getApplicationContext(), SelectWordActivity.class);
@@ -76,7 +82,7 @@ public class SelectClassFragment extends ListFragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    SelectWordActivity fragment = new SelectWordActivity();
+                    SelectWordFragment fragment = new SelectWordFragment();
                     transaction.replace(R.id.main_layout, fragment);
                     transaction.commit();
                     //Intent intent = new Intent(getActivity().getApplicationContext(), DrawInfoActivity.class);
@@ -89,7 +95,7 @@ public class SelectClassFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
-        Intent intent = new Intent(getActivity().getApplicationContext(), SelectWordActivity.class);
+        Intent intent = new Intent(getActivity().getApplicationContext(), SelectWordFragment.class);
         intent.putExtra("CLASS", items[position]);
         startActivityForResult(intent, VIEW_CODE);
     }

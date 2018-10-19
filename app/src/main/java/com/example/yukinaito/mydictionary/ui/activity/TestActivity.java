@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
+import com.example.yukinaito.mydictionary.R;
+import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
+import com.example.yukinaito.mydictionary.model.entity.Word;
+import com.example.yukinaito.mydictionary.ui.fragment.SelectWordFragment;
+import com.example.yukinaito.mydictionary.model.item.AdapterItem;
 
 public class TestActivity extends AppCompatActivity {
     private SQLiteApplication sqLiteApplication;
@@ -89,12 +94,12 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 if(data.length != 0) {
-                    Intent intent = new Intent(getApplicationContext(), SelectWordActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), SelectWordFragment.class);
                     intent.putExtra("CLASS", data[0]);
                     startActivity(intent);
                 }
                 /*
-                Intent intent = new Intent(getApplicationContext(), SelectWordActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SelectWordFragment.class);
                 startActivity(intent);
                 */
             }

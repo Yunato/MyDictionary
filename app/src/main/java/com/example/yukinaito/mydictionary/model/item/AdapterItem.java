@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.model.item;
 
 //WordNameAdapter表示用
 public class AdapterItem {

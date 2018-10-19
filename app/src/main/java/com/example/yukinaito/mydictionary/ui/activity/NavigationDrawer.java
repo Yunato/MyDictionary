@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -12,6 +12,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import com.example.yukinaito.mydictionary.R;
+import com.example.yukinaito.mydictionary.ui.fragment.SelectClassFragment;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

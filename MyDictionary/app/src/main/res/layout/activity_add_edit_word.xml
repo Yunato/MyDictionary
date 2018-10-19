@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add_edit_word"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yukinaito.mydictionary.AddEditWordActivity">
+    tools:context="com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity">
 
     <LinearLayout
         android:id="@+id/linearlayout1"
@@ -91,7 +92,7 @@
             android:imeOptions="actionDone"
             android:background="@drawable/underline_white"/>
 
-        <com.example.yukinaito.mydictionary.CustomSpinner
+        <com.example.yukinaito.mydictionary.ui.views.CustomSpinner
             android:id="@+id/input_class"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

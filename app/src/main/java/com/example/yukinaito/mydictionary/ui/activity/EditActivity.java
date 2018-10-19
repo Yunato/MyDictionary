@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.view.MenuInflater;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.view.MenuItem;
+
+import com.example.yukinaito.mydictionary.R;
 
 public class EditActivity extends AppCompatActivity {
 

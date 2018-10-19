@@ -1,5 +1,6 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.model.entity;
 
+import com.example.yukinaito.mydictionary.model.item.AdapterItem;
 
 import java.util.Comparator;
 

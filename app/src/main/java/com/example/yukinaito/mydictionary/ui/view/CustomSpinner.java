@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

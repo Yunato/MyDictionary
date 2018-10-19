@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.activity;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -12,6 +12,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.example.yukinaito.mydictionary.R;
+import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
+import com.example.yukinaito.mydictionary.model.entity.Word;
 
 public class DrawInfoActivity extends AppCompatActivity {
     private static final int EDIT_CODE = 1;

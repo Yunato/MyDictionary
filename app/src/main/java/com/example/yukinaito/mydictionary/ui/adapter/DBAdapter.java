@@ -1,4 +1,4 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
+
+import com.example.yukinaito.mydictionary.model.entity.Word;
 
 public class DBAdapter {
     //]static final String DATABASE_NAME = "/storage/53EA-840B/MyDictionary.db";

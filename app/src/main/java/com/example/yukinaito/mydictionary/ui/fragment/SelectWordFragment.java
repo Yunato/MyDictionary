@@ -1,17 +1,13 @@
-package com.example.yukinaito.mydictionary;
+package com.example.yukinaito.mydictionary.ui.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +15,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.yukinaito.mydictionary.R;
+import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
+import com.example.yukinaito.mydictionary.ui.adapter.WordNameAdapter;
+import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
+import com.example.yukinaito.mydictionary.ui.activity.DrawInfoActivity;
+import com.example.yukinaito.mydictionary.model.item.AdapterItem;
+
 import java.util.ArrayList;
 
-public class SelectWordActivity extends ListFragment {
+public class SelectWordFragment extends ListFragment {
     private static final int DRAW_CODE = 1;
     private static final int ADD_CODE = 2;
     private static ArrayList<AdapterItem> items;
@@ -31,7 +34,7 @@ public class SelectWordActivity extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.activity_select_word, container, false);
+        return inflater.inflate(R.layout.fragment_select_word, container, false);
     }
 
     @Override
