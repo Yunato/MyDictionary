@@ -18,5 +18,4 @@
         android:paddingRight="40px"
         android:paddingTop="25px"
         android:paddingBottom="25px"/>
-
 </RelativeLayout>
