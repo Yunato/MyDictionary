@@ -11,11 +11,11 @@
         android:id="@+id/input_mean"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="単語の意味を入力"
+        android:hint="@string/blank_mean"
         android:background="#00000000"
         android:textSize="22sp"
-        android:paddingLeft="40px"
-        android:paddingRight="40px"
-        android:paddingTop="25px"
-        android:paddingBottom="25px"/>
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"/>
 </RelativeLayout>

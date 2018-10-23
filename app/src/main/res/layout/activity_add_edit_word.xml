@@ -18,7 +18,7 @@
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="単語"
+            android:text="@string/show_word"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -29,7 +29,7 @@
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="読み方"
+            android:text="@string/show_read"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -40,7 +40,7 @@
             android:id="@+id/text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="分野"
+            android:text="@string/show_field"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -51,7 +51,7 @@
             android:id="@+id/text4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="意味"
+            android:text="@string/show_mean"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -67,13 +67,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/linearlayout1">
+        android:layout_toEndOf="@+id/linearlayout1">
 
         <EditText
             android:id="@+id/input_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="単語を入力"
+            android:hint="@string/blank_word"
             android:textSize="22sp"
             android:padding="10dp"
             android:inputType="text"
@@ -84,7 +84,7 @@
             android:id="@+id/input_kana"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="単語の読み方を入力"
+            android:hint="@string/blank_read"
             android:textSize="22sp"
             android:padding="10dp"
             android:inputType="text"
@@ -103,7 +103,7 @@
             android:fillViewport="true">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/activity_add_edit_mean"
                 android:clickable="true">
@@ -111,12 +111,12 @@
                     android:id="@+id/input_mean"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="単語の意味を入力"
+                    android:text="@string/blank_mean"
                     android:textSize="22sp"
-                    android:paddingLeft="40px"
-                    android:paddingRight="40px"
-                    android:paddingTop="25px"
-                    android:paddingBottom="25px"/>
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="25dp"
+                    android:paddingBottom="25dp"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
