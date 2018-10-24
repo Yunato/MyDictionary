@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,6 +33,7 @@ import com.example.yukinaito.mydictionary.model.entity.Word;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class AddEditWordActivity extends AppCompatActivity {
@@ -133,7 +135,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(AddEditWordActivity.this);
                         builder.setTitle("新規分野名の入力");
                         LayoutInflater inflater = LayoutInflater.from(AddEditWordActivity.this);
-                        final View view = inflater.inflate(R.layout.addclass_dialog, null);
+                        final View view = inflater.inflate(R.layout.addclass_dialog, (ViewGroup)findViewById(R.id.dialog_root));
                         builder.setView(view);
                         builder.setPositiveButton("追加", new DialogInterface.OnClickListener() {
                             @Override
@@ -242,7 +244,7 @@ public class AddEditWordActivity extends AppCompatActivity {
 
         //追加する(現在の)日時を取得 年月日
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPANESE);
         int date = Integer.parseInt(simpleDateFormat.format(calendar.getTime()));
 
         //入力内容の比較用変数

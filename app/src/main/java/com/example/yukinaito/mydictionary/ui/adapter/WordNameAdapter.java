@@ -79,7 +79,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
 
         //レイアウトの生成
         if (convertView == null) {
-            convertView = this.inflater.inflate(R.layout.layout_wordname_item, null);
+            convertView = this.inflater.inflate(R.layout.layout_wordname_item, parent);
         }
 
         //値の指定

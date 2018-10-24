@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.yukinaito.mydictionary">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -19,7 +20,8 @@
         </activity>
         <activity android:name=".ui.activity.DrawInfoActivity" />
         <activity android:name=".ui.activity.AddEditWordActivity" />
-        <activity android:name=".ui.activity.EditActivity"></activity>
+        <activity android:name=".ui.activity.EditActivity"/>
+        <activity android:name=".ui.activity.TestActivity"></activity>
     </application>
 
 </manifest>
