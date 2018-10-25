@@ -7,16 +7,16 @@
             android:icon="@mipmap/ic_launcher"
             android:title="Import" />
     </group>-->
-    <item android:title="Dictionary">
+    <item android:title="@string/menu_title_dictionary">
         <menu>
             <item
                 android:id="@+id/top_dictionary"
                 android:icon="@mipmap/ic_launcher"
-                android:title="Top" />
+                android:title="@string/menu_select_top" />
             <item
                 android:id="@+id/add_dictionary"
                 android:icon="@mipmap/ic_launcher"
-                android:title="Add" />
+                android:title="@string/menu_select_add" />
             <!-- Sort
             <item
                 android:id="@+id/nav_send"
@@ -26,16 +26,16 @@
         </menu>
     </item>
 
-    <item android:title="Research">
+    <item android:title="@string/menu_title_research">
         <menu>
             <item
                 android:id="@+id/top_research"
                 android:icon="@mipmap/ic_launcher"
-                android:title="Top" />
+                android:title="@string/menu_select_top"/>
             <item
                 android:id="@+id/add_research"
                 android:icon="@mipmap/ic_launcher"
-                android:title="Add" />
+                android:title="@string/menu_select_add" />
         </menu>
     </item>
 </menu>

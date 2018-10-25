@@ -19,7 +19,7 @@
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="単語"
+            android:text="@string/show_word"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -30,7 +30,7 @@
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="読み方"
+            android:text="@string/show_read"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -41,7 +41,7 @@
             android:id="@+id/text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="分野"
+            android:text="@string/show_field"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -52,7 +52,7 @@
             android:id="@+id/text4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="意味"
+            android:text="@string/show_mean"
             android:textSize="22sp"
             android:padding="10dp"
             android:textColor="#ffffff"
@@ -68,14 +68,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/linearlayout1">
+        android:layout_toEndOf="@+id/linearlayout1">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/underline_white">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
@@ -94,7 +94,7 @@
             android:fillViewport="true"
             android:background="@drawable/underline_white">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/underline_white">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
@@ -131,7 +131,7 @@
             android:fillViewport="true">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/output_mean"

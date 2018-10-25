@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/finish_action"
-        android:title="FINISH"
+        android:title="@string/bar_finish"
         app:showAsAction="always|collapseActionView" />
 </menu>

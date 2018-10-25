@@ -1,5 +1,6 @@
 package com.example.yukinaito.mydictionary.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -62,6 +63,7 @@ public class AddEditWordActivity extends AppCompatActivity {
         actionBar.setElevation(0f);
 
         //region 前画面に戻るボタンの生成
+        @SuppressLint("PrivateResource")
         final Drawable upArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.abc_ic_ab_back_material, null);
         upArrow.setColorFilter(ContextCompat.getColor(this, R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

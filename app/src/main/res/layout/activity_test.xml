@@ -17,41 +17,41 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edittext"
-        android:text="(テスト1)分類名を取得" />
+        android:layout_below="@+id/test_edittext"
+        android:text="@string/test1" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button1"
-        android:text="(テスト2)分類名を送信し、単語の名前と読み方を取得" />
+        android:text="@string/test2" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button2"
-        android:text="(テスト4)単語の名前と読み方を送信し、単語の情報を取得" />
+        android:text="@string/test4" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button4"
-        android:text="(テスト6)追加" />
+        android:text="@string/test6" />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button6"
-        android:text="(テスト7)削除"/>
+        android:text="@string/test7"/>
 
     <Button
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button7"
-        android:text="Activity呼び出し"/>
+        android:text="@string/call_activity"/>
 </RelativeLayout>
