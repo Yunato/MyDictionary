@@ -5,13 +5,13 @@ import java.io.Serializable;
 //単語情報をすべて保持するクラス
 public class Word implements Serializable{
     //単語の名前、読み方、分類、意味、アクセス数、どのくらいアクセスされていないか
-    private String name;
-    private String kana;
-    private String classification;
-    private String mean;
-    private int accesscount;
-    private int leastaccesscount;
-    private int date;
+    private final String name;
+    private final String kana;
+    private final String classification;
+    private final String mean;
+    private final int accesscount;
+    private final int leastaccesscount;
+    private final int date;
 
     public Word(String name, String kana, String classification, String mean, int accesscount, int leastaccesscount, int date){
         this.name = name;

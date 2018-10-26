@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.example.yukinaito.mydictionary.R;
 import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
+import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 import com.example.yukinaito.mydictionary.ui.adapter.WordNameAdapter;
 import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
 import com.example.yukinaito.mydictionary.ui.activity.DrawInfoActivity;
@@ -97,7 +98,7 @@ public class SelectWordFragment extends ListFragment {
 
 
     //DBへアクセスする 表示内容の更新
-    public void DBAccess(){
+    private void DBAccess(){
         SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
         ListView listView = getListView();
 
@@ -127,7 +128,7 @@ public class SelectWordFragment extends ListFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == DRAW_CODE){
             //DrawInfoActivityより
-            if(resultCode == getActivity().RESULT_OK) {
+            if(resultCode == NavigationDrawer.RESULT_OK) {
                 if(data.getBooleanExtra("update", false)) {
                     update_check = true;
                     DBAccess();
@@ -135,7 +136,7 @@ public class SelectWordFragment extends ListFragment {
             }
         }else if(requestCode == ADD_CODE){
             //AddEditWordActivityより
-            if(resultCode == getActivity().RESULT_OK){
+            if(resultCode == NavigationDrawer.RESULT_OK){
                 update_check = true;
                 DBAccess();
             }

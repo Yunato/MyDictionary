@@ -11,26 +11,24 @@ import com.example.yukinaito.mydictionary.model.entity.Word;
 
 public class DBAdapter {
     //]static final String DATABASE_NAME = "/storage/53EA-840B/MyDictionary.db";
-    static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
-    static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
+    private static final int DATABASE_VERSION = 1;
 
-    public static final String TABLE_NAME = "words";
-    public static final String WORD_ID = "_id";
-    public static final String WORD_NAME = "name";
-    public static final String WORD_KANA = "kana";
-    public static final String WORD_CLASS = "classification";
-    public static final String WORD_MEAN = "mean";
-    public static final String WORD_COUNT = "accesscount";
-    public static final String WORD_LEASTCOUNT = "leastaccesscount";
-    public static final String WORD_DATE = "adddate";
+    private static final String TABLE_NAME = "words";
+    private static final String WORD_ID = "_id";
+    private static final String WORD_NAME = "name";
+    private static final String WORD_KANA = "kana";
+    private static final String WORD_CLASS = "classification";
+    private static final String WORD_MEAN = "mean";
+    private static final String WORD_COUNT = "accesscount";
+    private static final String WORD_LEASTCOUNT = "leastaccesscount";
+    private static final String WORD_DATE = "adddate";
 
-    protected final Context context;
-    protected DatabaseHelper dbHelper;
-    protected SQLiteDatabase db;
+    private final DatabaseHelper dbHelper;
+    private SQLiteDatabase db;
 
     public DBAdapter(Context context){
-        this.context = context;
-        dbHelper = new DatabaseHelper(this.context);
+        dbHelper = new DatabaseHelper(context);
     }
 
     public class DatabaseHelper extends SQLiteOpenHelper {

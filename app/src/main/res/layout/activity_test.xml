@@ -7,17 +7,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.yukinaito.mydictionary.ui.activity.TestActivity">
 
-    <EditText
-        android:id="@+id/test_edittext"
-        android:labelFor="@+id/test_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/test_edittext"
         android:text="@string/test1" />
 
     <Button

@@ -12,13 +12,11 @@ import com.example.yukinaito.mydictionary.model.item.AdapterItem;
 
 import java.util.ArrayList;
 
-public class WordsAdapter extends BaseAdapter {
-    Context context;
-    LayoutInflater layoutInflater = null;
-    ArrayList<AdapterItem> items;
+class WordsAdapter extends BaseAdapter {
+    private LayoutInflater layoutInflater = null;
+    private ArrayList<AdapterItem> items;
 
     public WordsAdapter(Context context){
-        this.context = context;
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -43,8 +41,9 @@ public class WordsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        convertView = layoutInflater.inflate(R.layout.rowdata,parent,false);
-
+        if(convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.rowdata, parent, false);
+        }
         ((TextView)convertView.findViewById(R.id.NameText)).setText(items.get(position).getName());
         return convertView;
     }

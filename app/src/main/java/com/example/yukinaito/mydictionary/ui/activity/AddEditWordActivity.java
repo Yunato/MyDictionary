@@ -124,9 +124,8 @@ public class AddEditWordActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View viw, int position, long id) {
                 final CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_class);
-                if(spinner.isFocusable() == false) {
+                if(!spinner.isFocusable()) {
                     spinner.setFocusable(true);
-                    return;
                 }else {
                     //新しい分類名を追加していない場合
                     if (spinner.getSelectedItemPosition() == items.length - 1 && spinner.getSelectedItem().toString().equals("分野の追加...")) {

@@ -44,7 +44,7 @@ public class DrawInfoActivity extends AppCompatActivity {
     }
 
     //DBへアクセスする 表示内容の更新
-    public void DBAccess() {
+    private void DBAccess() {
         SQLiteApplication sqLiteApplication = (SQLiteApplication) this.getApplication();
         word = sqLiteApplication.getWordInfo(getIntent().getStringExtra("ID"));
 

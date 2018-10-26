@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,18 +15,15 @@ import android.widget.ListView;
 
 import com.example.yukinaito.mydictionary.R;
 import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
-import com.example.yukinaito.mydictionary.ui.adapter.WordsAdapter;
 import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
-import com.example.yukinaito.mydictionary.model.item.AdapterItem;
-
-import java.util.ArrayList;
+import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 
 public class SelectClassFragment extends ListFragment {
     private static final int VIEW_CODE = 1;
     private static final int ADD_CODE = 2;
     //Activityの状態を示す。 true = 分野選択 false = 追加順
-    private static boolean CONDITION = true;
-    String[] items;
+    //private boolean CONDITION = true;
+    private String[] items;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,11 +47,11 @@ public class SelectClassFragment extends ListFragment {
     }
 
     //DBへアクセスする 表示内容の更新
-    public void DBAccess(){
+    private void DBAccess(){
         SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
         ListView listView = getListView();
 
-        if(CONDITION) {
+        //if(CONDITION) {
             items = sqLiteApplication.getWordClass();
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.rowdata, items);
             setListAdapter(adapter);
@@ -72,6 +68,7 @@ public class SelectClassFragment extends ListFragment {
                     //startActivityForResult(intent, VIEW_CODE);
                 }
             });
+        /*
         }else{
             final ArrayList<AdapterItem> items = sqLiteApplication.getWords();
             WordsAdapter adapter = new WordsAdapter(getActivity());
@@ -90,7 +87,7 @@ public class SelectClassFragment extends ListFragment {
                     //startActivityForResult(intent, 1);      //DRAW_CODE = 1 / VIEW_CODEと被っている
                 }
             });
-        }
+        }*/
     }
 
     @Override
@@ -108,7 +105,7 @@ public class SelectClassFragment extends ListFragment {
         inflater.inflate(R.menu.selectclasswords_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }*/
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
@@ -122,18 +119,18 @@ public class SelectClassFragment extends ListFragment {
             //endregion
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == getActivity().RESULT_OK) {
+        if(resultCode == NavigationDrawer.RESULT_OK) {
             if(requestCode == VIEW_CODE){
                 if(data.getBooleanExtra("update", false))
                     DBAccess();
             }else if(requestCode == ADD_CODE)
                 //AddEditWordActivityより
-                if(resultCode == getActivity().RESULT_OK)
+                if(resultCode == NavigationDrawer.RESULT_OK)
                     DBAccess();
         }
     }

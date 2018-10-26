@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SQLiteApplication extends Application {
-    DBAdapter dbAdapter;
+    private DBAdapter dbAdapter;
 
     @Override
     public void onCreate(){

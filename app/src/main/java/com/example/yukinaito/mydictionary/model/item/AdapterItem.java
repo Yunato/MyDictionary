@@ -2,9 +2,9 @@ package com.example.yukinaito.mydictionary.model.item;
 
 //WordNameAdapter表示用
 public class AdapterItem {
-    private String id;
-    private String name;
-    private String kana;
+    private final String id;
+    private final String name;
+    private final String kana;
     private boolean visible;
 
     public AdapterItem(String id, String name, String kana){

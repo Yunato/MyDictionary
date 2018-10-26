@@ -18,8 +18,8 @@ import java.util.Iterator;
 import java.util.Locale;
 
 public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
-    private LayoutInflater inflater;
-    private ArrayList<AdapterItem> items;
+    private final LayoutInflater inflater;
+    private final ArrayList<AdapterItem> items;
     private String[] sections;
 
     public WordNameAdapter(Context context, ArrayList<AdapterItem> objects){
@@ -28,7 +28,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
         sectionSetting(objects);
     }
 
-    public void sectionSetting(ArrayList<AdapterItem> objects){
+    private void sectionSetting(ArrayList<AdapterItem> objects){
         ArrayList<String> buffer = new ArrayList<String>();
         String oldLabel = null;
 
