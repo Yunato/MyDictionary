@@ -36,7 +36,7 @@ public class EditActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id == R.id.finish_action) {
             //入力した文字列のチェック
-            String send = new String();
+            String send;
             send = ((EditText)findViewById(R.id.input_mean)).getText().toString();
 
             //戻り値の生成 mean=単語の意味

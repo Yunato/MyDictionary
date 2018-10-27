@@ -130,8 +130,7 @@ public class SelectClassFragment extends ListFragment {
                     DBAccess();
             }else if(requestCode == ADD_CODE)
                 //AddEditWordActivityより
-                if(resultCode == NavigationDrawer.RESULT_OK)
-                    DBAccess();
+                DBAccess();
         }
     }
 }

@@ -60,15 +60,22 @@ public class AddEditWordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_word);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setElevation(0f);
+        if(actionBar != null){
+            actionBar.setElevation(0f);
+        }
 
-        //region 前画面に戻るボタンの生成
-        @SuppressLint("PrivateResource")
-        final Drawable upArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.abc_ic_ab_back_material, null);
-        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+
+            //region 前画面に戻るボタンの生成
+            @SuppressLint("PrivateResource")
+            final Drawable upArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.abc_ic_ab_back_material, null);
+            if(upArrow != null){
+                upArrow.setColorFilter(ContextCompat.getColor(this, R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+            }
+            getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        }
         //endregion
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -114,7 +121,7 @@ public class AddEditWordActivity extends AppCompatActivity {
         items[buf.length + 1] = "分野の追加...";
 
         //スピナーに要素を登録
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.rowdata, items);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.rowdata, items);
         spinner.setAdapter(adapter);
         spinner.setPrompt("分野の選択");
         spinner.setFocusable(false);
@@ -185,7 +192,7 @@ public class AddEditWordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //新規作成か編集か
-                String send = new String();
+                String send = "";
                 if(textView.getText().toString().equals("単語の意味を入力")) {
                     //正しい文字列ではない(許可していない)とき
                     if (!meancheck)

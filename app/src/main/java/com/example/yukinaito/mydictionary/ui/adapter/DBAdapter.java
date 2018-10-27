@@ -58,9 +58,8 @@ public class DBAdapter {
     }
 
     //データベースのオープン
-    public DBAdapter open(){
+    public void open(){
         db = dbHelper.getWritableDatabase();
-        return this;
     }
 
     //データベースのクローズ
@@ -73,11 +72,6 @@ public class DBAdapter {
         return db.query(true, TABLE_NAME, new String[]{WORD_CLASS}, null, null, null, null, "_id ASC", null);
     }
 
-    //単語名の取得
-    public Cursor getWordName(){
-        return db.query(TABLE_NAME,new String[]{WORD_ID, WORD_NAME, WORD_KANA},null,null,null,null,"_id ASC", null);
-    }
-
     public Cursor getWordName(String wordClass){
         return db.query(TABLE_NAME, new String[]{WORD_ID, WORD_NAME, WORD_KANA}, WORD_CLASS + " = ?", new String[]{wordClass}, null, null, "_id ASC");
     }
@@ -88,8 +82,8 @@ public class DBAdapter {
     }
 
     //行の削除
-    public boolean deleteWord(String id){
-        return db.delete(TABLE_NAME, WORD_ID + "=" + id, null) > 0;
+    public void deleteWord(String id){
+        db.delete(TABLE_NAME, WORD_ID + "=" + id, null);
     }
 
     //行の挿入

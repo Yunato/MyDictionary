@@ -14,7 +14,6 @@ import com.example.yukinaito.mydictionary.R;
 import com.example.yukinaito.mydictionary.model.item.AdapterItem;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Locale;
 
 public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
@@ -24,22 +23,20 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
 
     public WordNameAdapter(Context context, ArrayList<AdapterItem> objects){
         this.inflater = LayoutInflater.from(context);
-        this.items = new ArrayList<AdapterItem>();
+        this.items = new ArrayList<>();
         sectionSetting(objects);
     }
 
     private void sectionSetting(ArrayList<AdapterItem> objects){
-        ArrayList<String> buffer = new ArrayList<String>();
+        ArrayList<String> buffer = new ArrayList<>();
         String oldLabel = null;
 
-        Iterator<AdapterItem> it = objects.iterator();
-        while(it.hasNext()){
-            AdapterItem buf = it.next();
+        for (AdapterItem buf : objects) {
             String s = buf.getName();
             String newLabel = s.substring(0, 1).toUpperCase(Locale.ENGLISH);
 
             if(oldLabel == null || !oldLabel.equals(newLabel)){
-                buffer.add(new String(newLabel));
+                buffer.add(newLabel);
                 items.add(new AdapterItem("", newLabel, "", false));
             }
 

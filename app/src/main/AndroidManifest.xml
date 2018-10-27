@@ -22,7 +22,6 @@
         <activity android:name=".ui.activity.DrawInfoActivity" />
         <activity android:name=".ui.activity.AddEditWordActivity" />
         <activity android:name=".ui.activity.EditActivity"/>
-        <activity android:name=".ui.activity.TestActivity"/>
     </application>
 
 </manifest>

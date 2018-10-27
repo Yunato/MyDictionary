@@ -22,7 +22,7 @@ public class CustomSpinner extends Spinner {
     {
         boolean sameSelected = position == getSelectedItemPosition();
         super.setSelection(position, animate);
-        if(sameSelected){
+        if(sameSelected && getOnItemSelectedListener() != null){
             getOnItemSelectedListener().onItemSelected(this, getSelectedView(), position, getSelectedItemId());
         }
     }
@@ -32,7 +32,7 @@ public class CustomSpinner extends Spinner {
     {
         boolean sameSelected = position == getSelectedItemPosition();
         super.setSelection(position);
-        if(sameSelected){
+        if(sameSelected && getOnItemSelectedListener() != null){
             getOnItemSelectedListener().onItemSelected(this, getSelectedView(), position, getSelectedItemId());
         }
     }

@@ -30,7 +30,7 @@ public class SelectWordFragment extends ListFragment {
     private static final int ADD_CODE = 2;
     private static ArrayList<AdapterItem> items;
     //更新されたか判定 true=更新済み
-    private boolean update_check = false;
+    //private boolean update_check = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class SelectWordFragment extends ListFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ((SQLiteApplication)getActivity().getApplication()).deleteWord(items.get(delete_pos).getId());
-                        update_check = true;
+                        //update_check = true;
                         DBAccess();
                     }
                 });
@@ -130,14 +130,14 @@ public class SelectWordFragment extends ListFragment {
             //DrawInfoActivityより
             if(resultCode == NavigationDrawer.RESULT_OK) {
                 if(data.getBooleanExtra("update", false)) {
-                    update_check = true;
+                    //update_check = true;
                     DBAccess();
                 }
             }
         }else if(requestCode == ADD_CODE){
             //AddEditWordActivityより
             if(resultCode == NavigationDrawer.RESULT_OK){
-                update_check = true;
+                //update_check = true;
                 DBAccess();
             }
         }
