@@ -24,12 +24,4 @@
     <string name="menu_title_research">"Research"</string>
     <string name="menu_select_top">"TOP"</string>
     <string name="menu_select_add">"ADD"</string>
-
-    <!-- TestActivity -->
-    <string name="test1">"(テスト1)分類名を取得"</string>
-    <string name="test2">"(テスト2)分類名を送信し、単語の名前と読み方を取得"</string>
-    <string name="test4">"(テスト4)単語の名前と読み方を送信し、単語の情報を取得"</string>
-    <string name="test6">"(テスト6)追加"</string>
-    <string name="test7">"(テスト7)削除"</string>
-    <string name="call_activity">"Activity呼び出し"</string>
 </resources>

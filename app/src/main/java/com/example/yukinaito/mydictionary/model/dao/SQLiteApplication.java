@@ -37,10 +37,10 @@ public class SQLiteApplication extends Application {
     }
 
     //単語選択画面Listの要素作成
-    public ArrayList<AdapterItem> getWordName(String wordclass){
+    public ArrayList<AdapterItem> getWordName(String wordClass){
         ArrayList<AdapterItem> items = new ArrayList<>();
         dbAdapter.open();
-        Cursor cursor = dbAdapter.getWordName(wordclass);
+        Cursor cursor = dbAdapter.getWordName(wordClass);
 
         while(cursor.moveToNext()){
             AdapterItem buf = new AdapterItem(cursor.getString(cursor.getColumnIndex("_id")),

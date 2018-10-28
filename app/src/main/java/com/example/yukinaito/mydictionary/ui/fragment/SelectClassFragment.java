@@ -51,43 +51,19 @@ public class SelectClassFragment extends ListFragment {
         SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
         ListView listView = getListView();
 
-        //if(CONDITION) {
-            items = sqLiteApplication.getWordClass();
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.rowdata, items);
-            setListAdapter(adapter);
+        items = sqLiteApplication.getWordClass();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.rowdata, items);
+        setListAdapter(adapter);
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    SelectWordFragment fragment = new SelectWordFragment();
-                    transaction.replace(R.id.main_layout, fragment);
-                    transaction.commit();
-                    //Intent intent = new Intent(getActivity().getApplicationContext(), SelectWordActivity.class);
-                    //intent.putExtra("CLASS", items[position]);
-                    //startActivityForResult(intent, VIEW_CODE);
-                }
-            });
-        /*
-        }else{
-            final ArrayList<AdapterItem> items = sqLiteApplication.getWords();
-            WordsAdapter adapter = new WordsAdapter(getActivity());
-            adapter.setItems(items);
-            setListAdapter(adapter);
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    SelectWordFragment fragment = new SelectWordFragment();
-                    transaction.replace(R.id.main_layout, fragment);
-                    transaction.commit();
-                    //Intent intent = new Intent(getActivity().getApplicationContext(), DrawInfoActivity.class);
-                    //intent.putExtra("ID", items.get(position).getId());
-                    //startActivityForResult(intent, 1);      //DRAW_CODE = 1 / VIEW_CODEと被っている
-                }
-            });
-        }*/
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                SelectWordFragment fragment = new SelectWordFragment();
+                transaction.replace(R.id.main_layout, fragment);
+                transaction.commit();
+            }
+        });
     }
 
     @Override
@@ -96,30 +72,6 @@ public class SelectClassFragment extends ListFragment {
         intent.putExtra("CLASS", items[position]);
         startActivityForResult(intent, VIEW_CODE);
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        //actionbarのカスタマイズ
-        final MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.selectclasswords_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }*/
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-        if (id == R.id.action_convert) {
-            //region リスト切り替え
-            if(CONDITION)
-                CONDITION = false;
-            else
-                CONDITION = true;
-            DBAccess();
-            //endregion
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){

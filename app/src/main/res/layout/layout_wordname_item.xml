@@ -15,7 +15,7 @@
 
     <!--
     <TextView
-        android:id="@+id/textView_Kana"
+        android:id="@+id/textView_kana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
         -->

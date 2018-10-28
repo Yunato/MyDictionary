@@ -41,7 +41,7 @@ public class AddEditWordActivity extends AppCompatActivity {
     private static final int EDIT_CODE = 1;
     private static final int RESULT_BACK = -1;
     //"単語の意味を入力"を意味とするか判定 trueは許可
-    private boolean meancheck = false;
+    private boolean mean_check = false;
     //単語の新規追加か修正か判定に使える nullのとき新規作成
     private Word update_word;
     //単語の言語の判定に使う
@@ -195,7 +195,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                 String send = "";
                 if(textView.getText().toString().equals("単語の意味を入力")) {
                     //正しい文字列ではない(許可していない)とき
-                    if (!meancheck)
+                    if (!mean_check)
                         send = "";
                 }
                 else
@@ -212,7 +212,7 @@ public class AddEditWordActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.input_name)).setText(update_word.getName());
             ((TextView)findViewById(R.id.input_kana)).setText(update_word.getKana());
             ((TextView)findViewById(R.id.input_mean)).setText(update_word.getMean());
-            meancheck = true;
+            mean_check = true;
             for(int i = 0; i < items.length; i++)
                 if(items[i].equals(update_word.getClassification())){
                     spinner.setSelection(i);
@@ -256,7 +256,7 @@ public class AddEditWordActivity extends AppCompatActivity {
         int date = Integer.parseInt(simpleDateFormat.format(calendar.getTime()));
 
         //入力内容の比較用変数
-        boolean check_name = false, check_kana = false, check_class = false, check_mean = false;
+        boolean check_name, check_kana, check_class, check_mean;
 
         if (id == R.id.update_action || id == R.id.add_action) {
             //編集のとき、入力内容に変更があるか true 変更なし false 変更有
@@ -270,7 +270,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                 check_class = ((((SQLiteApplication)this.getApplication()).getWordClass()).length == 0 &&
                         ((CustomSpinner)findViewById(R.id.input_class)).getSelectedItem().toString().equals("分野の追加...") && touch_spinner)
                         || ((CustomSpinner)findViewById(R.id.input_class)).getSelectedItem().toString().equals("分野の選択[必須]");
-                check_mean = !meancheck;
+                check_mean = !mean_check;
                 if (!(check_name ||check_kana ||check_class ||check_mean)) {
                     //追加/変更する単語情報
                     Word Word = new Word(name, kana, classification, mean, 0, -1, date);
@@ -323,11 +323,11 @@ public class AddEditWordActivity extends AppCompatActivity {
                 String send;
                 if(data.getStringExtra("mean").equals("")) {
                     //正しい文字列ではない(許可しない)
-                    meancheck = false;
+                    mean_check = false;
                     send = "単語の意味を入力";
                 }
                 else {
-                    meancheck = true;
+                    mean_check = true;
                     send = data.getStringExtra("mean");
                 }
 
