@@ -148,7 +148,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                         builder.setPositiveButton("追加", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                items[buf.length] = ((EditText) view.findViewById(R.id.edittext)).getText().toString();
+                                items[buf.length] = ((EditText) view.findViewById(R.id.input_mean)).getText().toString();
                                 spinner.setSelection(buf.length);
                                 adapter.notifyDataSetChanged();
                                 spinner_index = buf.length;
@@ -159,7 +159,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                         dialog.show();
                         dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
-                        ((EditText) view.findViewById(R.id.edittext)).addTextChangedListener(new TextWatcher() {
+                        ((EditText) view.findViewById(R.id.input_mean)).addTextChangedListener(new TextWatcher() {
                             @Override
                             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                             }
@@ -170,7 +170,7 @@ public class AddEditWordActivity extends AppCompatActivity {
 
                             @Override
                             public void afterTextChanged(Editable editable) {
-                                if (!((EditText) view.findViewById(R.id.edittext)).getText().toString().equals(""))
+                                if (!((EditText) view.findViewById(R.id.input_mean)).getText().toString().equals(""))
                                     dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                                 else
                                     dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setEnabled(false);

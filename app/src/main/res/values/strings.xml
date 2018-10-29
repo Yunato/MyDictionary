@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">MyDictionary</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
     <!-- DrawInfoActivity -->
     <string name="show_word">"単語"</string>
     <string name="show_read">"読み方"</string>
