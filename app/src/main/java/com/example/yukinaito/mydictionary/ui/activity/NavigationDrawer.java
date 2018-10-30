@@ -21,6 +21,9 @@ import com.example.yukinaito.mydictionary.ui.fragment.SelectClassFragment;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    /**
+     * 要求コード
+     */
     private static final int REQUEST_WRITE_STORAGE = 1;
 
     @Override
@@ -39,18 +42,21 @@ public class NavigationDrawer extends AppCompatActivity
         toggle.syncState();
 
         ((NavigationView)findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
-
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SelectClassFragment fragment = new SelectClassFragment();
-        transaction.add(R.id.main_layout, fragment);
-        transaction.commit();
+        switchUserInterface(R.id.top_dictionary);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         int id = item.getItemId();
+        switchUserInterface(id);
+        return false;
+    }
 
+    /**
+     * パラメータを基に, 次の描画に適したActivityまたはFragmentへ画面を切り替える
+     * @param id メニューID
+     */
+    private void switchUserInterface(int id){
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -66,12 +72,20 @@ public class NavigationDrawer extends AppCompatActivity
             case R.id.add_research:
                 break;
             default:
-                return false;
+                return;
         }
         transaction.commit();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return false;
+        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
+    }
+
+    /**
+     * ユーザがアプリケーションに権限を付与しているか確認する
+     */
+    private void checkPermission(){
+        boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        if(!hasPermission){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
+        }
     }
 
     @Override
@@ -81,13 +95,6 @@ public class NavigationDrawer extends AppCompatActivity
             if(grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED){
                 finish();
             }
-        }
-    }
-
-    private void checkPermission(){
-        boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-        if(!hasPermission){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
         }
     }
 }
