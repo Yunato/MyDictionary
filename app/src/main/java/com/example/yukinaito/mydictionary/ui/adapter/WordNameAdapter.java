@@ -2,6 +2,7 @@ package com.example.yukinaito.mydictionary.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,13 +72,11 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
 
     //セルのビューの生成
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
         AdapterItem item = this.items.get(position);
 
         //レイアウトの生成
-        if (convertView == null) {
-            convertView = this.inflater.inflate(R.layout.layout_wordname_item, parent);
-        }
+        convertView = this.inflater.inflate(R.layout.layout_wordname_item, null);
 
         //値の指定
         TextView name = (TextView)convertView.findViewById(R.id.textView_Name);

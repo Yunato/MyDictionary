@@ -23,7 +23,7 @@ public class SQLiteApplication extends Application {
     }
 
     //分類選択画面Listの要素作成
-    public String[] getWordClass(){
+    public String[] getWordFiled(){
         dbAdapter.open();
         Cursor cursor = dbAdapter.getWordClass();
 

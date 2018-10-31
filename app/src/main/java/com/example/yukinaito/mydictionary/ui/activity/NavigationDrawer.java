@@ -17,7 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.yukinaito.mydictionary.R;
-import com.example.yukinaito.mydictionary.ui.fragment.SelectClassFragment;
+import com.example.yukinaito.mydictionary.ui.fragment.SelectFieldFragment;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,7 +62,7 @@ public class NavigationDrawer extends AppCompatActivity
 
         switch (id) {
             case R.id.top_dictionary:
-                SelectClassFragment fragment = new SelectClassFragment();
+                SelectFieldFragment fragment = new SelectFieldFragment();
                 transaction.replace(R.id.main_layout, fragment);
                 break;
             case R.id.add_dictionary:

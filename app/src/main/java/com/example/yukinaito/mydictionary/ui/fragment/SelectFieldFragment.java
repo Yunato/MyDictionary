@@ -3,13 +3,12 @@ package com.example.yukinaito.mydictionary.ui.fragment;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -18,12 +17,12 @@ import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
 import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
 import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 
-public class SelectClassFragment extends ListFragment {
-    private static final int VIEW_CODE = 1;
+public class SelectFieldFragment extends ListFragment {
+    /**
+     * 要求コード
+     */
+    private static final int UPDATE_CODE = 1;
     private static final int ADD_CODE = 2;
-    //Activityの状態を示す。 true = 分野選択 false = 追加順
-    //private boolean CONDITION = true;
-    private String[] items;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,9 +32,9 @@ public class SelectClassFragment extends ListFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
-        DBAccess();
+        super.onViewCreated(view, savedInstanceState);
 
-        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.button_floating_action);
         fab.setOnClickListener(new View.OnClickListener() {
             //単語の追加
             @Override
@@ -44,45 +43,41 @@ public class SelectClassFragment extends ListFragment {
                 startActivityForResult(intent, ADD_CODE);
             }
         });
+
+        setAdapter();
     }
 
-    //DBへアクセスする 表示内容の更新
-    private void DBAccess(){
+    /**
+     * DBから取得した分野群を基にAdapterを生成し, ListViewへセットする
+     */
+    private void setAdapter(){
         SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
-        ListView listView = getListView();
-
-        items = sqLiteApplication.getWordClass();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.rowdata, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item, sqLiteApplication.getWordFiled());
         setListAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                SelectWordFragment fragment = new SelectWordFragment();
-                transaction.replace(R.id.main_layout, fragment);
-                transaction.commit();
-            }
-        });
     }
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
-        Intent intent = new Intent(getActivity().getApplicationContext(), SelectWordFragment.class);
-        intent.putExtra("CLASS", items[position]);
-        startActivityForResult(intent, VIEW_CODE);
+        Bundle bundle = new Bundle();
+        bundle.putString("FIELD", (String)listView.getAdapter().getItem(position));
+
+        Fragment fragment = new SelectWordFragment();
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_layout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == NavigationDrawer.RESULT_OK) {
-            if(requestCode == VIEW_CODE){
-                if(data.getBooleanExtra("update", false))
-                    DBAccess();
+            if(requestCode == UPDATE_CODE){
+                if(data.getBooleanExtra("UPDATE", false))
+                    setAdapter();
             }else if(requestCode == ADD_CODE)
-                //AddEditWordActivityより
-                DBAccess();
+                setAdapter();
         }
     }
 }

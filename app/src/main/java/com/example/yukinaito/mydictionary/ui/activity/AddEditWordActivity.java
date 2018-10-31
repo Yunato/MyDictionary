@@ -114,14 +114,14 @@ public class AddEditWordActivity extends AppCompatActivity {
 
         //スピナーの要素設定
         final CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_class);
-        final String[] buf = sqLiteApplication.getWordClass();
+        final String[] buf = sqLiteApplication.getWordFiled();
         final String[] items = new String[buf.length + 2];
         items[0] = "分野の選択[必須]";
         System.arraycopy(buf, 0, items, 1, buf.length);
         items[buf.length + 1] = "分野の追加...";
 
         //スピナーに要素を登録
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.rowdata, items);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
         spinner.setAdapter(adapter);
         spinner.setPrompt("分野の選択");
         spinner.setFocusable(false);
@@ -267,7 +267,7 @@ public class AddEditWordActivity extends AppCompatActivity {
                 //入力情報に不備がないか trueなら不備
                 check_name = name.equals("");
                 check_kana = (kana.equals("") && !check_name && japaneseUnicodeBlocks.contains(Character.UnicodeBlock.of(name.charAt(0))));
-                check_class = ((((SQLiteApplication)this.getApplication()).getWordClass()).length == 0 &&
+                check_class = ((((SQLiteApplication)this.getApplication()).getWordFiled()).length == 0 &&
                         ((CustomSpinner)findViewById(R.id.input_class)).getSelectedItem().toString().equals("分野の追加...") && touch_spinner)
                         || ((CustomSpinner)findViewById(R.id.input_class)).getSelectedItem().toString().equals("分野の選択[必須]");
                 check_mean = !mean_check;

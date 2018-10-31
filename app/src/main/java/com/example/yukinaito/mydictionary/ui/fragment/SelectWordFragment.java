@@ -104,7 +104,11 @@ public class SelectWordFragment extends ListFragment {
 
         //リストビューの要素生成
         //itemsの作成(セクションは抜き)
-        items = sqLiteApplication.getWordName(getActivity().getIntent().getStringExtra("CLASS"));
+        Bundle bundle = getArguments();
+        if(bundle == null){
+            return;
+        }
+        items = sqLiteApplication.getWordName(bundle.getString("FIELD"));
         WordNameAdapter adapter = new WordNameAdapter(getActivity(), items);
         //itemsの再作成(セクションは有)
         items = adapter.getItems();
