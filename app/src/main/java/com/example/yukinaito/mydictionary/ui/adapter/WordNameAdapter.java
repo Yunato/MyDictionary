@@ -48,8 +48,8 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
         sections = buffer.toArray(new String[] {});
     }
 
-    public ArrayList<AdapterItem> getItems(){
-        return this.items;
+    private static class ViewHolder{
+        TextView textName;
     }
 
     //要素数の取得
@@ -72,17 +72,19 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
 
     //セルのビューの生成
     @Override
-    public View getView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         AdapterItem item = this.items.get(position);
+        ViewHolder viewHolder;
 
-        //レイアウトの生成
-        convertView = this.inflater.inflate(R.layout.layout_wordname_item, null);
-
-        //値の指定
-        TextView name = (TextView)convertView.findViewById(R.id.textView_Name);
-        //TextView kana = (TextView)convertView.findViewById(R.id.textView_Kana);
-        name.setText(item.getName());
-        //kana.setText(item.getKana());
+        if(convertView == null){
+            convertView = this.inflater.inflate(R.layout.layout_wordname_item, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.textName = (TextView)convertView.findViewById(R.id.textView_Name);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder)convertView.getTag();
+        }
+        viewHolder.textName.setText(item.getName());
 
         LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.textView_Layout);
         if(!item.getVisible())
