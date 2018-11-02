@@ -27,7 +27,7 @@ public class EditActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         //actionbarのカスタマイズ
         final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.editmean_menu, menu);
+        inflater.inflate(R.menu.menu_edit_mean, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

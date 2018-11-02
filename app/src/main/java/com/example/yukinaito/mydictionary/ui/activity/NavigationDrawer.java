@@ -21,9 +21,7 @@ import com.example.yukinaito.mydictionary.ui.fragment.SelectFieldFragment;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    /**
-     * 要求コード
-     */
+    /** 要求コード  */
     private static final int REQUEST_WRITE_STORAGE = 1;
 
     @Override
@@ -53,7 +51,7 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
     /**
-     * パラメータを基に, 次の描画に適したActivityまたはFragmentへ画面を切り替える
+     * パラメータを基に, 次の描画に適した Activity または Fragment へ画面を切り替える
      * @param id メニューID
      */
     private void switchUserInterface(int id){
@@ -78,9 +76,7 @@ public class NavigationDrawer extends AppCompatActivity
         ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
     }
 
-    /**
-     * ユーザがアプリケーションに権限を付与しているか確認する
-     */
+    /** ユーザがアプリケーションに権限を付与しているか確認する */
     private void checkPermission(){
         boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
         if(!hasPermission){

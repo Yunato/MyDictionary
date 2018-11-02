@@ -13,17 +13,20 @@ import android.widget.ListView;
 
 import com.example.yukinaito.mydictionary.R;
 import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
+import com.example.yukinaito.mydictionary.model.item.AdapterItem;
 import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 import com.example.yukinaito.mydictionary.ui.adapter.WordNameAdapter;
 import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
 import com.example.yukinaito.mydictionary.ui.activity.DrawInfoActivity;
 
 public class SelectWordFragment extends ListFragment {
-    /**
-     * 要求コード
-     */
-    private static final int SHOW_INFO_CODE = 1;
-    private static final int ADD_CODE = 2;
+    /** 要求コード  */
+    public static final int REQUEST_DRAW_INFO = 1;
+    public static final int REQUEST_ADD = 2;
+
+    /** 識別子 */
+    public static final String EXTRA_STRING_DATA_ID = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_STRING_DATA_ID";
+    public static final String EXTRA_BOOLEAN_UPDATE = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_BOOLEAN_UPDATE";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class SelectWordFragment extends ListFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),AddEditWordActivity.class);
-                startActivityForResult(intent, ADD_CODE);
+                startActivityForResult(intent, REQUEST_ADD);
             }
         });
 
@@ -68,36 +71,34 @@ public class SelectWordFragment extends ListFragment {
         setAdapter();
     }
 
-    /**
-     * DBから取得した単語名群を基にAdapterを生成し, ListViewへセットする
-     */
+    /** DB から取得した単語名群を基に Adapter を生成し, ListView へセットする */
     private void setAdapter(){
         SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
         Bundle bundle = getArguments();
         if(bundle == null){
             return;
         }
-        WordNameAdapter adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getWordName(bundle.getString("FIELD")));
+        WordNameAdapter adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getWordName(bundle.getString(SelectFieldFragment.EXTRA_STRING_FIELD)));
         setListAdapter(adapter);
     }
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
         Intent intent = new Intent(getActivity().getApplicationContext(),DrawInfoActivity.class);
-        intent.putExtra("ID", (String)listView.getAdapter().getItem(position));
-        startActivityForResult(intent, SHOW_INFO_CODE);
+        intent.putExtra(EXTRA_STRING_DATA_ID, ((AdapterItem)listView.getAdapter().getItem(position)).getId());
+        startActivityForResult(intent, REQUEST_DRAW_INFO);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == SHOW_INFO_CODE){
+        if(requestCode == REQUEST_DRAW_INFO){
             if(resultCode == NavigationDrawer.RESULT_OK) {
-                if(data.getBooleanExtra("UPDATE", false)) {
+                if(data.getBooleanExtra(EXTRA_BOOLEAN_UPDATE, false)) {
                     setAdapter();
                 }
             }
-        }else if(requestCode == ADD_CODE){
+        }else if(requestCode == REQUEST_ADD){
             if(resultCode == NavigationDrawer.RESULT_OK){
                 setAdapter();
             }

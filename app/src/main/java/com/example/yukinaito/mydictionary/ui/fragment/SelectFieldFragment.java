@@ -18,11 +18,12 @@ import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
 import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 
 public class SelectFieldFragment extends ListFragment {
-    /**
-     * 要求コード
-     */
-    private static final int UPDATE_CODE = 1;
-    private static final int ADD_CODE = 2;
+    /** 要求コード  */
+    public static final int REQUEST_UPDATE = 1;
+    public static final int REQUEST_ADD = 2;
+
+    /** 識別子 */
+    public static final String EXTRA_STRING_FIELD = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_STRING_FIELD";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,16 +41,14 @@ public class SelectFieldFragment extends ListFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),AddEditWordActivity.class);
-                startActivityForResult(intent, ADD_CODE);
+                startActivityForResult(intent, REQUEST_ADD);
             }
         });
 
         setAdapter();
     }
 
-    /**
-     * DBから取得した分野群を基にAdapterを生成し, ListViewへセットする
-     */
+    /** DB から取得した分野群を基に Adapter を生成し, ListView へセットする */
     private void setAdapter(){
         SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item, sqLiteApplication.getWordFiled());
@@ -59,7 +58,7 @@ public class SelectFieldFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
         Bundle bundle = new Bundle();
-        bundle.putString("FIELD", (String)listView.getAdapter().getItem(position));
+        bundle.putString(EXTRA_STRING_FIELD, (String)listView.getAdapter().getItem(position));
 
         Fragment fragment = new SelectWordFragment();
         fragment.setArguments(bundle);
@@ -73,10 +72,10 @@ public class SelectFieldFragment extends ListFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == NavigationDrawer.RESULT_OK) {
-            if(requestCode == UPDATE_CODE){
+            if(requestCode == REQUEST_UPDATE){
                 if(data.getBooleanExtra("UPDATE", false))
                     setAdapter();
-            }else if(requestCode == ADD_CODE)
+            }else if(requestCode == REQUEST_ADD)
                 setAdapter();
         }
     }

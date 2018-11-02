@@ -40,19 +40,14 @@ import java.util.Set;
 public class AddEditWordActivity extends AppCompatActivity {
     private static final int EDIT_CODE = 1;
     private static final int RESULT_BACK = -1;
-    //"単語の意味を入力"を意味とするか判定 trueは許可
     private boolean mean_check = false;
-    //単語の新規追加か修正か判定に使える nullのとき新規作成
     private Word update_word;
-    //単語の言語の判定に使う
     private static final Set<Character.UnicodeBlock> japaneseUnicodeBlocks = new HashSet<Character.UnicodeBlock>() {{
         add(Character.UnicodeBlock.HIRAGANA);
         add(Character.UnicodeBlock.KATAKANA);
         add(Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS);
     }};
-    //spinnerで選択しているindex
     private int spinner_index = -1;
-    //spinnerを一度もタップしていないか
     private boolean touch_spinner = true;
 
     @Override
@@ -226,9 +221,9 @@ public class AddEditWordActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         final MenuInflater inflater = getMenuInflater();
         if(update_word != null)
-            inflater.inflate(R.menu.edit_menu, menu);
+            inflater.inflate(R.menu.menu_edit, menu);
         else
-            inflater.inflate(R.menu.add_menu, menu);
+            inflater.inflate(R.menu.menu_add, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
