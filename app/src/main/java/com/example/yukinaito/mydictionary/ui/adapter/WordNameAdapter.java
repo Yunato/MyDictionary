@@ -77,7 +77,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
         ViewHolder viewHolder;
 
         if(convertView == null){
-            convertView = this.inflater.inflate(R.layout.layout_wordname_item, parent, false);
+            convertView = this.inflater.inflate(R.layout.list_word_name_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.textName = (TextView)convertView.findViewById(R.id.textView_Name);
             convertView.setTag(viewHolder);

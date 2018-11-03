@@ -116,7 +116,7 @@ public class AddEditWordActivity extends AppCompatActivity {
         items[buf.length + 1] = "分野の追加...";
 
         //スピナーに要素を登録
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_field_item, items);
         spinner.setAdapter(adapter);
         spinner.setPrompt("分野の選択");
         spinner.setFocusable(false);
@@ -182,8 +182,7 @@ public class AddEditWordActivity extends AppCompatActivity {
         });
 
         final TextView textView = (TextView)findViewById(R.id.input_mean);
-        final LinearLayout layout = (LinearLayout)findViewById(R.id.activity_add_edit_mean);
-        layout.setOnClickListener(new View.OnClickListener() {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //新規作成か編集か

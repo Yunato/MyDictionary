@@ -1,123 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_add_edit_word"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity">
 
-    <LinearLayout
-        android:id="@+id/item_field_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true">
-        <TextView
-            android:id="@+id/text1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/show_word"
-            android:textSize="22sp"
-            android:padding="10dp"
-            android:textColor="#ffffff"
-            android:background="@drawable/underline"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/show_read"
-            android:textSize="22sp"
-            android:padding="10dp"
-            android:textColor="#ffffff"
-            android:background="@drawable/underline"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/text3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/show_field"
-            android:textSize="22sp"
-            android:padding="10dp"
-            android:textColor="#ffffff"
-            android:background="@drawable/underline"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/text4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/show_mean"
-            android:textSize="22sp"
-            android:padding="10dp"
-            android:textColor="#ffffff"
-            android:background="@color/heading"
-            android:gravity="center"/>
-    </LinearLayout>
+    <include
+        layout="@layout/layout_item_name_on_word"
+        android:id="@+id/item_name_on_word"/>
 
     <LinearLayout
-        android:id="@+id/input_field_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/item_field_layout">
+        style="@style/linear_layout_right_word_information"
+        android:layout_toEndOf="@+id/item_name_on_word">
 
         <EditText
+            style="@style/edit_view_one_line"
             android:id="@+id/input_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/blank_word"
-            android:textSize="22sp"
-            android:padding="10dp"
-            android:inputType="text"
-            android:imeOptions="actionDone"
-            android:background="@drawable/underline_white"/>
+            android:hint="@string/blank_word"/>
 
         <EditText
+            style="@style/edit_view_one_line"
             android:id="@+id/input_kana"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/blank_read"
-            android:textSize="22sp"
-            android:padding="10dp"
-            android:inputType="text"
-            android:imeOptions="actionDone"
-            android:background="@drawable/underline_white"/>
+            android:hint="@string/blank_read"/>
 
-        <com.example.yukinaito.mydictionary.CustomSpinner
+        <com.example.yukinaito.mydictionary.ui.view.CustomSpinner
             android:id="@+id/input_class"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/underline_white"/>
+            android:background="@drawable/view_underline_white"/>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/activity_add_edit_mean"
-                android:clickable="true">
-                <TextView
-                    android:id="@+id/input_mean"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/blank_mean"
-                    android:textSize="22sp"
-                    android:paddingLeft="40dp"
-                    android:paddingRight="40dp"
-                    android:paddingTop="25dp"
-                    android:paddingBottom="25dp"/>
-            </LinearLayout>
+        <ScrollView style="@style/scroll_view_mean">
+
+            <TextView
+                style="@style/text_view_multi_line"
+                android:text="@string/blank_mean"
+                android:id="@+id/input_mean"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"/>
+
         </ScrollView>
+
     </LinearLayout>
+
 </RelativeLayout>

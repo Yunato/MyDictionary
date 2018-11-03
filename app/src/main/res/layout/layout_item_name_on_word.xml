@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_field_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentBottom="true">
+
+    <TextView
+        style="@style/text_view_left_one_line"
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_word"
+        android:background="@drawable/view_underline"/>
+
+    <TextView
+        style="@style/text_view_left_one_line"
+        android:id="@+id/item_kana"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_read"
+        android:background="@drawable/view_underline"/>
+
+    <TextView
+        style="@style/text_view_left_one_line"
+        android:id="@+id/item_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_field"
+        android:background="@drawable/view_underline"/>
+
+    <TextView
+        style="@style/text_view_left_one_line"
+        android:id="@+id/item_mean"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/show_mean"
+        android:background="@color/heading"/>
+
+</LinearLayout>

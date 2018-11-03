@@ -57,7 +57,7 @@ public class DrawInfoActivity extends AppCompatActivity {
         if (!word.getKana().equals("")) {
             ((TextView) findViewById(R.id.draw_kana)).setText(word.getKana());
         }else{
-            int id = DrawInfoActivity.this.getResources().getIdentifier("underline_gray", "drawable", DrawInfoActivity.this.getPackageName());
+            int id = DrawInfoActivity.this.getResources().getIdentifier("view_underline_gray", "drawable", DrawInfoActivity.this.getPackageName());
             Drawable back = ResourcesCompat.getDrawable(getResources(), id, null);
             (findViewById(R.id.draw_kana)).setBackground(back);
         }
