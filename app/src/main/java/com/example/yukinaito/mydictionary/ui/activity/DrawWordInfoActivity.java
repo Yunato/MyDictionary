@@ -18,9 +18,9 @@ import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
 import com.example.yukinaito.mydictionary.model.entity.Word;
 import com.example.yukinaito.mydictionary.ui.fragment.SelectWordFragment;
 
-public class DrawInfoActivity extends AppCompatActivity {
+public class DrawWordInfoActivity extends AppCompatActivity {
     /** 要求コード  */
-    public static final int REQUEST_EDIT = 1;
+    private static final int REQUEST_EDIT = 1;
 
     /** 変更有無フラグ  */
     private boolean updateFlag = false;
@@ -28,8 +28,13 @@ public class DrawInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_draw_info);
+        setContentView(R.layout.activity_draw_word_info);
+        setupUIElements();
+        setInformation();
+    }
 
+    /** アクティビティ上の User Interface Elements を設定を行う */
+    private void setupUIElements(){
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setElevation(0f);
@@ -42,8 +47,6 @@ public class DrawInfoActivity extends AppCompatActivity {
                 actionBar.setHomeAsUpIndicator(upArrow);
             }
         }
-
-        setInformation();
     }
 
     /** DB から取得した単語情報を基に Widgets の設定を行う */
@@ -57,7 +60,7 @@ public class DrawInfoActivity extends AppCompatActivity {
         if (!word.getKana().equals("")) {
             ((TextView) findViewById(R.id.draw_kana)).setText(word.getKana());
         }else{
-            int id = DrawInfoActivity.this.getResources().getIdentifier("view_underline_gray", "drawable", DrawInfoActivity.this.getPackageName());
+            int id = DrawWordInfoActivity.this.getResources().getIdentifier("view_underline_gray", "drawable", DrawWordInfoActivity.this.getPackageName());
             Drawable back = ResourcesCompat.getDrawable(getResources(), id, null);
             (findViewById(R.id.draw_kana)).setBackground(back);
         }
@@ -83,7 +86,7 @@ public class DrawInfoActivity extends AppCompatActivity {
         if (id == android.R.id.home) {
             closeActivity();
         }else if(id == R.id.edit_action) {
-            Intent intent = new Intent(getApplicationContext(), AddEditWordActivity.class);
+            Intent intent = new Intent(getApplicationContext(), EditWordInfoActivity.class);
             intent.putExtra(SelectWordFragment.EXTRA_STRING_DATA_ID, getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID));
             startActivityForResult(intent, REQUEST_EDIT);
             return true;

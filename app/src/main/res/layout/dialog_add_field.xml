@@ -8,8 +8,8 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/input_mean"
-        android:labelFor="@+id/input_mean"
+        android:id="@+id/input_field"
+        android:labelFor="@+id/input_field"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:inputType="text"

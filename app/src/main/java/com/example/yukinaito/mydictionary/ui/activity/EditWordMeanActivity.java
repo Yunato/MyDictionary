@@ -11,15 +11,15 @@ import android.view.MenuItem;
 
 import com.example.yukinaito.mydictionary.R;
 
-public class EditActivity extends AppCompatActivity {
+public class EditWordMeanActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_edit_word_mean);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        EditText editText = (EditText)findViewById(R.id.input_mean);
+        EditText editText = (EditText)findViewById(R.id.input_field);
         editText.setText(getIntent().getStringExtra("mean"));
     }
 
@@ -37,7 +37,7 @@ public class EditActivity extends AppCompatActivity {
         if(id == R.id.finish_action) {
             //入力した文字列のチェック
             String send;
-            send = ((EditText)findViewById(R.id.input_mean)).getText().toString();
+            send = ((EditText)findViewById(R.id.input_field)).getText().toString();
 
             //戻り値の生成 mean=単語の意味
             Intent intent = new Intent();

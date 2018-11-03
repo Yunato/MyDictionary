@@ -16,13 +16,13 @@ import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
 import com.example.yukinaito.mydictionary.model.item.AdapterItem;
 import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 import com.example.yukinaito.mydictionary.ui.adapter.WordNameAdapter;
-import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
-import com.example.yukinaito.mydictionary.ui.activity.DrawInfoActivity;
+import com.example.yukinaito.mydictionary.ui.activity.EditWordInfoActivity;
+import com.example.yukinaito.mydictionary.ui.activity.DrawWordInfoActivity;
 
 public class SelectWordFragment extends ListFragment {
     /** 要求コード  */
-    public static final int REQUEST_DRAW_INFO = 1;
-    public static final int REQUEST_ADD = 2;
+    private static final int REQUEST_DRAW_INFO = 1;
+    private static final int REQUEST_ADD = 2;
 
     /** 識別子 */
     public static final String EXTRA_STRING_DATA_ID = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_STRING_DATA_ID";
@@ -37,13 +37,20 @@ public class SelectWordFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        setupUIElements(view);
+        setAdapter();
+    }
 
+    /**
+     * フラグメント上の User Interface Elements を設定を行う
+     * @param view onCreateView() メソッドにより生成された View
+     */
+    private void setupUIElements(View view){
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.button_floating_action);
         fab.setOnClickListener(new View.OnClickListener() {
-            //単語の追加
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),AddEditWordActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(),EditWordInfoActivity.class);
                 startActivityForResult(intent, REQUEST_ADD);
             }
         });
@@ -67,8 +74,6 @@ public class SelectWordFragment extends ListFragment {
                 return true;
             }
         });
-
-        setAdapter();
     }
 
     /** DB から取得した単語名群を基に Adapter を生成し, ListView へセットする */
@@ -84,7 +89,7 @@ public class SelectWordFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
-        Intent intent = new Intent(getActivity().getApplicationContext(),DrawInfoActivity.class);
+        Intent intent = new Intent(getActivity().getApplicationContext(),DrawWordInfoActivity.class);
         intent.putExtra(EXTRA_STRING_DATA_ID, ((AdapterItem)listView.getAdapter().getItem(position)).getId());
         startActivityForResult(intent, REQUEST_DRAW_INFO);
     }

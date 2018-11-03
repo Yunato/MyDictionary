@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity">
+    tools:context="com.example.yukinaito.mydictionary.ui.activity.EditWordInfoActivity">
 
     <include
         layout="@layout/layout_item_name_on_word"
@@ -25,7 +25,7 @@
             android:hint="@string/blank_read"/>
 
         <com.example.yukinaito.mydictionary.ui.view.CustomSpinner
-            android:id="@+id/input_class"
+            android:id="@+id/input_filed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/view_underline_white"/>
@@ -35,7 +35,7 @@
             <TextView
                 style="@style/text_view_multi_line"
                 android:text="@string/blank_mean"
-                android:id="@+id/input_mean"
+                android:id="@+id/input_field"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:paddingTop="25dp"

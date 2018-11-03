@@ -29,7 +29,11 @@ public class NavigationDrawer extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_drawer);
         checkPermission();
+        setupUIElements();
+    }
 
+    /** アクティビティ上の User Interface Elements を設定を行う */
+    private void setupUIElements(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

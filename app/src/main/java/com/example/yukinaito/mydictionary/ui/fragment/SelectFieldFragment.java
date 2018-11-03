@@ -14,13 +14,13 @@ import android.widget.ListView;
 
 import com.example.yukinaito.mydictionary.R;
 import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
-import com.example.yukinaito.mydictionary.ui.activity.AddEditWordActivity;
+import com.example.yukinaito.mydictionary.ui.activity.EditWordInfoActivity;
 import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 
 public class SelectFieldFragment extends ListFragment {
     /** 要求コード  */
-    public static final int REQUEST_UPDATE = 1;
-    public static final int REQUEST_ADD = 2;
+    private static final int REQUEST_UPDATE = 1;
+    private static final int REQUEST_ADD = 2;
 
     /** 識別子 */
     public static final String EXTRA_STRING_FIELD = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_STRING_FIELD";
@@ -34,18 +34,24 @@ public class SelectFieldFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        setupUIElements(view);
+        setAdapter();
+    }
 
+    /**
+     * フラグメント上の User Interface Elements を設定を行う
+     * @param view onCreateView() メソッドにより生成された View
+     */
+    private void setupUIElements(View view){
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.button_floating_action);
         fab.setOnClickListener(new View.OnClickListener() {
             //単語の追加
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),AddEditWordActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(),EditWordInfoActivity.class);
                 startActivityForResult(intent, REQUEST_ADD);
             }
         });
-
-        setAdapter();
     }
 
     /** DB から取得した分野群を基に Adapter を生成し, ListView へセットする */

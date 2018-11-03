@@ -5,10 +5,10 @@
     android:id="@+id/activity_edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yukinaito.mydictionary.ui.activity.EditActivity">
+    tools:context="com.example.yukinaito.mydictionary.ui.activity.EditWordMeanActivity">
 
     <EditText
-        android:id="@+id/input_mean"
+        android:id="@+id/input_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/blank_mean"
