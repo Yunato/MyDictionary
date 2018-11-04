@@ -37,10 +37,8 @@
                 android:id="@+id/input_mean"
                 android:hint="@string/blank_mean"
                 android:enabled="false"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:paddingTop="25dp"
-                android:paddingBottom="25dp"/>
+                android:padding="10dp"
+                android:background="@drawable/view_underline_white"/>
 
         </ScrollView>
 

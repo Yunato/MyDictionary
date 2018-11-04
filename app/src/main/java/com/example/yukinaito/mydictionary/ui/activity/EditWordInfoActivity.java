@@ -3,6 +3,7 @@ package com.example.yukinaito.mydictionary.ui.activity;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -37,7 +38,7 @@ import java.util.Locale;
 public class EditWordInfoActivity extends AppCompatActivity {
     /** 要求コード  */
     private static final int REQUEST_EDIT_CODE = 1;
-    private static final int RESULT_BACK = -1;
+    private static final int REQUEST_BACK = -1;
     /** 識別子 */
     private static final String EXTRA_STRING_MEAN = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_MEAN";
     /** 更新対象である単語情報 */
@@ -90,14 +91,33 @@ public class EditWordInfoActivity extends AppCompatActivity {
             }
         });
 
-        EditText editView = (EditText)findViewById(R.id.input_mean);
-        editView.setOnClickListener(new View.OnClickListener() {
+        EditText editText = (EditText)findViewById(R.id.input_mean);
+        editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String send = ((EditText)view).getText().toString();
                 Intent intent = new Intent(getApplicationContext(),EditWordMeanActivity.class);
                 intent.putExtra(EXTRA_STRING_MEAN, send);
                 startActivityForResult(intent, REQUEST_EDIT_CODE);
+            }
+        });
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                EditText editText = (EditText)findViewById(R.id.input_mean);
+                if(editText.getText().toString().equals("")){
+                    editText.setTextColor(Color.GRAY);
+                }else{
+                    editText.setTextColor(Color.parseColor("#757575"));
+                }
             }
         });
     }
@@ -114,7 +134,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.input_name)).setText(editedWord.getName());
             ((TextView)findViewById(R.id.input_kana)).setText(editedWord.getKana());
             spinnerIndex = ((CustomSpinner)findViewById(R.id.input_filed)).setSelection(editedWord.getField());
-            ((EditText)findViewById(R.id.input_field)).setText(editedWord.getMean());
+            ((EditText)findViewById(R.id.input_mean)).setText(editedWord.getMean());
         }
     }
 
@@ -180,14 +200,14 @@ public class EditWordInfoActivity extends AppCompatActivity {
 
         if (id == android.R.id.home) {
             Intent intent = new Intent();
-            setResult(RESULT_BACK, intent);
+            setResult(REQUEST_BACK, intent);
             finish();
         }else if(id == R.id.action_add || id == R.id.action_update) {
             boolean nameChanged, kanaChanged = false, fieldChanged, meanChanged;
             String name = ((EditText) findViewById(R.id.input_name)).getText().toString();
             String kana = ((EditText) findViewById(R.id.input_kana)).getText().toString();
             String field = ((Spinner) findViewById(R.id.input_filed)).getSelectedItem().toString();
-            String mean = ((TextView) findViewById(R.id.input_field)).getText().toString();
+            String mean = ((TextView) findViewById(R.id.input_mean)).getText().toString();
 
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPANESE);

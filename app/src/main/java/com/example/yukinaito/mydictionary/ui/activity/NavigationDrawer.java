@@ -1,6 +1,7 @@
 package com.example.yukinaito.mydictionary.ui.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     /** 要求コード  */
     private static final int REQUEST_WRITE_STORAGE = 1;
+    private static final int REQUEST_ADD_WORD_INFO = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -68,6 +70,8 @@ public class NavigationDrawer extends AppCompatActivity
                 transaction.replace(R.id.main_layout, fragment);
                 break;
             case R.id.add_dictionary:
+                Intent intent = new Intent(this.getApplicationContext(),EditWordInfoActivity.class);
+                startActivityForResult(intent, REQUEST_ADD_WORD_INFO);
                 break;
             case  R.id.top_research:
                 break;
