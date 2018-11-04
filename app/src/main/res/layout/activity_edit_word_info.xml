@@ -32,10 +32,11 @@
 
         <ScrollView style="@style/scroll_view_mean">
 
-            <TextView
-                style="@style/text_view_multi_line"
-                android:text="@string/blank_mean"
-                android:id="@+id/input_field"
+            <EditText
+                style="@style/text_multi_line"
+                android:id="@+id/input_mean"
+                android:hint="@string/blank_mean"
+                android:enabled="false"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:paddingTop="25dp"

@@ -41,7 +41,7 @@
         <ScrollView style="@style/scroll_view_mean">
 
             <TextView
-                style="@style/text_view_multi_line"
+                style="@style/text_multi_line"
                 android:id="@+id/draw_mean"
                 android:padding="10dp"/>
 

@@ -34,7 +34,7 @@ public class EditWordMeanActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == R.id.finish_action) {
+        if(id == R.id.action_finish) {
             //入力した文字列のチェック
             String send;
             send = ((EditText)findViewById(R.id.input_field)).getText().toString();

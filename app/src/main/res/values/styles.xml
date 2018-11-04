@@ -38,7 +38,7 @@
         <item name = "android:maxLines">1</item>
     </style>
 
-    <style name="text_view_multi_line">
+    <style name="text_multi_line">
         <item name = "android:layout_width">match_parent</item>
         <item name = "android:layout_height">match_parent</item>
         <item name = "android:textSize">22sp</item>

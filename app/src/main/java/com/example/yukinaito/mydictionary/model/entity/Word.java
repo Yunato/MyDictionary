@@ -7,16 +7,16 @@ public class Word implements Serializable{
     //単語の名前、読み方、分類、意味、アクセス数、どのくらいアクセスされていないか
     private final String name;
     private final String kana;
-    private final String classification;
+    private final String field;
     private final String mean;
     private final int accesscount;
     private final int leastaccesscount;
     private final int date;
 
-    public Word(String name, String kana, String classification, String mean, int accesscount, int leastaccesscount, int date){
+    public Word(String name, String kana, String field, String mean, int accesscount, int leastaccesscount, int date){
         this.name = name;
         this.kana = kana;
-        this.classification = classification;
+        this.field = field;
         this.mean = mean;
         this.accesscount = accesscount;
         this.leastaccesscount = leastaccesscount;
@@ -34,8 +34,8 @@ public class Word implements Serializable{
     }
 
     //分類の取得
-    public String getClassification(){
-        return classification;
+    public String getField(){
+        return field;
     }
 
     //意味の取得

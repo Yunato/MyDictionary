@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/finish_action"
+        android:id="@+id/action_finish"
         android:title="@string/bar_finish"
         app:showAsAction="always|collapseActionView" />
 </menu>

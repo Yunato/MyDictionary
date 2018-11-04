@@ -55,7 +55,7 @@ public class DrawWordInfoActivity extends AppCompatActivity {
         final Word word = sqLiteApplication.getWordInfo(getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID));
 
         ((TextView) findViewById(R.id.draw_name)).setText(word.getName());
-        ((TextView) findViewById(R.id.draw_field)).setText(word.getClassification());
+        ((TextView) findViewById(R.id.draw_field)).setText(word.getField());
         ((TextView) findViewById(R.id.draw_mean)).setText(word.getMean());
         if (!word.getKana().equals("")) {
             ((TextView) findViewById(R.id.draw_kana)).setText(word.getKana());

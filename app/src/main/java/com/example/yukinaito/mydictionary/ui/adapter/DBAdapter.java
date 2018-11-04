@@ -31,8 +31,8 @@ public class DBAdapter {
         dbHelper = new DatabaseHelper(context);
     }
 
-    public class DatabaseHelper extends SQLiteOpenHelper {
-        public DatabaseHelper(Context context){
+    private class DatabaseHelper extends SQLiteOpenHelper {
+        private DatabaseHelper(Context context){
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
@@ -91,7 +91,7 @@ public class DBAdapter {
         ContentValues values = new ContentValues();
         values.put(WORD_NAME, word.getName());
         values.put(WORD_KANA, word.getKana());
-        values.put(WORD_CLASS, word.getClassification());
+        values.put(WORD_CLASS, word.getField());
         values.put(WORD_MEAN, word.getMean());
         values.put(WORD_COUNT, word.getAccesscount());
         values.put(WORD_LEASTCOUNT, word.getLeastaccesscount());
@@ -104,7 +104,7 @@ public class DBAdapter {
         ContentValues values = new ContentValues();
         values.put(WORD_NAME, word.getName());
         values.put(WORD_KANA, word.getKana());
-        values.put(WORD_CLASS, word.getClassification());
+        values.put(WORD_CLASS, word.getField());
         values.put(WORD_MEAN, word.getMean());
         values.put(WORD_COUNT, word.getAccesscount());
         values.put(WORD_LEASTCOUNT, word.getLeastaccesscount());

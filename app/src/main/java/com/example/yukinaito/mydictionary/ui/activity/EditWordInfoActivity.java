@@ -32,25 +32,18 @@ import com.example.yukinaito.mydictionary.model.entity.Word;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 public class EditWordInfoActivity extends AppCompatActivity {
     /** 要求コード  */
     private static final int REQUEST_EDIT_CODE = 1;
+    private static final int RESULT_BACK = -1;
     /** 識別子 */
     private static final String EXTRA_STRING_MEAN = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_MEAN";
-
-    private static final int RESULT_BACK = -1;
-    private boolean meanUpdateFlag = false;
-    private static final Set<Character.UnicodeBlock> japaneseUnicodeBlocks = new HashSet<Character.UnicodeBlock>() {{
-        add(Character.UnicodeBlock.HIRAGANA);
-        add(Character.UnicodeBlock.KATAKANA);
-        add(Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS);
-    }};
+    /** 更新対象である単語情報 */
+    private Word editedWord;
+    /** CustomSpinnerの選択インデックス */
     private int spinnerIndex = -1;
-    private boolean touch_spinner = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +69,32 @@ public class EditWordInfoActivity extends AppCompatActivity {
             }
         }
 
-        TextView textView = (TextView)findViewById(R.id.input_field);
-        textView.setOnClickListener(new View.OnClickListener() {
+        CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_filed);
+        spinner.setPrompt("分野を選択して下さい");
+        spinner.setFocusable(false);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_filed);
+                if(!spinner.isFocusable()) {
+                    spinner.setFocusable(true);
+                }else {
+                    if (position == spinner.getItemSize() - 1) {
+                        createDialog(spinner);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        EditText editView = (EditText)findViewById(R.id.input_mean);
+        editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String send = "";
-                if (meanUpdateFlag){
-                    send = ((TextView)view).getText().toString();
-                }
-
+                String send = ((EditText)view).getText().toString();
                 Intent intent = new Intent(getApplicationContext(),EditWordMeanActivity.class);
                 intent.putExtra(EXTRA_STRING_MEAN, send);
                 startActivityForResult(intent, REQUEST_EDIT_CODE);
@@ -96,46 +106,27 @@ public class EditWordInfoActivity extends AppCompatActivity {
     private void setInformation() {
         SQLiteApplication sqLiteApplication = (SQLiteApplication) this.getApplication();
 
-        CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_filed);
-        spinner.setAdapter(sqLiteApplication.getWordFiled());
-        spinner.setPrompt("分野を選択して下さい");
-        spinner.setFocusable(false);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_filed);
-                if(!spinner.isFocusable()) {
-                    spinner.setFocusable(true);
-                }else {
-                    if (spinner.getSelectedItemPosition() == spinner.getItemSize() - 1) {
-                        spinner.setSelection(spinnerIndex);
-                        createDialog(spinner);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        ((CustomSpinner)findViewById(R.id.input_filed)).setAdapter(sqLiteApplication.getWordFiled());
 
         String wordID = getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID);
         if(wordID != null){
-            Word word = sqLiteApplication.getWordInfo(wordID);
-            ((TextView)findViewById(R.id.input_name)).setText(word.getName());
-            ((TextView)findViewById(R.id.input_kana)).setText(word.getKana());
-            ((TextView)findViewById(R.id.input_field)).setText(word.getMean());
-            meanUpdateFlag = false;
-            spinnerIndex = spinner.setSelection(word.getClassification());
+            editedWord = sqLiteApplication.getWordInfo(wordID);
+            ((TextView)findViewById(R.id.input_name)).setText(editedWord.getName());
+            ((TextView)findViewById(R.id.input_kana)).setText(editedWord.getKana());
+            spinnerIndex = ((CustomSpinner)findViewById(R.id.input_filed)).setSelection(editedWord.getField());
+            ((EditText)findViewById(R.id.input_field)).setText(editedWord.getMean());
         }
     }
 
+    /**
+     * Spinner が 「分野の追加...」 で選択された場合におけるダイアログを生成する
+     * @param spinner 画面に描画されている CustomSpinner オブジェクト
+     */
     private void createDialog(final CustomSpinner spinner){
         AlertDialog.Builder builder = new AlertDialog.Builder(EditWordInfoActivity.this);
         builder.setTitle("新規分野名の入力");
         LayoutInflater inflater = LayoutInflater.from(EditWordInfoActivity.this);
-        final View dialogView = inflater.inflate(R.layout.dialog_add_field, (ViewGroup)findViewById(R.id.dialog_root));
+        final View dialogView = inflater.inflate(R.layout.dialog_add_field, (ViewGroup)findViewById(R.id.dialog_layout));
         builder.setView(dialogView);
         builder.setPositiveButton("追加", new DialogInterface.OnClickListener() {
             @Override
@@ -143,7 +134,6 @@ public class EditWordInfoActivity extends AppCompatActivity {
                 String strInput = ((EditText) dialogView.findViewById(R.id.input_field)).getText().toString();
                 spinner.addItem(strInput);
                 spinnerIndex = spinner.setSelection(strInput);
-                touch_spinner = false;
             }
         });
         final AlertDialog dialog = builder.create();
@@ -192,67 +182,61 @@ public class EditWordInfoActivity extends AppCompatActivity {
             Intent intent = new Intent();
             setResult(RESULT_BACK, intent);
             finish();
-        }
+        }else if(id == R.id.action_add || id == R.id.action_update) {
+            boolean nameChanged, kanaChanged = false, fieldChanged, meanChanged;
+            String name = ((EditText) findViewById(R.id.input_name)).getText().toString();
+            String kana = ((EditText) findViewById(R.id.input_kana)).getText().toString();
+            String field = ((Spinner) findViewById(R.id.input_filed)).getSelectedItem().toString();
+            String mean = ((TextView) findViewById(R.id.input_field)).getText().toString();
 
-        String name = ((EditText) findViewById(R.id.input_name)).getText().toString();
-        String kana = ((EditText) findViewById(R.id.input_kana)).getText().toString();
-        String classification = ((Spinner) findViewById(R.id.input_filed)).getSelectedItem().toString();
-        String mean = ((TextView) findViewById(R.id.input_field)).getText().toString();
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPANESE);
+            int date = Integer.parseInt(simpleDateFormat.format(calendar.getTime()));
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPANESE);
-        int date = Integer.parseInt(simpleDateFormat.format(calendar.getTime()));
+            String compName, compMean;
+            fieldChanged = spinnerIndex != 0 && spinnerIndex != ((CustomSpinner)findViewById(R.id.input_filed)).getItemSize() - 1;
+            if(editedWord != null){
+                compName = editedWord.getName();
+                compMean = editedWord.getMean();
+                kanaChanged = !kana.equals(editedWord.getKana());
+                fieldChanged = fieldChanged && (spinnerIndex != ((CustomSpinner)findViewById(R.id.input_filed)).findSelection(editedWord.getField()));
+            }else{
+                compName = "";
+                compMean = "";
+            }
+            nameChanged = !name.equals(compName);
+            meanChanged = !mean.equals(compMean);
 
-        boolean check_name, check_kana, check_class, check_mean;
-
-        SQLiteApplication sqLiteApplication = (SQLiteApplication) this.getApplication();
-        String wordID = getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID);
-        Word word = sqLiteApplication.getWordInfo(wordID);
-
-        if (id == R.id.update_action || id == R.id.add_action) {
-            if (word != null && word.getName().equals(name) && word.getKana().equals(kana) &&
-                    word.getClassification().equals(classification) && word.getMean().equals(mean)) {
-                finish();
-            }else {
-                check_name = name.equals("");
-                check_kana = (kana.equals("") && !check_name && japaneseUnicodeBlocks.contains(Character.UnicodeBlock.of(name.charAt(0))));
-                check_class = ((((SQLiteApplication)this.getApplication()).getWordFiled()).length == 0 &&
-                        ((CustomSpinner)findViewById(R.id.input_filed)).getSelectedItem().toString().equals("分野の追加...") && touch_spinner)
-                        || ((CustomSpinner)findViewById(R.id.input_filed)).getSelectedItem().toString().equals("分野の選択[必須]");
-                check_mean = !meanUpdateFlag;
-                if (!(check_name ||check_kana ||check_class ||check_mean)) {
-                    Word Word = new Word(name, kana, classification, mean, 0, -1, date);
-
-                    if (id == R.id.update_action)
-                        ((SQLiteApplication) this.getApplication()).updateWord(getIntent().getStringExtra("ID"), Word);
-                    else
-                        ((SQLiteApplication) this.getApplication()).saveWord(Word);
-
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
-                    finish();
-                } else {
-                    String message = "";
-                    if (check_name)
-                        message += "追加する単語が入力されていません。\n";
-                    if (check_kana)
-                        message += "単語の読み方が入力されていません。\n";
-                    if (check_class)
-                        message += "単語を割り振る分野が入力されていません。\n";
-                    if (check_mean)
-                        message += "単語の意味が入力されていません\n";
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("警告");
-                    builder.setMessage(message);
-                    builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+            if((editedWord == null && nameChanged && fieldChanged && meanChanged) ||
+                    (editedWord != null && (nameChanged || kanaChanged || fieldChanged || meanChanged))){
+                Word newWord = new Word(name, kana, field, mean, 0, -1, date);
+                if (editedWord != null) {
+                    ((SQLiteApplication) this.getApplication()).updateWord(getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID), newWord);
+                }else{
+                    ((SQLiteApplication) this.getApplication()).saveWord(newWord);
                 }
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+            } else {
+                String message = "";
+                if(editedWord == null) {
+                    if (!nameChanged)
+                        message += "追加する単語が入力されていません。\n";
+                    if (!fieldChanged)
+                        message += "単語を割り振る分野が入力されていません。\n";
+                    if (!meanChanged)
+                        message += "単語の意味が入力されていません\n";
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("警告").setMessage(message);
+                builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -265,10 +249,8 @@ public class EditWordInfoActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK) {
                 String send;
                 if(data.getStringExtra(EXTRA_STRING_MEAN).equals("")) {
-                    meanUpdateFlag = false;
                     send = "単語の意味を入力";
                 }else {
-                    meanUpdateFlag = true;
                     send = data.getStringExtra(EXTRA_STRING_MEAN);
                 }
                 TextView textView = (TextView) findViewById(R.id.input_field);
