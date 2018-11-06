@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.yukinaito.mydictionary.R;
 
@@ -17,15 +18,18 @@ public class EditWordMeanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_word_mean);
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        EditText editText = (EditText)findViewById(R.id.input_field);
-        editText.setText(getIntent().getStringExtra("mean"));
+        setupUIElements();
+    }
+
+    /** アクティビティ上の User Interface Elements を設定を行う */
+    private void setupUIElements(){
+        EditText editText = (EditText)findViewById(R.id.input_mean);
+        editText.setText(getIntent().getStringExtra(EditWordInfoActivity.EXTRA_STRING_MEAN));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        //actionbarのカスタマイズ
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_edit_mean, menu);
         return super.onCreateOptionsMenu(menu);
@@ -35,13 +39,8 @@ public class EditWordMeanActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if(id == R.id.action_finish) {
-            //入力した文字列のチェック
-            String send;
-            send = ((EditText)findViewById(R.id.input_field)).getText().toString();
-
-            //戻り値の生成 mean=単語の意味
             Intent intent = new Intent();
-            intent.putExtra("mean", send);
+            intent.putExtra(EditWordInfoActivity.EXTRA_STRING_MEAN, ((EditText)findViewById(R.id.input_mean)).getText().toString());
             setResult(RESULT_OK, intent);
             finish();
             return true;

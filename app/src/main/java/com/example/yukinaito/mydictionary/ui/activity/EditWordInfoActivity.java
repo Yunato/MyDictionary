@@ -3,7 +3,6 @@ package com.example.yukinaito.mydictionary.ui.activity;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -40,7 +39,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
     private static final int REQUEST_EDIT_CODE = 1;
     private static final int REQUEST_BACK = -1;
     /** 識別子 */
-    private static final String EXTRA_STRING_MEAN = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_MEAN";
+    public static final String EXTRA_STRING_MEAN = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_MEAN";
     /** 更新対象である単語情報 */
     private Word editedWord;
     /** CustomSpinnerの選択インデックス */
@@ -91,33 +90,13 @@ public class EditWordInfoActivity extends AppCompatActivity {
             }
         });
 
-        EditText editText = (EditText)findViewById(R.id.input_mean);
-        editText.setOnClickListener(new View.OnClickListener() {
+        TextView textView = (TextView)findViewById(R.id.input_mean);
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String send = ((EditText)view).getText().toString();
-                Intent intent = new Intent(getApplicationContext(),EditWordMeanActivity.class);
-                intent.putExtra(EXTRA_STRING_MEAN, send);
+                Intent intent = new Intent(getApplicationContext(), EditWordMeanActivity.class);
+                intent.putExtra(EXTRA_STRING_MEAN, ((TextView)view).getText().toString());
                 startActivityForResult(intent, REQUEST_EDIT_CODE);
-            }
-        });
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                EditText editText = (EditText)findViewById(R.id.input_mean);
-                if(editText.getText().toString().equals("")){
-                    editText.setTextColor(Color.GRAY);
-                }else{
-                    editText.setTextColor(Color.parseColor("#757575"));
-                }
             }
         });
     }
@@ -134,7 +113,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.input_name)).setText(editedWord.getName());
             ((TextView)findViewById(R.id.input_kana)).setText(editedWord.getKana());
             spinnerIndex = ((CustomSpinner)findViewById(R.id.input_filed)).setSelection(editedWord.getField());
-            ((EditText)findViewById(R.id.input_mean)).setText(editedWord.getMean());
+            ((TextView)findViewById(R.id.input_mean)).setText(editedWord.getMean());
         }
     }
 
@@ -273,7 +252,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
                 }else {
                     send = data.getStringExtra(EXTRA_STRING_MEAN);
                 }
-                TextView textView = (TextView) findViewById(R.id.input_field);
+                TextView textView = (TextView) findViewById(R.id.input_mean);
                 textView.setText(send);
             }
         }
