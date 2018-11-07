@@ -89,8 +89,12 @@ public class SelectWordFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
+        AdapterItem item = (AdapterItem)listView.getAdapter().getItem(position);
+        if(!item.getVisible()){
+            return;
+        }
         Intent intent = new Intent(getActivity().getApplicationContext(),DrawWordInfoActivity.class);
-        intent.putExtra(EXTRA_STRING_DATA_ID, ((AdapterItem)listView.getAdapter().getItem(position)).getId());
+        intent.putExtra(EXTRA_STRING_DATA_ID, item.getId());
         startActivityForResult(intent, REQUEST_DRAW_INFO);
     }
 

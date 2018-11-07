@@ -76,21 +76,23 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
         AdapterItem item = this.items.get(position);
         ViewHolder viewHolder;
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = this.inflater.inflate(R.layout.list_word_name_item, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.textName = (TextView)convertView.findViewById(R.id.textView_Name);
+            viewHolder.textName = (TextView) convertView.findViewById(R.id.textView_Name);
             convertView.setTag(viewHolder);
-        }else{
-            viewHolder = (ViewHolder)convertView.getTag();
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.textName.setText(item.getName());
 
-        LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.textView_Layout);
-        if(!item.getVisible())
-            layout.setBackgroundColor(Color.parseColor("#26A69A"));
-        else
+        LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.textView_Layout);
+        if (item.getVisible()) {
             layout.setBackgroundColor(Color.parseColor("#ffffff"));
+        } else {
+            layout.setBackgroundColor(Color.parseColor("#26A69A"));
+
+        }
         return convertView;
     }
 

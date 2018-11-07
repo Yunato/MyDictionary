@@ -36,10 +36,10 @@ import java.util.Locale;
 
 public class EditWordInfoActivity extends AppCompatActivity {
     /** 要求コード  */
-    private static final int REQUEST_EDIT_CODE = 1;
-    private static final int REQUEST_BACK = -1;
+    private static final int REQUEST_EDIT_MEAN_CODE = 1;
     /** 識別子 */
     public static final String EXTRA_STRING_MEAN = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_MEAN";
+    public static final String EXTRA_UPDATE_REQUEST = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_UPDATE_REQUEST";
     /** 更新対象である単語情報 */
     private Word editedWord;
     /** CustomSpinnerの選択インデックス */
@@ -96,7 +96,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), EditWordMeanActivity.class);
                 intent.putExtra(EXTRA_STRING_MEAN, ((TextView)view).getText().toString());
-                startActivityForResult(intent, REQUEST_EDIT_CODE);
+                startActivityForResult(intent, REQUEST_EDIT_MEAN_CODE);
             }
         });
     }
@@ -179,53 +179,61 @@ public class EditWordInfoActivity extends AppCompatActivity {
 
         if (id == android.R.id.home) {
             Intent intent = new Intent();
-            setResult(REQUEST_BACK, intent);
+            setResult(RESULT_CANCELED, intent);
             finish();
         }else if(id == R.id.action_add || id == R.id.action_update) {
-            boolean nameChanged, kanaChanged = false, fieldChanged, meanChanged;
             String name = ((EditText) findViewById(R.id.input_name)).getText().toString();
             String kana = ((EditText) findViewById(R.id.input_kana)).getText().toString();
             String field = ((Spinner) findViewById(R.id.input_filed)).getSelectedItem().toString();
             String mean = ((TextView) findViewById(R.id.input_mean)).getText().toString();
-
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPANESE);
             int date = Integer.parseInt(simpleDateFormat.format(calendar.getTime()));
 
-            String compName, compMean;
-            fieldChanged = spinnerIndex != 0 && spinnerIndex != ((CustomSpinner)findViewById(R.id.input_filed)).getItemSize() - 1;
-            if(editedWord != null){
-                compName = editedWord.getName();
-                compMean = editedWord.getMean();
-                kanaChanged = !kana.equals(editedWord.getKana());
-                fieldChanged = fieldChanged && (spinnerIndex != ((CustomSpinner)findViewById(R.id.input_filed)).findSelection(editedWord.getField()));
-            }else{
-                compName = "";
-                compMean = "";
-            }
-            nameChanged = !name.equals(compName);
-            meanChanged = !mean.equals(compMean);
-
-            if((editedWord == null && nameChanged && fieldChanged && meanChanged) ||
-                    (editedWord != null && (nameChanged || kanaChanged || fieldChanged || meanChanged))){
+            Bundle bundle = new Bundle();
+            if(isCommittable(name, kana, field, mean, date)) {
                 Word newWord = new Word(name, kana, field, mean, 0, -1, date);
                 if (editedWord != null) {
                     ((SQLiteApplication) this.getApplication()).updateWord(getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID), newWord);
-                }else{
+                } else {
                     ((SQLiteApplication) this.getApplication()).saveWord(newWord);
                 }
                 Intent intent = new Intent();
+                bundle.putBoolean(EXTRA_UPDATE_REQUEST, true);
+                intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
                 finish();
-            } else {
+            }else if(editedWord != null){
+                Intent intent = new Intent();
+                bundle.putBoolean(EXTRA_UPDATE_REQUEST, false);
+                intent.putExtras(bundle);
+                setResult(RESULT_CANCELED, intent);
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isCommittable(String name, String kana, String field, String mean, int date){
+        boolean updatePermit = true;
+        if (editedWord == null) {
+            boolean noNameChanged, noFieldChanged, noMeanChanged;
+            noNameChanged = name.equals("");
+            noFieldChanged = spinnerIndex == 0 || spinnerIndex == ((CustomSpinner) findViewById(R.id.input_filed)).getItemSize() - 1;
+            noMeanChanged = mean.equals("");
+            if (noNameChanged || noFieldChanged || noMeanChanged) {
+                updatePermit = false;
                 String message = "";
-                if(editedWord == null) {
-                    if (!nameChanged)
+                if (editedWord == null) {
+                    if (noNameChanged) {
                         message += "追加する単語が入力されていません。\n";
-                    if (!fieldChanged)
+                    }
+                    if (noFieldChanged) {
                         message += "単語を割り振る分野が入力されていません。\n";
-                    if (!meanChanged)
+                    }
+                    if (noMeanChanged) {
                         message += "単語の意味が入力されていません\n";
+                    }
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("警告").setMessage(message);
@@ -237,14 +245,23 @@ public class EditWordInfoActivity extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
+        }else{
+            boolean noNameChanged, noKanaChanged, noFieldChanged, noMeanChanged;
+            noNameChanged = name.equals(editedWord.getName());
+            noKanaChanged = kana.equals(editedWord.getKana());
+            noFieldChanged = field.equals(editedWord.getField());
+            noMeanChanged = mean.equals(editedWord.getMean());
+            if(noNameChanged && noKanaChanged && noFieldChanged && noMeanChanged){
+                updatePermit = false;
+            }
         }
-        return super.onOptionsItemSelected(item);
+        return updatePermit;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_EDIT_CODE){
+        if(requestCode == REQUEST_EDIT_MEAN_CODE){
             if(resultCode == RESULT_OK) {
                 String send;
                 if(data.getStringExtra(EXTRA_STRING_MEAN).equals("")) {
