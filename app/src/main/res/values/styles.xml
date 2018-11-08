@@ -54,6 +54,12 @@
         <item name = "android:background">@drawable/view_underline_white</item>
     </style>
 
+    <style name="edit_view_on_dialog">
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
+        <item name="android:colorControlActivated">@color/colorPrimary</item>
+        <item name="android:colorControlHighlight">@color/colorPrimary</item>
+    </style>
+
     <style name="horizontal_scroll_view_one_line">
         <item name = "android:layout_width">match_parent</item>
         <item name = "android:layout_height">wrap_content</item>

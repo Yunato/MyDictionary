@@ -68,8 +68,12 @@ public class SelectWordFragment extends ListFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ((SQLiteApplication)getActivity().getApplication()).deleteWord(((WordNameAdapter)getListView().getAdapter()).getItem(position).getId());
                         setAdapter();
+                        if(getListAdapter().getCount() == 0){
+                            getFragmentManager().popBackStack();
+                        }
                     }
                 });
+                builder.setNegativeButton("CANCEL", null);
                 builder.create().show();
                 return true;
             }
