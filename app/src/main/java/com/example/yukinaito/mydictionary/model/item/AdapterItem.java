@@ -7,12 +7,6 @@ public class AdapterItem {
     private final String kana;
     private boolean visible;
 
-    public AdapterItem(String id, String name, String kana){
-        this.id = id;
-        this.name = name;
-        this.kana = kana;
-    }
-
     public AdapterItem(String id, String name, String kana, boolean visible){
         this.id = id;
         this.name = name;

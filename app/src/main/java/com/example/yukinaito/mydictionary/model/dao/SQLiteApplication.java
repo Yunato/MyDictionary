@@ -45,7 +45,8 @@ public class SQLiteApplication extends Application {
         while(cursor.moveToNext()){
             AdapterItem buf = new AdapterItem(cursor.getString(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("name")),
-                    cursor.getString(cursor.getColumnIndex("kana")));
+                    cursor.getString(cursor.getColumnIndex("kana")),
+                    true);
             items.add(buf);
         }
         cursor.close();

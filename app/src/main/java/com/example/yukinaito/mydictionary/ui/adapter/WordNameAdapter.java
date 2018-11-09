@@ -19,33 +19,38 @@ import java.util.Locale;
 
 public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
     private final LayoutInflater inflater;
-    private final ArrayList<AdapterItem> items;
-    private String[] sections;
+    private final ArrayList<AdapterItem> wordNameItems;
+    private String[] wordLabels;
 
-    public WordNameAdapter(Context context, ArrayList<AdapterItem> objects){
+    /**
+     * コンストラクタ
+     * @param context context
+     * @param wordList ある分野に該当する単語名リスト
+     */
+    public WordNameAdapter(Context context, ArrayList<AdapterItem> wordList){
         this.inflater = LayoutInflater.from(context);
-        this.items = new ArrayList<>();
-        sectionSetting(objects);
+        this.wordNameItems = new ArrayList<>();
+        setupLabel(wordList);
     }
 
-    private void sectionSetting(ArrayList<AdapterItem> objects){
-        ArrayList<String> buffer = new ArrayList<>();
-        String oldLabel = null;
-
-        for (AdapterItem buf : objects) {
-            String s = buf.getName();
-            String newLabel = s.substring(0, 1).toUpperCase(Locale.ENGLISH);
-
-            if(oldLabel == null || !oldLabel.equals(newLabel)){
-                buffer.add(newLabel);
-                items.add(new AdapterItem("", newLabel, "", false));
+    /**
+     * リストに差し込むラベルの生成を行う
+     * @param wordList ある分野に該当する単語名リスト
+     */
+    private void setupLabel(ArrayList<AdapterItem> wordList){
+        ArrayList<String> labelList = new ArrayList<>();
+        String oldLabelName = null;
+        for (AdapterItem item : wordList) {
+            String str = item.getName();
+            String newLabelName = str.substring(0, 1).toUpperCase(Locale.ENGLISH);
+            if(oldLabelName == null || !oldLabelName.equals(newLabelName)){
+                labelList.add(newLabelName);
+                wordNameItems.add(new AdapterItem("", newLabelName, "", false));
+                oldLabelName = newLabelName;
             }
-
-            items.add(new AdapterItem(buf.getId(), buf.getName(), buf.getKana(), true));
-            oldLabel = newLabel;
+            wordNameItems.add(item);
         }
-
-        sections = buffer.toArray(new String[] {});
+        wordLabels = labelList.toArray(new String[] {});
     }
 
     private static class ViewHolder{
@@ -55,13 +60,13 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
     //要素数の取得
     @Override
     public int getCount() {
-        return this.items.size();
+        return this.wordNameItems.size();
     }
 
     //要素の取得
     @Override
     public AdapterItem getItem(int position) {
-        return this.items.get(position);
+        return this.wordNameItems.get(position);
     }
 
     //要素IDの取得
@@ -73,7 +78,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
     //セルのビューの生成
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        AdapterItem item = this.items.get(position);
+        AdapterItem item = this.wordNameItems.get(position);
         ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -108,6 +113,6 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
 
     @Override
     public Object[] getSections() {
-        return sections;
+        return wordLabels;
     }
 }

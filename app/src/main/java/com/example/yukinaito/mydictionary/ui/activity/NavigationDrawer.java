@@ -22,6 +22,8 @@ import com.example.yukinaito.mydictionary.ui.fragment.SelectFieldFragment;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    //TODO: Add を選択したあとで描画中の Fragment を更新する
+
     /** 要求コード  */
     private static final int REQUEST_WRITE_STORAGE = 1;
     private static final int REQUEST_ADD_WORD_INFO = 1;
