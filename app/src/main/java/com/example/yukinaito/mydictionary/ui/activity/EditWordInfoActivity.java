@@ -191,7 +191,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
             int date = Integer.parseInt(simpleDateFormat.format(calendar.getTime()));
 
             Bundle bundle = new Bundle();
-            if(isCommittable(name, kana, field, mean, date)) {
+            if(isCommittable(name, kana, field, mean)) {
                 Word newWord = new Word(name, kana, field, mean, 0, -1, date);
                 if (editedWord != null) {
                     ((SQLiteApplication) this.getApplication()).updateWord(getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID), newWord);
@@ -214,7 +214,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean isCommittable(String name, String kana, String field, String mean, int date){
+    private boolean isCommittable(String name, String kana, String field, String mean){
         boolean updatePermit = true;
         if (editedWord == null) {
             boolean noNameChanged, noFieldChanged, noMeanChanged;

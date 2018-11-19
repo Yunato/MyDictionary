@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.yukinaito.mydictionary.ui.adapter.DBAdapter;
-import com.example.yukinaito.mydictionary.model.item.AdapterItem;
+import com.example.yukinaito.mydictionary.model.item.WordNameAdapterItem;
 import com.example.yukinaito.mydictionary.model.entity.Word;
 import com.example.yukinaito.mydictionary.model.entity.WordComparator;
 
@@ -37,15 +37,14 @@ public class SQLiteApplication extends Application {
     }
 
     //単語選択画面Listの要素作成
-    public ArrayList<AdapterItem> getWordName(String wordClass){
-        ArrayList<AdapterItem> items = new ArrayList<>();
+    public ArrayList<WordNameAdapterItem> getWordName(String wordClass){
+        ArrayList<WordNameAdapterItem> items = new ArrayList<>();
         dbAdapter.open();
         Cursor cursor = dbAdapter.getWordName(wordClass);
 
         while(cursor.moveToNext()){
-            AdapterItem buf = new AdapterItem(cursor.getString(cursor.getColumnIndex("_id")),
+            WordNameAdapterItem buf = new WordNameAdapterItem(cursor.getString(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("name")),
-                    cursor.getString(cursor.getColumnIndex("kana")),
                     true);
             items.add(buf);
         }

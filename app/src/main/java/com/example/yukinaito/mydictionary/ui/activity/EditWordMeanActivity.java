@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.yukinaito.mydictionary.R;
 

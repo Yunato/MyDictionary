@@ -76,10 +76,6 @@ public class CustomSpinner extends Spinner {
         return -1;
     }
 
-    public int findSelection(String str){
-        return setSelection(str);
-    }
-
     public boolean isNotMatchItem(String str){
         for(int index = 1; index < items.size(); index++) {
             if (items.get(index).equals(str)) {

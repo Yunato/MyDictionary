@@ -12,14 +12,19 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.example.yukinaito.mydictionary.R;
-import com.example.yukinaito.mydictionary.model.item.AdapterItem;
+import com.example.yukinaito.mydictionary.model.item.WordNameAdapterItem;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
+    /** inflater  */
     private final LayoutInflater inflater;
-    private final ArrayList<AdapterItem> wordNameItems;
+
+    /** 単語名 (ラベル名含む) 格納リスト  */
+    private final ArrayList<WordNameAdapterItem> wordNameItems;
+
+    /** ラベル名格納配列  */
     private String[] wordLabels;
 
     /**
@@ -27,7 +32,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
      * @param context context
      * @param wordList ある分野に該当する単語名リスト
      */
-    public WordNameAdapter(Context context, ArrayList<AdapterItem> wordList){
+    public WordNameAdapter(Context context, ArrayList<WordNameAdapterItem> wordList){
         this.inflater = LayoutInflater.from(context);
         this.wordNameItems = new ArrayList<>();
         setupLabel(wordList);
@@ -37,15 +42,15 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
      * リストに差し込むラベルの生成を行う
      * @param wordList ある分野に該当する単語名リスト
      */
-    private void setupLabel(ArrayList<AdapterItem> wordList){
+    private void setupLabel(ArrayList<WordNameAdapterItem> wordList){
         ArrayList<String> labelList = new ArrayList<>();
         String oldLabelName = null;
-        for (AdapterItem item : wordList) {
+        for (WordNameAdapterItem item : wordList) {
             String str = item.getName();
             String newLabelName = str.substring(0, 1).toUpperCase(Locale.ENGLISH);
             if(oldLabelName == null || !oldLabelName.equals(newLabelName)){
                 labelList.add(newLabelName);
-                wordNameItems.add(new AdapterItem("", newLabelName, "", false));
+                wordNameItems.add(new WordNameAdapterItem("", newLabelName, false));
                 oldLabelName = newLabelName;
             }
             wordNameItems.add(item);
@@ -53,64 +58,84 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
         wordLabels = labelList.toArray(new String[] {});
     }
 
+    /** リストビューで描画される View を保持するクラス  */
     private static class ViewHolder{
-        TextView textName;
+        TextView wordNaveView;
     }
 
-    //要素数の取得
+    /**  単語名 (ラベル名含む) リストの要素数を取得する   */
     @Override
     public int getCount() {
         return this.wordNameItems.size();
     }
 
-    //要素の取得
+    /**
+     * 単語名 (ラベル名含む) リストから要素を取得する
+     * @param position リストに対する取得したい要素のインデックス
+     */
     @Override
-    public AdapterItem getItem(int position) {
+    public WordNameAdapterItem getItem(int position) {
         return this.wordNameItems.get(position);
     }
 
-    //要素IDの取得
+    /**
+     * リストの位置に対応するセルのインデックスを取得する
+     * @param position リストの位置に対応するセルのインデックス
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-    //セルのビューの生成
+    /**
+     * セル (ビュー) を取得する
+     * @param position リストの位置に対応するセルのインデックス
+     * @param convertView セルのView情報
+     * @param parent getView()メソッドで生成されるViewの親となるViewGroup
+     */
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        AdapterItem item = this.wordNameItems.get(position);
+        WordNameAdapterItem item = this.wordNameItems.get(position);
         ViewHolder viewHolder;
 
         if (convertView == null) {
             convertView = this.inflater.inflate(R.layout.list_word_name_item, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.textName = (TextView) convertView.findViewById(R.id.textView_Name);
+            viewHolder.wordNaveView = (TextView) convertView.findViewById(R.id.textView_Name);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textName.setText(item.getName());
+        viewHolder.wordNaveView.setText(item.getName());
 
         LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.textView_Layout);
         if (item.getVisible()) {
             layout.setBackgroundColor(Color.parseColor("#ffffff"));
         } else {
             layout.setBackgroundColor(Color.parseColor("#26A69A"));
-
         }
         return convertView;
     }
 
+    /**
+     * インデックスラベルに対応するリストビューの位置を取得する
+     * @param sectionIndex インデックスラベルに対応するリストビューの位置
+     */
     @Override
     public int getPositionForSection(int sectionIndex) {
         return sectionIndex;
     }
 
+    /**
+     * リストの位置に対応するインデックスラベルのインデックスを取得する
+     * @param position リストの位置に対応するインデックスラベルのインデックス
+     */
     @Override
     public int getSectionForPosition(int position) {
         return position;
     }
 
+    /** ラベル名格納配列を取得する  */
     @Override
     public Object[] getSections() {
         return wordLabels;

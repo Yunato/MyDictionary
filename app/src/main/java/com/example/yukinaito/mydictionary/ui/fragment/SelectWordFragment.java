@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.example.yukinaito.mydictionary.R;
 import com.example.yukinaito.mydictionary.model.dao.SQLiteApplication;
-import com.example.yukinaito.mydictionary.model.item.AdapterItem;
+import com.example.yukinaito.mydictionary.model.item.WordNameAdapterItem;
 import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 import com.example.yukinaito.mydictionary.ui.adapter.WordNameAdapter;
 import com.example.yukinaito.mydictionary.ui.activity.EditWordInfoActivity;
@@ -93,7 +93,7 @@ public class SelectWordFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
-        AdapterItem item = (AdapterItem)listView.getAdapter().getItem(position);
+        WordNameAdapterItem item = (WordNameAdapterItem)listView.getAdapter().getItem(position);
         if(!item.getVisible()){
             return;
         }

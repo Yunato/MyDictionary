@@ -1,16 +1,14 @@
 package com.example.yukinaito.mydictionary.model.item;
 
-//WordNameAdapter表示用
-public class AdapterItem {
+public class WordNameAdapterItem {
+    /** 単語名 (ラベル名含む) 格納リスト  */
     private final String id;
     private final String name;
-    private final String kana;
-    private boolean visible;
+    private final boolean visible;
 
-    public AdapterItem(String id, String name, String kana, boolean visible){
+    public WordNameAdapterItem(String id, String name, boolean visible){
         this.id = id;
         this.name = name;
-        this.kana = kana;
         this.visible = visible;
     }
 
@@ -22,11 +20,6 @@ public class AdapterItem {
     //名前の取得
     public String getName(){
         return this.name;
-    }
-
-    //読み方の取得
-    public String getKana(){
-        return this.kana;
     }
 
     //表示するか
