@@ -2,9 +2,8 @@ package com.example.yukinaito.mydictionary.model.entity;
 
 import java.io.Serializable;
 
-//単語情報をすべて保持するクラス
 public class Word implements Serializable{
-    //単語の名前、読み方、分類、意味、アクセス数、どのくらいアクセスされていないか
+    /** 単語情報パラメータ */
     private final String name;
     private final String kana;
     private final String field;
@@ -13,6 +12,16 @@ public class Word implements Serializable{
     private final int leastaccesscount;
     private final int date;
 
+    /**
+     * コンストラクタ
+     * @param name 単語名
+     * @param kana 読み方
+     * @param field 分野名
+     * @param mean 単語の意味
+     * @param accesscount アクセス数
+     * @param leastaccesscount 最後にアクセスしてから, 他の単語にアクセスした回数
+     * @param date 単語の登録日時
+     */
     public Word(String name, String kana, String field, String mean, int accesscount, int leastaccesscount, int date){
         this.name = name;
         this.kana = kana;
@@ -23,37 +32,37 @@ public class Word implements Serializable{
         this.date = date;
     }
 
-    //名前の取得
+    /** 単語名を取得する */
     public String getName(){
         return name;
     }
 
-    //読み方の取得
+    /** 読み方を取得する */
     public String getKana(){
         return kana;
     }
 
-    //分類の取得
+    /** 分野名を取得する */
     public String getField(){
         return field;
     }
 
-    //意味の取得
+    /** 単語の意味を取得する */
     public String getMean(){
         return mean;
     }
 
-    //アクセス数の取得
+    /** アクセス数を取得する */
     public int getAccesscount(){
         return accesscount;
     }
 
-    //どのくらいアクセスされていないか取得
+    /** 最後にアクセスしてから, 他の単語にアクセスした回数を取得する */
     public int getLeastaccesscount(){
         return leastaccesscount;
     }
 
-    //追加した日時を取得
+    /** 単語の登録日時を取得する */
     public int getDate(){
         return this.date;
     }

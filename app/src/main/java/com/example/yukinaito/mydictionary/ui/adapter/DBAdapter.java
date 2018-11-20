@@ -10,7 +10,7 @@ import android.os.Environment;
 import com.example.yukinaito.mydictionary.model.entity.Word;
 
 public class DBAdapter {
-    //]static final String DATABASE_NAME = "/storage/53EA-840B/MyDictionary.db";
+    //static final String DATABASE_NAME = "/storage/53EA-840B/MyDictionary.db";
     private static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
     private static final int DATABASE_VERSION = 1;
 

@@ -18,7 +18,6 @@ public class SQLiteApplication extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-        Log.d("Test","作成");
         dbAdapter = new DBAdapter(this);
     }
 

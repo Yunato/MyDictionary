@@ -6,23 +6,29 @@ public class WordNameAdapterItem {
     private final String name;
     private final boolean visible;
 
+    /**
+     * コンストラクタ
+     * @param id 単語に対応した SQLite の ID
+     * @param name 単語名
+     * @param visible 可視化
+     */
     public WordNameAdapterItem(String id, String name, boolean visible){
         this.id = id;
         this.name = name;
         this.visible = visible;
     }
 
-    //idの取得
+    /** 単語に対応した SQLite の ID を取得する  */
     public String getId(){
         return this.id;
     }
 
-    //名前の取得
+    /** 単語名を取得する  */
     public String getName(){
         return this.name;
     }
 
-    //表示するか
+    /** 可視化の許可を取得する  */
     public boolean getVisible(){
         return this.visible;
     }

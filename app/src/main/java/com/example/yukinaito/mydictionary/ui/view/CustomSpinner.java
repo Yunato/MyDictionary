@@ -15,6 +15,10 @@ public class CustomSpinner extends Spinner {
     final private List<String> items = new ArrayList<>();
     private ArrayAdapter<String> adapter;
 
+    /**
+     * コンストラクタ
+     * @param context context
+     */
     public CustomSpinner(Context context){
         super(context);
         this.context = context;
@@ -36,6 +40,11 @@ public class CustomSpinner extends Spinner {
         items.add("分野の追加...");
     }
 
+    /**
+     * Spinner の選択されているアイテムを設定する
+     * @param position インデックス
+     * @param animate アイテムの選択方法
+     */
     @Override
     public void setSelection(int position, boolean animate){
         boolean sameSelected = position == getSelectedItemPosition();
@@ -45,6 +54,10 @@ public class CustomSpinner extends Spinner {
         }
     }
 
+    /**
+     * Spinner の選択されているアイテムを設定する
+     * @param position インデックス
+     */
     @Override
     public void setSelection(int position){
         boolean sameSelected = position == getSelectedItemPosition();
@@ -54,6 +67,10 @@ public class CustomSpinner extends Spinner {
         }
     }
 
+    /**
+     * Spinner にアイテム配列で生成した Adapter を設定する
+     * @param addItems アイテム配列
+     */
     public void setAdapter(String[] addItems){
         for (String item: addItems) {
             items.add(1, item);
@@ -62,10 +79,18 @@ public class CustomSpinner extends Spinner {
         this.setAdapter(adapter);
     }
 
+    /**
+     * Spinner のアイテム数を取得する
+     */
     public int getItemSize(){
         return items.size();
     }
 
+    /**
+     * Spinner が str を選択している状態にし, そのインデックスを返す
+     * str がアイテムリストに存在しない場合, -1 を返す
+     * @param str 選択対象文字列
+     */
     public int setSelection(String str){
         for(int index = 1; index < items.size(); index++) {
             if (items.get(index).equals(str)) {
@@ -76,6 +101,10 @@ public class CustomSpinner extends Spinner {
         return -1;
     }
 
+    /**
+     * Spinner の持つアイテム群に str が含まれていないかを得る
+     * @param str 選択対象文字列
+     */
     public boolean isNotMatchItem(String str){
         for(int index = 1; index < items.size(); index++) {
             if (items.get(index).equals(str)) {
@@ -85,6 +114,10 @@ public class CustomSpinner extends Spinner {
         return true;
     }
 
+    /**
+     * Spinner のアイテム群に str を追加する
+     * @param str 選択対象文字列
+     */
     public void addItem(String str){
         items.add(items.size() - 2, str);
         adapter.notifyDataSetChanged();
