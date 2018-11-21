@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SQLiteApplication extends Application {
+    /** DB アダプター */
     private DBAdapter dbAdapter;
 
     @Override
@@ -21,46 +22,60 @@ public class SQLiteApplication extends Application {
         dbAdapter = new DBAdapter(this);
     }
 
-    //分類選択画面Listの要素作成
+    /**
+     * SQLite に登録済みの単語から分野を取得する
+     * @return 分野を格納した配列
+     * */
     public String[] getWordFiled(){
         dbAdapter.open();
+
         Cursor cursor = dbAdapter.getWordClass();
-
-        String[] data = new String[cursor.getCount()];
-        int i = 0;
-        while(cursor.moveToNext())
-            data[i++] = cursor.getString(cursor.getColumnIndex("classification"));
-        cursor.close();
-        dbAdapter.close();
-        return data;
-    }
-
-    //単語選択画面Listの要素作成
-    public ArrayList<WordNameAdapterItem> getWordName(String wordClass){
-        ArrayList<WordNameAdapterItem> items = new ArrayList<>();
-        dbAdapter.open();
-        Cursor cursor = dbAdapter.getWordName(wordClass);
-
-        while(cursor.moveToNext()){
-            WordNameAdapterItem buf = new WordNameAdapterItem(cursor.getString(cursor.getColumnIndex("_id")),
-                    cursor.getString(cursor.getColumnIndex("name")),
-                    true);
-            items.add(buf);
+        String[] filedItems = new String[cursor.getCount()];
+        int index = 0;
+        while(cursor.moveToNext()) {
+            filedItems[index++] = cursor.getString(cursor.getColumnIndex("classification"));
         }
         cursor.close();
-        dbAdapter.close();
 
-        Collections.sort(items, new WordComparator());
-        return items;
+        dbAdapter.close();
+        return filedItems;
     }
 
-    //単語詳細画面の表示情報作成
+    /**
+     * SQLite に登録済みの単語から単語名を取得する
+     * @return 単語名を格納したリスト
+     * */
+    public ArrayList<WordNameAdapterItem> getWordName(String wordClass){
+        dbAdapter.open();
+
+        Cursor cursor = dbAdapter.getWordName(wordClass);
+        ArrayList<WordNameAdapterItem> wordNameItems = new ArrayList<>();
+        while(cursor.moveToNext()){
+            WordNameAdapterItem addItem = new WordNameAdapterItem(
+                    cursor.getString(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("name")),
+                    true);
+            wordNameItems.add(addItem);
+        }
+        Collections.sort(wordNameItems, new WordComparator());
+        cursor.close();
+
+        dbAdapter.close();
+        return wordNameItems;
+    }
+
+    /**
+     * SQLite から ID で指定された登録済みの単語を取得する
+     * @param id 取得したい単語の ID
+     * @return ID に対応した登録済みの情報から生成される Word オブジェクト
+     * */
     public Word getWordInfo(String id){
         dbAdapter.open();
-        Cursor cursor = dbAdapter.getWordInfo(id);
 
+        Cursor cursor = dbAdapter.getWordInfo(id);
         cursor.moveToNext();
-        Word word = new Word(cursor.getString(cursor.getColumnIndex("name")),
+        Word word = new Word(
+                cursor.getString(cursor.getColumnIndex("name")),
                 cursor.getString(cursor.getColumnIndex("kana")),
                 cursor.getString(cursor.getColumnIndex("classification")),
                 cursor.getString(cursor.getColumnIndex("mean")),
@@ -68,23 +83,36 @@ public class SQLiteApplication extends Application {
                 cursor.getInt(cursor.getColumnIndex("leastaccesscount")),
                 cursor.getInt(cursor.getColumnIndex("adddate")));
         cursor.close();
+
         dbAdapter.close();
         return word;
     }
 
+    /**
+     * SQLite へ Word を保存する
+     * @param word SQLite へ登録する Word オブジェクト
+     * */
     public void saveWord(Word word){
         dbAdapter.open();
         dbAdapter.saveWord(word);
         dbAdapter.close();
     }
 
+    /**
+     * SQLite へ Word を更新する
+     * @param wordId SQLite 内の更新するデータに対応した ID
+     * @param word SQLite へ更新する Word オブジェクト
+     * */
     public void updateWord(String wordId, Word word){
         dbAdapter.open();
         dbAdapter.updateWord(wordId, word);
         dbAdapter.close();
     }
 
-    //テスト(単語情報をDBから削除)
+    /**
+     * SQLite へ Word を削除する
+     * @param id SQLite 内の削除するデータに対応した ID
+     * */
     public void deleteWord(String id){
         dbAdapter.open();
         dbAdapter.deleteWord(id);
