@@ -10,10 +10,13 @@ import android.os.Environment;
 import com.example.yukinaito.mydictionary.model.entity.Word;
 
 public class DBAdapter {
-    //static final String DATABASE_NAME = "/storage/53EA-840B/MyDictionary.db";
-    private static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
+    /** SQLite 保存先 */
+    private static final String DATABASE_PATH = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
+
+    /** SQLite バージョン */
     private static final int DATABASE_VERSION = 1;
 
+    /** SQLite カラム名 */
     private static final String TABLE_NAME = "words";
     private static final String WORD_ID = "_id";
     private static final String WORD_NAME = "name";
@@ -24,16 +27,28 @@ public class DBAdapter {
     private static final String WORD_LEASTCOUNT = "leastaccesscount";
     private static final String WORD_DATE = "adddate";
 
+    /** ヘルパークラス */
     private final DatabaseHelper dbHelper;
+
+    /** SQLiteDB オブジェクト */
     private SQLiteDatabase db;
 
+    /**
+     * コンストラクタ
+     * @param context context
+     */
     public DBAdapter(Context context){
         dbHelper = new DatabaseHelper(context);
     }
 
+    /** ヘルパークラス */
     private class DatabaseHelper extends SQLiteOpenHelper {
+        /**
+         * コンストラクタ
+         * @param context context
+         */
         private DatabaseHelper(Context context){
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            super(context, DATABASE_PATH, null, DATABASE_VERSION);
         }
 
         @Override
@@ -57,36 +72,58 @@ public class DBAdapter {
         }
     }
 
-    //データベースのオープン
+    /**
+     * SQLiteDB をオープンする
+     * */
     public void open(){
         db = dbHelper.getWritableDatabase();
     }
 
-    //データベースのクローズ
+    /**
+     * SQLiteDB をクローズする
+     * */
     public void close(){
         dbHelper.close();
     }
 
-    //分類名の取得
+    /**
+     * SQLiteDB から分野名を検索する
+     * @return 検索結果のCursor
+     * */
     public Cursor getWordClass(){
         return db.query(true, TABLE_NAME, new String[]{WORD_CLASS}, null, null, null, null, "_id ASC", null);
     }
 
+    /**
+     * SQLiteDB から分野名を検索する
+     * @param wordClass 検索対象分野名
+     * @return 検索結果のCursor
+     * */
     public Cursor getWordName(String wordClass){
         return db.query(TABLE_NAME, new String[]{WORD_ID, WORD_NAME, WORD_KANA}, WORD_CLASS + " = ?", new String[]{wordClass}, null, null, "_id ASC");
     }
 
-    //単語情報の取得
+    /**
+     * SQLiteDB から単語情報を検索する
+     * @param wordId 検索対象単語 ID
+     * @return 検索結果のCursor
+     * */
     public Cursor getWordInfo(String wordId){
         return db.query(TABLE_NAME, new String[]{WORD_NAME, WORD_KANA, WORD_CLASS, WORD_MEAN, WORD_COUNT, WORD_LEASTCOUNT, WORD_DATE}, WORD_ID + " = ?", new String[]{wordId}, null, null, "_id ASC");
     }
 
-    //行の削除
+    /**
+     * SQLiteDB から該当する ID の単語を削除する
+     * @param id 削除対象単語 ID
+     * */
     public void deleteWord(String id){
         db.delete(TABLE_NAME, WORD_ID + "=" + id, null);
     }
 
-    //行の挿入
+    /**
+     * SQLiteDB へ単語を挿入する
+     * @param word 挿入対象単語オブジェクト
+     * */
     public void saveWord(Word word){
         ContentValues values = new ContentValues();
         values.put(WORD_NAME, word.getName());
@@ -99,7 +136,11 @@ public class DBAdapter {
         db.insertOrThrow(TABLE_NAME, null, values);
     }
 
-    //行の更新
+    /**
+     * SQLiteDB の単語情報を更新する
+     * @param wordId 更新対象単語 ID
+     * @param word 更新対象単語オブジェクト
+     * */
     public void updateWord(String wordId, Word word){
         ContentValues values = new ContentValues();
         values.put(WORD_NAME, word.getName());
