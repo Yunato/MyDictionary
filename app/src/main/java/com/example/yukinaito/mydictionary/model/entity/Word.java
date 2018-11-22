@@ -32,37 +32,58 @@ public class Word implements Serializable{
         this.date = date;
     }
 
-    /** 単語名を取得する */
+    /**
+     * 単語名を取得する
+     * @return 単語名
+     */
     public String getName(){
         return name;
     }
 
-    /** 読み方を取得する */
+    /**
+     *  読み方を取得する
+     *  @return 単語の読み方
+     */
     public String getKana(){
         return kana;
     }
 
-    /** 分野名を取得する */
+    /**
+     * 分野名を取得する
+     * 分類名
+     */
     public String getField(){
         return field;
     }
 
-    /** 単語の意味を取得する */
+    /**
+     * 単語の意味を取得する
+     * @return 単語の意味
+     */
     public String getMean(){
         return mean;
     }
 
-    /** アクセス数を取得する */
+    /**
+     * アクセス数を取得する
+     * @return アクセス数
+     */
     public int getAccesscount(){
         return accesscount;
     }
 
-    /** 最後にアクセスしてから, 他の単語にアクセスした回数を取得する */
+    /**
+     * 最後にアクセスしてから, 他の単語にアクセスした回数を取得する
+     * @return 直近のアクセスから他の単語にアクセスした回数
+     */
     public int getLeastaccesscount(){
         return leastaccesscount;
     }
 
-    /** 単語の登録日時を取得する */
+    /**
+     * 単語の登録日時を取得する
+     * @return 単語の登録日時
+     */
     public int getDate(){
         return this.date;
     }

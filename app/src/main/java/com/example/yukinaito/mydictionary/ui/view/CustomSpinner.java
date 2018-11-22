@@ -81,6 +81,7 @@ public class CustomSpinner extends Spinner {
 
     /**
      * Spinner のアイテム数を取得する
+     * @return アイテム数
      */
     public int getItemSize(){
         return items.size();
@@ -88,8 +89,8 @@ public class CustomSpinner extends Spinner {
 
     /**
      * Spinner が str を選択している状態にし, そのインデックスを返す
-     * str がアイテムリストに存在しない場合, -1 を返す
      * @param str 選択対象文字列
+     * @return  str のアイテムリストの該当インデックス. str がアイテムリストに存在しない場合, -1 を返す.
      */
     public int setSelection(String str){
         for(int index = 1; index < items.size(); index++) {
@@ -104,6 +105,7 @@ public class CustomSpinner extends Spinner {
     /**
      * Spinner の持つアイテム群に str が含まれていないかを得る
      * @param str 選択対象文字列
+     * @return 含まれていなければ true. 含まれていれば false.
      */
     public boolean isNotMatchItem(String str){
         for(int index = 1; index < items.size(); index++) {

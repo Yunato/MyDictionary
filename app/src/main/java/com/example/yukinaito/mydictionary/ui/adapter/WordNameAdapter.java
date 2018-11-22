@@ -63,7 +63,10 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
         TextView wordNaveView;
     }
 
-    /**  単語名 (ラベル名含む) リストの要素数を取得する   */
+    /**
+     * 単語名 (ラベル名含む) リストの要素数を取得する
+     * @return 単語名 (ラベル名含む) リストの要素数
+     */
     @Override
     public int getCount() {
         return this.wordNameItems.size();
@@ -81,6 +84,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
     /**
      * リストの位置に対応するセルのインデックスを取得する
      * @param position リストの位置に対応するセルのインデックス
+     * @return リストの位置に対応するセルのインデックス
      */
     @Override
     public long getItemId(int position) {
@@ -92,6 +96,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
      * @param position リストの位置に対応するセルのインデックス
      * @param convertView セルのView情報
      * @param parent getView()メソッドで生成されるViewの親となるViewGroup
+     * @return セルのView情報
      */
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -120,6 +125,7 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
     /**
      * インデックスラベルに対応するリストビューの位置を取得する
      * @param sectionIndex インデックスラベルに対応するリストビューの位置
+     * @return インデックスラベルに対応するリストビューの位置
      */
     @Override
     public int getPositionForSection(int sectionIndex) {
@@ -129,13 +135,17 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
     /**
      * リストの位置に対応するインデックスラベルのインデックスを取得する
      * @param position リストの位置に対応するインデックスラベルのインデックス
+     * @return リストの位置に対応するインデックスラベルのインデックス
      */
     @Override
     public int getSectionForPosition(int position) {
         return position;
     }
 
-    /** ラベル名格納配列を取得する  */
+    /**
+     * ラベル名格納配列を取得する
+     * @return ラベル名格納配列
+     */
     @Override
     public Object[] getSections() {
         return wordLabels;

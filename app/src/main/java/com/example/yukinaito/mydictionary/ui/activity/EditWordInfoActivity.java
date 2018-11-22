@@ -214,6 +214,14 @@ public class EditWordInfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * SQLite へ入力された情報で反映させて良いか判定する
+     * @param name 単語名
+     * @param kana 読み方
+     * @param field 分野名
+     * @param mean 意味
+     * @return SQLiteへの反映許可フラグ
+     */
     private boolean isCommittable(String name, String kana, String field, String mean){
         boolean updatePermit = true;
         if (editedWord == null) {
