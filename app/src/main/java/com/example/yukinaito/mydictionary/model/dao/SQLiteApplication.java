@@ -3,7 +3,7 @@ package com.example.yukinaito.mydictionary.model.dao;
 import android.app.Application;
 import android.database.Cursor;
 
-import com.example.yukinaito.mydictionary.ui.adapter.WordDBAdapter;
+import com.example.yukinaito.mydictionary.ui.adapter.DBAdapter;
 import com.example.yukinaito.mydictionary.model.item.WordNameAdapterItem;
 import com.example.yukinaito.mydictionary.model.entity.Word;
 import com.example.yukinaito.mydictionary.model.entity.WordComparator;
@@ -13,12 +13,12 @@ import java.util.Collections;
 
 public class SQLiteApplication extends Application {
     /** DB アダプター */
-    private WordDBAdapter wordDbAdapter;
+    private DBAdapter dbAdapter;
 
     @Override
     public void onCreate(){
         super.onCreate();
-        wordDbAdapter = new WordDBAdapter(this);
+        dbAdapter = new DBAdapter(this);
     }
 
     /**
@@ -26,9 +26,9 @@ public class SQLiteApplication extends Application {
      * @return 分野を格納した配列
      * */
     public String[] getWordFiled(){
-        wordDbAdapter.open();
+        dbAdapter.open();
 
-        Cursor cursor = wordDbAdapter.getWordClass();
+        Cursor cursor = dbAdapter.getWordClass();
         String[] filedItems = new String[cursor.getCount()];
         int index = 0;
         while(cursor.moveToNext()) {
@@ -36,30 +36,53 @@ public class SQLiteApplication extends Application {
         }
         cursor.close();
 
-        wordDbAdapter.close();
+        dbAdapter.close();
         return filedItems;
     }
 
     /**
      * SQLite に登録済みの単語から単語名を取得する
+     * @param wordClass 抽出したい分野名
      * @return 単語名を格納したリスト
      * */
-    public ArrayList<WordNameAdapterItem> getWordName(String wordClass){
-        wordDbAdapter.open();
+    public ArrayList<WordNameAdapterItem> getWordNamesList(String wordClass){
+        return getWordNames(wordClass, true);
+    }
 
-        Cursor cursor = wordDbAdapter.getWordName(wordClass);
+    /**
+     * SQLite に登録済みの検索対象である単語から単語名を取得する
+     * @param wordClass 抽出したい分野名
+     * @return 検索対象の単語名を格納したリスト
+     * */
+    public ArrayList<WordNameAdapterItem> getSearchesList(String wordClass){
+        return getWordNames(wordClass, false);
+    }
+
+    /**
+     * SQLite に登録済みの検索対象である単語から単語名を取得する
+     * @param wordClass 抽出したい分野名
+     * @param flag 格納方式フラグ. true ならば登録済み単語名を, false なら検索対象単語名を抽出する
+     * @return 単語名を格納したリスト
+     * */
+    public ArrayList<WordNameAdapterItem> getWordNames(String wordClass, boolean flag){
+        dbAdapter.open();
+
+        Cursor cursor = dbAdapter.getWordName(wordClass);
         ArrayList<WordNameAdapterItem> wordNameItems = new ArrayList<>();
         while(cursor.moveToNext()){
-            WordNameAdapterItem addItem = new WordNameAdapterItem(
-                    cursor.getString(cursor.getColumnIndex("_id")),
-                    cursor.getString(cursor.getColumnIndex("name")),
-                    true);
-            wordNameItems.add(addItem);
+            if((flag && !cursor.getString(cursor.getColumnIndex("mean")).equals("")) ||
+                    (!flag && cursor.getString(cursor.getColumnIndex("mean")).equals(""))) {
+                WordNameAdapterItem addItem = new WordNameAdapterItem(
+                        cursor.getString(cursor.getColumnIndex("_id")),
+                        cursor.getString(cursor.getColumnIndex("name")),
+                        true);
+                wordNameItems.add(addItem);
+            }
         }
         Collections.sort(wordNameItems, new WordComparator());
         cursor.close();
 
-        wordDbAdapter.close();
+        dbAdapter.close();
         return wordNameItems;
     }
 
@@ -69,9 +92,9 @@ public class SQLiteApplication extends Application {
      * @return ID に対応した登録済みの情報から生成される Word オブジェクト
      * */
     public Word getWordInfo(String id){
-        wordDbAdapter.open();
+        dbAdapter.open();
 
-        Cursor cursor = wordDbAdapter.getWordInfo(id);
+        Cursor cursor = dbAdapter.getWordInfo(id);
         cursor.moveToNext();
         Word word = new Word(
                 cursor.getString(cursor.getColumnIndex("name")),
@@ -83,7 +106,7 @@ public class SQLiteApplication extends Application {
                 cursor.getInt(cursor.getColumnIndex("adddate")));
         cursor.close();
 
-        wordDbAdapter.close();
+        dbAdapter.close();
         return word;
     }
 
@@ -92,9 +115,9 @@ public class SQLiteApplication extends Application {
      * @param word SQLite へ登録する Word オブジェクト
      * */
     public void saveWord(Word word){
-        wordDbAdapter.open();
-        wordDbAdapter.saveWord(word);
-        wordDbAdapter.close();
+        dbAdapter.open();
+        dbAdapter.saveWord(word);
+        dbAdapter.close();
     }
 
     /**
@@ -103,9 +126,9 @@ public class SQLiteApplication extends Application {
      * @param word SQLite へ更新する Word オブジェクト
      * */
     public void updateWord(String wordId, Word word){
-        wordDbAdapter.open();
-        wordDbAdapter.updateWord(wordId, word);
-        wordDbAdapter.close();
+        dbAdapter.open();
+        dbAdapter.updateWord(wordId, word);
+        dbAdapter.close();
     }
 
     /**
@@ -113,8 +136,8 @@ public class SQLiteApplication extends Application {
      * @param id SQLite 内の削除するデータに対応した ID
      * */
     public void deleteWord(String id){
-        wordDbAdapter.open();
-        wordDbAdapter.deleteWord(id);
-        wordDbAdapter.close();
+        dbAdapter.open();
+        dbAdapter.deleteWord(id);
+        dbAdapter.close();
     }
 }

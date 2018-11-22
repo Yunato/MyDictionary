@@ -9,9 +9,9 @@ import android.os.Environment;
 
 import com.example.yukinaito.mydictionary.model.entity.Word;
 
-public class SearchDBAdapter {
+public class DBAdapter {
     /** SQLite 保存先 */
-    private static final String DATABASE_PATH = Environment.getExternalStorageDirectory() + "/MyDictionarySearch.db";
+    private static final String DATABASE_PATH = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
 
     /** SQLite バージョン */
     private static final int DATABASE_VERSION = 1;
@@ -37,7 +37,7 @@ public class SearchDBAdapter {
      * コンストラクタ
      * @param context context
      */
-    public SearchDBAdapter(Context context){
+    public DBAdapter(Context context){
         dbHelper = new DatabaseHelper(context);
     }
 
@@ -100,7 +100,7 @@ public class SearchDBAdapter {
      * @return 検索結果のCursor
      * */
     public Cursor getWordName(String wordClass){
-        return db.query(TABLE_NAME, new String[]{WORD_ID, WORD_NAME, WORD_KANA}, WORD_CLASS + " = ?", new String[]{wordClass}, null, null, "_id ASC");
+        return db.query(TABLE_NAME, new String[]{WORD_ID, WORD_NAME, WORD_KANA, WORD_MEAN}, WORD_CLASS + " = ?", new String[]{wordClass}, null, null, "_id ASC");
     }
 
     /**
@@ -152,4 +152,5 @@ public class SearchDBAdapter {
         values.put(WORD_DATE, word.getDate());
         db.update(TABLE_NAME, values, WORD_ID + " = " + wordId, null);
     }
+
 }

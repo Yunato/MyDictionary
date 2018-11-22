@@ -28,6 +28,11 @@ public class NavigationDrawer extends AppCompatActivity
     private static final int REQUEST_WRITE_STORAGE = 1;
     private static final int REQUEST_ADD_WORD_INFO = 1;
 
+    /** 識別コード */
+    public static String status;
+    public static final String STATUS_MEAN = "STATUS_MEAN";
+    public static final String STATUS_SEARCH = "STATUS_SEARCH";
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -65,10 +70,11 @@ public class NavigationDrawer extends AppCompatActivity
     private void switchUserInterface(int id){
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
+        SelectFieldFragment fragment;
         switch (id) {
             case R.id.top_dictionary:
-                SelectFieldFragment fragment = new SelectFieldFragment();
+                status = STATUS_MEAN;
+                fragment = new SelectFieldFragment();
                 transaction.replace(R.id.main_layout, fragment);
                 break;
             case R.id.add_dictionary:
@@ -76,6 +82,9 @@ public class NavigationDrawer extends AppCompatActivity
                 startActivityForResult(intent, REQUEST_ADD_WORD_INFO);
                 break;
             case  R.id.top_research:
+                status = STATUS_SEARCH;
+                fragment = new SelectFieldFragment();
+                transaction.replace(R.id.main_layout, fragment);
                 break;
             case R.id.add_research:
                 break;

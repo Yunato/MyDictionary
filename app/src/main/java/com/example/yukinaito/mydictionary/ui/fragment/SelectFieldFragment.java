@@ -56,8 +56,8 @@ public class SelectFieldFragment extends ListFragment {
 
     /** DB から取得した分野群を基に Adapter を生成し, ListView へセットする */
     private void setAdapter(){
-        SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_field_item, sqLiteApplication.getWordFiled());
+        SQLiteApplication sqliteApplication = (SQLiteApplication)getActivity().getApplication();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_field_item, sqliteApplication.getWordFiled());
         setListAdapter(adapter);
     }
 
