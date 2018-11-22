@@ -9,9 +9,9 @@ import android.os.Environment;
 
 import com.example.yukinaito.mydictionary.model.entity.Word;
 
-public class DBAdapter {
+public class SearchDBAdapter {
     /** SQLite 保存先 */
-    private static final String DATABASE_PATH = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
+    private static final String DATABASE_PATH = Environment.getExternalStorageDirectory() + "/MyDictionarySearch.db";
 
     /** SQLite バージョン */
     private static final int DATABASE_VERSION = 1;
@@ -37,7 +37,7 @@ public class DBAdapter {
      * コンストラクタ
      * @param context context
      */
-    public DBAdapter(Context context){
+    public SearchDBAdapter(Context context){
         dbHelper = new DatabaseHelper(context);
     }
 
@@ -152,5 +152,4 @@ public class DBAdapter {
         values.put(WORD_DATE, word.getDate());
         db.update(TABLE_NAME, values, WORD_ID + " = " + wordId, null);
     }
-
 }
