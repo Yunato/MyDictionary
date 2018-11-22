@@ -26,12 +26,11 @@ public class NavigationDrawer extends AppCompatActivity
 
     /** 要求コード  */
     private static final int REQUEST_WRITE_STORAGE = 1;
-    private static final int REQUEST_ADD_WORD_INFO = 1;
 
     /** 識別コード */
     public static String status;
-    public static final String STATUS_MEAN = "STATUS_MEAN";
-    public static final String STATUS_SEARCH = "STATUS_SEARCH";
+    public static final String STATUS_MEAN = "MyDictionary_MEAN";
+    public static final String STATUS_SEARCH = "MyDictionary_RESEARCH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -70,28 +69,20 @@ public class NavigationDrawer extends AppCompatActivity
     private void switchUserInterface(int id){
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SelectFieldFragment fragment;
+        SelectFieldFragment fragment = new SelectFieldFragment();
+        transaction.replace(R.id.main_layout, fragment);
+        transaction.commit();
+
         switch (id) {
             case R.id.top_dictionary:
                 status = STATUS_MEAN;
-                fragment = new SelectFieldFragment();
-                transaction.replace(R.id.main_layout, fragment);
-                break;
-            case R.id.add_dictionary:
-                Intent intent = new Intent(this.getApplicationContext(),EditWordInfoActivity.class);
-                startActivityForResult(intent, REQUEST_ADD_WORD_INFO);
                 break;
             case  R.id.top_research:
                 status = STATUS_SEARCH;
-                fragment = new SelectFieldFragment();
-                transaction.replace(R.id.main_layout, fragment);
-                break;
-            case R.id.add_research:
                 break;
             default:
                 return;
         }
-        transaction.commit();
         ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
     }
 

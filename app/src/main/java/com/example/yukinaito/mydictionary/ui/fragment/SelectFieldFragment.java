@@ -43,6 +43,8 @@ public class SelectFieldFragment extends ListFragment {
      * @param view onCreateView() メソッドにより生成された View
      */
     private void setupUIElements(View view){
+        getActivity().setTitle(NavigationDrawer.status);
+
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.button_floating_action);
         fab.setOnClickListener(new View.OnClickListener() {
             //単語の追加

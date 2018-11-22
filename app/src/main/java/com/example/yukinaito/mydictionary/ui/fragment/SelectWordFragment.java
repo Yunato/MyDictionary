@@ -68,9 +68,6 @@ public class SelectWordFragment extends ListFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ((SQLiteApplication)getActivity().getApplication()).deleteWord(((WordNameAdapter)getListView().getAdapter()).getItem(position).getId());
                         setAdapter();
-                        if(getListAdapter().getCount() == 0){
-                            getFragmentManager().popBackStack();
-                        }
                     }
                 });
                 builder.setNegativeButton("CANCEL", null);
@@ -80,7 +77,10 @@ public class SelectWordFragment extends ListFragment {
         });
     }
 
-    /** DB から取得した単語名群を基に Adapter を生成し, ListView へセットする */
+    /**
+     * DB から取得した単語名群を基に Adapter を生成し, ListView へセットする
+     * 但し, Adapter が持つ Item の要素が 0 なら, この Fragment を終了する
+     */
     private void setAdapter(){
         SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
         Bundle bundle = getArguments();
@@ -88,12 +88,15 @@ public class SelectWordFragment extends ListFragment {
             return;
         }
         WordNameAdapter adapter = null;
-        if((NavigationDrawer.STATUS_MEAN).equals(NavigationDrawer.status)){
+        if((NavigationDrawer.status).equals(NavigationDrawer.STATUS_MEAN)){
             adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getWordNamesList(bundle.getString(SelectFieldFragment.EXTRA_STRING_FIELD)));
-        }else if((NavigationDrawer.STATUS_SEARCH).equals(NavigationDrawer.status)) {
-            adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getSearchesList(bundle.getString(SelectFieldFragment.EXTRA_STRING_FIELD)));
+        }else if((NavigationDrawer.status).equals(NavigationDrawer.STATUS_SEARCH)) {
+            adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getResearchesList(bundle.getString(SelectFieldFragment.EXTRA_STRING_FIELD)));
         }
         setListAdapter(adapter);
+        if(getListAdapter().getCount() == 0){
+            getFragmentManager().popBackStack();
+        }
     }
 
     @Override

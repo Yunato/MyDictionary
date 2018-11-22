@@ -23,9 +23,7 @@
     <string name="bar_finish">"FINISH"</string>
 
     <!-- DrawerMenu -->
-    <string name="drawer_title">"Select Function"</string>
-    <string name="menu_title_dictionary">"Dictionary"</string>
+    <string name="drawer_title">"Menu"</string>
+    <string name="menu_title_dictionary">"Mean"</string>
     <string name="menu_title_research">"Research"</string>
-    <string name="menu_select_top">"TOP"</string>
-    <string name="menu_select_add">"ADD"</string>
 </resources>

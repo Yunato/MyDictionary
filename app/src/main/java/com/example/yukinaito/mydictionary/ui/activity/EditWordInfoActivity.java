@@ -229,6 +229,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
             noNameChanged = name.equals("");
             noFieldChanged = spinnerIndex == 0 || spinnerIndex == ((CustomSpinner) findViewById(R.id.input_filed)).getItemSize() - 1;
             noMeanChanged = mean.equals("");
+            noMeanChanged = noMeanChanged && (NavigationDrawer.status).equals(NavigationDrawer.STATUS_MEAN);
             if (noNameChanged || noFieldChanged || noMeanChanged) {
                 updatePermit = false;
                 String message = "";
@@ -258,7 +259,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
             noNameChanged = name.equals(editedWord.getName());
             noKanaChanged = kana.equals(editedWord.getKana());
             noFieldChanged = field.equals(editedWord.getField());
-            noMeanChanged = mean.equals(editedWord.getMean());
+            noMeanChanged = mean.equals(editedWord.getMean()) || mean.equals("");
             if(noNameChanged && noKanaChanged && noFieldChanged && noMeanChanged){
                 updatePermit = false;
             }
@@ -271,14 +272,13 @@ public class EditWordInfoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_EDIT_MEAN_CODE){
             if(resultCode == RESULT_OK) {
-                String send;
+                String mean;
                 if(data.getStringExtra(EXTRA_STRING_MEAN).equals("")) {
-                    send = "単語の意味を入力";
+                    mean = "";
                 }else {
-                    send = data.getStringExtra(EXTRA_STRING_MEAN);
+                    mean = data.getStringExtra(EXTRA_STRING_MEAN);
                 }
-                TextView textView = (TextView) findViewById(R.id.input_mean);
-                textView.setText(send);
+                ((TextView) findViewById(R.id.input_mean)).setText(mean);
             }
         }
     }

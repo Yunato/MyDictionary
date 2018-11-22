@@ -54,7 +54,7 @@ public class SQLiteApplication extends Application {
      * @param wordClass 抽出したい分野名
      * @return 検索対象の単語名を格納したリスト
      * */
-    public ArrayList<WordNameAdapterItem> getSearchesList(String wordClass){
+    public ArrayList<WordNameAdapterItem> getResearchesList(String wordClass){
         return getWordNames(wordClass, false);
     }
 
