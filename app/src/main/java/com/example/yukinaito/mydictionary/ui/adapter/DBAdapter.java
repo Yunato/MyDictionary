@@ -11,7 +11,8 @@ import com.example.yukinaito.mydictionary.model.entity.Word;
 
 public class DBAdapter {
     /** SQLite 保存先 */
-    private static final String DATABASE_PATH = Environment.getExternalStorageDirectory() + "/MyDictionary.db";
+    private static final String DATABASE_PATH = Environment.getExternalStorageDirectory()
+            + "/Android/data/com.example.yukinaito.mydictionary/MyDictionary.db";
 
     /** SQLite バージョン */
     private static final int DATABASE_VERSION = 1;

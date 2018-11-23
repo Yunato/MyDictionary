@@ -41,7 +41,8 @@ public class EditWordInfoActivity extends AppCompatActivity {
     public static final String EXTRA_STRING_MEAN = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_MEAN";
     public static final String EXTRA_UPDATE_REQUEST = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_UPDATE_REQUEST";
     /** 更新対象である単語情報 */
-    private Word editedWord;
+    private boolean existWordFlag = false;
+    private Word defaultWord;
     /** CustomSpinnerの選択インデックス */
     private int spinnerIndex = -1;
 
@@ -68,6 +69,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
                 actionBar.setHomeAsUpIndicator(upArrow);
             }
         }
+        setTitle(NavigationDrawer.status);
 
         CustomSpinner spinner = (CustomSpinner)findViewById(R.id.input_filed);
         spinner.setPrompt("分野を選択して下さい");
@@ -81,6 +83,8 @@ public class EditWordInfoActivity extends AppCompatActivity {
                 }else {
                     if (position == spinner.getItemSize() - 1) {
                         createDialog(spinner);
+                    }else{
+                        spinnerIndex = position;
                     }
                 }
             }
@@ -109,11 +113,12 @@ public class EditWordInfoActivity extends AppCompatActivity {
 
         String wordID = getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID);
         if(wordID != null){
-            editedWord = sqLiteApplication.getWordInfo(wordID);
-            ((TextView)findViewById(R.id.input_name)).setText(editedWord.getName());
-            ((TextView)findViewById(R.id.input_kana)).setText(editedWord.getKana());
-            spinnerIndex = ((CustomSpinner)findViewById(R.id.input_filed)).setSelection(editedWord.getField());
-            ((TextView)findViewById(R.id.input_mean)).setText(editedWord.getMean());
+            existWordFlag = true;
+            defaultWord = sqLiteApplication.getWordInfo(wordID);
+            ((TextView)findViewById(R.id.input_name)).setText(defaultWord.getName());
+            ((TextView)findViewById(R.id.input_kana)).setText(defaultWord.getKana());
+            spinnerIndex = ((CustomSpinner)findViewById(R.id.input_filed)).setSelection(defaultWord.getField());
+            ((TextView)findViewById(R.id.input_mean)).setText(defaultWord.getMean());
         }
     }
 
@@ -193,7 +198,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             if(isCommittable(name, kana, field, mean)) {
                 Word newWord = new Word(name, kana, field, mean, 0, -1, date);
-                if (editedWord != null) {
+                if (existWordFlag) {
                     ((SQLiteApplication) this.getApplication()).updateWord(getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID), newWord);
                 } else {
                     ((SQLiteApplication) this.getApplication()).saveWord(newWord);
@@ -202,12 +207,6 @@ public class EditWordInfoActivity extends AppCompatActivity {
                 bundle.putBoolean(EXTRA_UPDATE_REQUEST, true);
                 intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
-                finish();
-            }else if(editedWord != null){
-                Intent intent = new Intent();
-                bundle.putBoolean(EXTRA_UPDATE_REQUEST, false);
-                intent.putExtras(bundle);
-                setResult(RESULT_CANCELED, intent);
                 finish();
             }
         }
@@ -224,25 +223,23 @@ public class EditWordInfoActivity extends AppCompatActivity {
      */
     private boolean isCommittable(String name, String kana, String field, String mean){
         boolean updatePermit = true;
-        if (editedWord == null) {
+        if (!existWordFlag) {
             boolean noNameChanged, noFieldChanged, noMeanChanged;
             noNameChanged = name.equals("");
-            noFieldChanged = spinnerIndex == 0 || spinnerIndex == ((CustomSpinner) findViewById(R.id.input_filed)).getItemSize() - 1;
+            noFieldChanged = spinnerIndex == -1 || spinnerIndex == ((CustomSpinner) findViewById(R.id.input_filed)).getItemSize() - 1;
             noMeanChanged = mean.equals("");
             noMeanChanged = noMeanChanged && (NavigationDrawer.status).equals(NavigationDrawer.STATUS_MEAN);
             if (noNameChanged || noFieldChanged || noMeanChanged) {
                 updatePermit = false;
                 String message = "";
-                if (editedWord == null) {
-                    if (noNameChanged) {
-                        message += "追加する単語が入力されていません。\n";
-                    }
-                    if (noFieldChanged) {
-                        message += "単語を割り振る分野が入力されていません。\n";
-                    }
-                    if (noMeanChanged) {
-                        message += "単語の意味が入力されていません\n";
-                    }
+                if (noNameChanged) {
+                    message += "追加する単語が入力されていません.\n";
+                }
+                if (noFieldChanged) {
+                    message += "単語を割り振る分野が入力されていません.\n";
+                }
+                if (noMeanChanged) {
+                    message += "単語の意味が入力されていません.\n";
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("警告").setMessage(message);
@@ -255,16 +252,58 @@ public class EditWordInfoActivity extends AppCompatActivity {
                 dialog.show();
             }
         }else{
-            boolean noNameChanged, noKanaChanged, noFieldChanged, noMeanChanged;
-            noNameChanged = name.equals(editedWord.getName());
-            noKanaChanged = kana.equals(editedWord.getKana());
-            noFieldChanged = field.equals(editedWord.getField());
-            noMeanChanged = mean.equals(editedWord.getMean()) || mean.equals("");
-            if(noNameChanged && noKanaChanged && noFieldChanged && noMeanChanged){
+            if (hasBlank(name, field, mean)) {
                 updatePermit = false;
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("警告").setMessage("未入力の情報があります.");
+                builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
+            /*
+            else if(isPastParam(name, kana, field, mean)) {
+                updatePermit = false;
+            }*/
         }
         return updatePermit;
+    }
+
+    /**
+     * SQLite へ反映しようとしている情報が過去のデータから更新されたか判別する
+     * @param name 単語名
+     * @param kana 読み方
+     * @param field 分野名
+     * @param mean 意味
+     * @return データ更新の有無. true ならデータ更新をしていない. false ならデータ更新がされている.
+     */
+    private boolean isPastParam(String name, String kana, String field, String mean){
+        boolean noNameChanged, noKanaChanged, noFieldChanged, noMeanChanged;
+        noNameChanged = name.equals(defaultWord.getName());
+        noKanaChanged = kana.equals(defaultWord.getKana());
+        noFieldChanged = field.equals(defaultWord.getField());
+        noMeanChanged = mean.equals(defaultWord.getMean());
+        return noNameChanged && noKanaChanged && noFieldChanged && noMeanChanged;
+    }
+
+    /**
+     * SQLite へ反映しようとしている情報に未入力のデータが含まれていないか判別する
+     * @param name 単語名
+     * @param field 分野名
+     * @param mean 意味
+     * @return 未入力データの有無. true なら未入力データを保持している. false なら未入力データを保持していない.
+     */
+    private boolean hasBlank(String name, String field, String mean){
+        boolean noNameChanged, noFieldChanged, noMeanChanged = false;
+        noNameChanged = name.equals("");
+        noFieldChanged = field.equals("");
+        if(NavigationDrawer.status.equals(NavigationDrawer.STATUS_MEAN)) {
+            noMeanChanged = mean.equals("");
+        }
+        return noNameChanged || noFieldChanged || noMeanChanged;
     }
 
     @Override

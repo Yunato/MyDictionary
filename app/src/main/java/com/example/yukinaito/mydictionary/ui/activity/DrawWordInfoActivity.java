@@ -47,6 +47,8 @@ public class DrawWordInfoActivity extends AppCompatActivity {
                 actionBar.setHomeAsUpIndicator(upArrow);
             }
         }
+        setTitle(NavigationDrawer.status);
+
     }
 
     /** DB から取得した単語情報を基に Widgets の設定を行う */
@@ -55,15 +57,27 @@ public class DrawWordInfoActivity extends AppCompatActivity {
         final Word word = sqLiteApplication.getWordInfo(getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID));
 
         ((TextView) findViewById(R.id.draw_name)).setText(word.getName());
+        ((TextView) findViewById(R.id.draw_kana)).setText(word.getKana());
         ((TextView) findViewById(R.id.draw_field)).setText(word.getField());
         ((TextView) findViewById(R.id.draw_mean)).setText(word.getMean());
+
+        //TODO:リファクタリング
+        int id;
         if (!word.getKana().equals("")) {
-            ((TextView) findViewById(R.id.draw_kana)).setText(word.getKana());
+            id = DrawWordInfoActivity.this.getResources().getIdentifier("view_underline_white", "drawable", DrawWordInfoActivity.this.getPackageName());
         }else{
-            int id = DrawWordInfoActivity.this.getResources().getIdentifier("view_underline_gray", "drawable", DrawWordInfoActivity.this.getPackageName());
-            Drawable back = ResourcesCompat.getDrawable(getResources(), id, null);
-            (findViewById(R.id.draw_kana)).setBackground(back);
+            id = DrawWordInfoActivity.this.getResources().getIdentifier("view_underline_gray", "drawable", DrawWordInfoActivity.this.getPackageName());
         }
+        Drawable back = ResourcesCompat.getDrawable(getResources(), id, null);
+        (findViewById(R.id.draw_kana)).setBackground(back);
+
+        if (!word.getMean().equals("")) {
+            id = DrawWordInfoActivity.this.getResources().getIdentifier("view_underline_white", "drawable", DrawWordInfoActivity.this.getPackageName());
+        }else{
+            id = DrawWordInfoActivity.this.getResources().getIdentifier("view_underline_gray", "drawable", DrawWordInfoActivity.this.getPackageName());
+        }
+        back = ResourcesCompat.getDrawable(getResources(), id, null);
+        (findViewById(R.id.draw_mean)).setBackground(back);
     }
 
     /** 呼び出し元へ渡す単語情報の変更の有無情報を添え, Activity を終了する */
