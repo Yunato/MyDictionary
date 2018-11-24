@@ -44,7 +44,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
     private boolean existWordFlag = false;
     private Word defaultWord;
     /** CustomSpinnerの選択インデックス */
-    private int spinnerIndex = -1;
+    private int spinnerIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,7 +226,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
         if (!existWordFlag) {
             boolean noNameChanged, noFieldChanged, noMeanChanged;
             noNameChanged = name.equals("");
-            noFieldChanged = spinnerIndex == -1 || spinnerIndex == ((CustomSpinner) findViewById(R.id.input_filed)).getItemSize() - 1;
+            noFieldChanged = spinnerIndex == 0 || spinnerIndex == ((CustomSpinner) findViewById(R.id.input_filed)).getItemSize() - 1;
             noMeanChanged = mean.equals("");
             noMeanChanged = noMeanChanged && (NavigationDrawer.status).equals(NavigationDrawer.STATUS_MEAN);
             if (noNameChanged || noFieldChanged || noMeanChanged) {

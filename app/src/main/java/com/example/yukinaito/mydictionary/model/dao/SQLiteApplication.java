@@ -28,7 +28,7 @@ public class SQLiteApplication extends Application {
     public String[] getWordFiled(){
         dbAdapter.open();
 
-        Cursor cursor = dbAdapter.getWordClass();
+        Cursor cursor = dbAdapter.getWordField();
         String[] filedItems = new String[cursor.getCount()];
         int index = 0;
         while(cursor.moveToNext()) {
@@ -38,6 +38,28 @@ public class SQLiteApplication extends Application {
 
         dbAdapter.close();
         return filedItems;
+    }
+
+    /**
+     * SQLite に登録済みの単語から単語名を取得する
+     * @return 単語名を格納したリスト
+     * */
+    public ArrayList<WordNameAdapterItem> getWordNamesList(){
+        dbAdapter.open();
+
+        Cursor cursor = dbAdapter.getWordName();
+        ArrayList<WordNameAdapterItem> wordNameItems = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            WordNameAdapterItem addItem = new WordNameAdapterItem(
+                    cursor.getString(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("name")),
+                    true);
+            wordNameItems.add(0, addItem);
+        }
+        cursor.close();
+
+        dbAdapter.close();
+        return wordNameItems;
     }
 
     /**

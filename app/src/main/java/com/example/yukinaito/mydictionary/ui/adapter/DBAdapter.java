@@ -91,12 +91,20 @@ public class DBAdapter {
      * SQLiteDB から分野名を検索する
      * @return 検索結果のCursor
      * */
-    public Cursor getWordClass(){
+    public Cursor getWordField(){
         return db.query(true, TABLE_NAME, new String[]{WORD_CLASS}, null, null, null, null, "_id ASC", null);
     }
 
     /**
-     * SQLiteDB から分野名を検索する
+     * SQLiteDB から単語名を取得する
+     * @return 検索結果のCursor
+     * */
+    public Cursor getWordName(){
+        return db.query(TABLE_NAME,new String[]{WORD_ID, WORD_NAME, WORD_KANA},null,null,null,null,"_id ASC", null);
+    }
+
+    /**
+     * SQLiteDB から単語名を検索する
      * @param wordClass 検索対象分野名
      * @return 検索結果のCursor
      * */
