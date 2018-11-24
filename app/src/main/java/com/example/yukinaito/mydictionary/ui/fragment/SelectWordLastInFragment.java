@@ -3,8 +3,10 @@ package com.example.yukinaito.mydictionary.ui.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,11 +85,7 @@ public class SelectWordLastInFragment extends ListFragment {
      */
     private void setAdapter(){
         SQLiteApplication sqLiteApplication = (SQLiteApplication)getActivity().getApplication();
-        Bundle bundle = getArguments();
-        if(bundle == null){
-            return;
-        }
-        WordNameAdapter adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getWordNamesList());
+        WordNameAdapter adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getWordNamesList(), false);
         setListAdapter(adapter);
         if(getListAdapter().getCount() == 0){
             getFragmentManager().popBackStack();

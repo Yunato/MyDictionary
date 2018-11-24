@@ -87,12 +87,7 @@ public class SelectWordFragment extends ListFragment {
         if(bundle == null){
             return;
         }
-        WordNameAdapter adapter = null;
-        if((NavigationDrawer.status).equals(NavigationDrawer.STATUS_MEAN)){
-            adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getWordNamesList(bundle.getString(SelectFieldFragment.EXTRA_STRING_FIELD)));
-        }else if((NavigationDrawer.status).equals(NavigationDrawer.STATUS_SEARCH)) {
-            adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getResearchesList(bundle.getString(SelectFieldFragment.EXTRA_STRING_FIELD)));
-        }
+        WordNameAdapter adapter = new WordNameAdapter(getActivity(), sqLiteApplication.getWordNamesList(bundle.getString(SelectFieldFragment.EXTRA_STRING_FIELD)), true);
         setListAdapter(adapter);
         if(getListAdapter().getCount() == 0){
             getFragmentManager().popBackStack();

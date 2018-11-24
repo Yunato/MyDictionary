@@ -32,23 +32,23 @@ public class WordNameAdapter  extends BaseAdapter implements SectionIndexer{
      * @param context context
      * @param wordList ある分野に該当する単語名リスト
      */
-    public WordNameAdapter(Context context, ArrayList<WordNameAdapterItem> wordList){
+    public WordNameAdapter(Context context, ArrayList<WordNameAdapterItem> wordList, boolean includeLabel){
         this.inflater = LayoutInflater.from(context);
         this.wordNameItems = new ArrayList<>();
-        setupLabel(wordList);
+        setupLabel(wordList, includeLabel);
     }
 
     /**
      * リストに差し込むラベルの生成を行う
      * @param wordList ある分野に該当する単語名リスト
      */
-    private void setupLabel(ArrayList<WordNameAdapterItem> wordList){
+    private void setupLabel(ArrayList<WordNameAdapterItem> wordList, boolean includeLabel){
         ArrayList<String> labelList = new ArrayList<>();
         String oldLabelName = null;
         for (WordNameAdapterItem item : wordList) {
             String str = item.getName();
             String newLabelName = str.substring(0, 1).toUpperCase(Locale.ENGLISH);
-            if(oldLabelName == null || !oldLabelName.equals(newLabelName)){
+            if(includeLabel && (oldLabelName == null || !oldLabelName.equals(newLabelName))){
                 labelList.add(newLabelName);
                 wordNameItems.add(new WordNameAdapterItem("", newLabelName, false));
                 oldLabelName = newLabelName;

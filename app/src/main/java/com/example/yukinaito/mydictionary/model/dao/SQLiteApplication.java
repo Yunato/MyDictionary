@@ -3,6 +3,7 @@ package com.example.yukinaito.mydictionary.model.dao;
 import android.app.Application;
 import android.database.Cursor;
 
+import com.example.yukinaito.mydictionary.ui.activity.NavigationDrawer;
 import com.example.yukinaito.mydictionary.ui.adapter.DBAdapter;
 import com.example.yukinaito.mydictionary.model.item.WordNameAdapterItem;
 import com.example.yukinaito.mydictionary.model.entity.Word;
@@ -49,12 +50,16 @@ public class SQLiteApplication extends Application {
 
         Cursor cursor = dbAdapter.getWordName();
         ArrayList<WordNameAdapterItem> wordNameItems = new ArrayList<>();
+        boolean flag = NavigationDrawer.status.equals(NavigationDrawer.STATUS_MEAN);
         while(cursor.moveToNext()) {
-            WordNameAdapterItem addItem = new WordNameAdapterItem(
-                    cursor.getString(cursor.getColumnIndex("_id")),
-                    cursor.getString(cursor.getColumnIndex("name")),
-                    true);
-            wordNameItems.add(0, addItem);
+            if((flag && !cursor.getString(cursor.getColumnIndex("mean")).equals("")) ||
+                    (!flag && cursor.getString(cursor.getColumnIndex("mean")).equals(""))) {
+                WordNameAdapterItem addItem = new WordNameAdapterItem(
+                        cursor.getString(cursor.getColumnIndex("_id")),
+                        cursor.getString(cursor.getColumnIndex("name")),
+                        true);
+                wordNameItems.add(0, addItem);
+            }
         }
         cursor.close();
 
@@ -63,34 +68,16 @@ public class SQLiteApplication extends Application {
     }
 
     /**
-     * SQLite に登録済みの単語から単語名を取得する
+     * SQLite に登録済みの検索対象である単語から単語名を取得する
      * @param wordClass 抽出したい分野名
      * @return 単語名を格納したリスト
      * */
     public ArrayList<WordNameAdapterItem> getWordNamesList(String wordClass){
-        return getWordNames(wordClass, true);
-    }
-
-    /**
-     * SQLite に登録済みの検索対象である単語から単語名を取得する
-     * @param wordClass 抽出したい分野名
-     * @return 検索対象の単語名を格納したリスト
-     * */
-    public ArrayList<WordNameAdapterItem> getResearchesList(String wordClass){
-        return getWordNames(wordClass, false);
-    }
-
-    /**
-     * SQLite に登録済みの検索対象である単語から単語名を取得する
-     * @param wordClass 抽出したい分野名
-     * @param flag 格納方式フラグ. true ならば登録済み単語名を, false なら検索対象単語名を抽出する
-     * @return 単語名を格納したリスト
-     * */
-    public ArrayList<WordNameAdapterItem> getWordNames(String wordClass, boolean flag){
         dbAdapter.open();
 
         Cursor cursor = dbAdapter.getWordName(wordClass);
         ArrayList<WordNameAdapterItem> wordNameItems = new ArrayList<>();
+        boolean flag = NavigationDrawer.status.equals(NavigationDrawer.STATUS_MEAN);
         while(cursor.moveToNext()){
             if((flag && !cursor.getString(cursor.getColumnIndex("mean")).equals("")) ||
                     (!flag && cursor.getString(cursor.getColumnIndex("mean")).equals(""))) {

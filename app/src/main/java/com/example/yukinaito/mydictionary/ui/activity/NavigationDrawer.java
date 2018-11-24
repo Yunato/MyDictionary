@@ -1,12 +1,12 @@
 package com.example.yukinaito.mydictionary.ui.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -15,15 +15,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.yukinaito.mydictionary.R;
 import com.example.yukinaito.mydictionary.ui.fragment.SelectFieldFragment;
+import com.example.yukinaito.mydictionary.ui.fragment.SelectWordLastInFragment;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    //TODO: Add を選択したあとで描画中の Fragment を更新する
-
     /** 要求コード  */
     private static final int REQUEST_WRITE_STORAGE = 1;
 
@@ -31,6 +32,7 @@ public class NavigationDrawer extends AppCompatActivity
     public static String status;
     public static final String STATUS_MEAN = "MyDictionary_MEAN";
     public static final String STATUS_SEARCH = "MyDictionary_RESEARCH";
+    static boolean fragmentSwitchFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -92,6 +94,32 @@ public class NavigationDrawer extends AppCompatActivity
         if(!hasPermission){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_convert_listflagment, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (id == R.id.action_convert) {
+            if(fragmentSwitchFlag){
+                fragmentSwitchFlag = false;
+                Fragment fragment = new SelectWordLastInFragment();
+                transaction.replace(R.id.main_layout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }else {
+                fragmentSwitchFlag = true;
+                getSupportFragmentManager().popBackStack();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

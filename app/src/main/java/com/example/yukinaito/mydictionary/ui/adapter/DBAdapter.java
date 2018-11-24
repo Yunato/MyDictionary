@@ -100,7 +100,7 @@ public class DBAdapter {
      * @return 検索結果のCursor
      * */
     public Cursor getWordName(){
-        return db.query(TABLE_NAME,new String[]{WORD_ID, WORD_NAME, WORD_KANA},null,null,null,null,"_id ASC", null);
+        return db.query(TABLE_NAME,new String[]{WORD_ID, WORD_NAME, WORD_KANA, WORD_MEAN},null,null,null,null,"_id ASC", null);
     }
 
     /**

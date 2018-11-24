@@ -17,6 +17,7 @@
     <string name="blank_mean">"単語の意味を入力"</string>
 
     <!-- TitleBar -->
+    <string name="bar_convert">"CONVERT"</string>
     <string name="bar_add">"ADD"</string>
     <string name="bar_edit">"EDIT"</string>
     <string name="bar_update">"UPDATE"</string>
