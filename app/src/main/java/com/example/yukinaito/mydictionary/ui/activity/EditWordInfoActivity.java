@@ -37,12 +37,14 @@ import java.util.Locale;
 public class EditWordInfoActivity extends AppCompatActivity {
     /** 要求コード  */
     private static final int REQUEST_EDIT_MEAN_CODE = 1;
+
     /** 識別子 */
     public static final String EXTRA_STRING_MEAN = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_MEAN";
     public static final String EXTRA_UPDATE_REQUEST = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_UPDATE_REQUEST";
+
     /** 更新対象である単語情報 */
     private boolean existWordFlag = false;
-    private Word defaultWord;
+
     /** CustomSpinnerの選択インデックス */
     private int spinnerIndex = 0;
 
@@ -111,10 +113,10 @@ public class EditWordInfoActivity extends AppCompatActivity {
 
         ((CustomSpinner)findViewById(R.id.input_filed)).setAdapter(sqLiteApplication.getWordFiled());
 
-        String wordID = getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID);
+        String wordID = getIntent().getStringExtra(DrawWordInfoActivity.EXTRA_STRING_DATA_ID);
         if(wordID != null){
             existWordFlag = true;
-            defaultWord = sqLiteApplication.getWordInfo(wordID);
+            Word defaultWord = sqLiteApplication.getWordInfo(wordID);
             ((TextView)findViewById(R.id.input_name)).setText(defaultWord.getName());
             ((TextView)findViewById(R.id.input_kana)).setText(defaultWord.getKana());
             spinnerIndex = ((CustomSpinner)findViewById(R.id.input_filed)).setSelection(defaultWord.getField());
@@ -196,7 +198,7 @@ public class EditWordInfoActivity extends AppCompatActivity {
             int date = Integer.parseInt(simpleDateFormat.format(calendar.getTime()));
 
             Bundle bundle = new Bundle();
-            if(isCommittable(name, kana, field, mean)) {
+            if(isCommittable(name, field, mean)) {
                 Word newWord = new Word(name, kana, field, mean, 0, -1, date);
                 if (existWordFlag) {
                     ((SQLiteApplication) this.getApplication()).updateWord(getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID), newWord);
@@ -216,12 +218,11 @@ public class EditWordInfoActivity extends AppCompatActivity {
     /**
      * SQLite へ入力された情報で反映させて良いか判定する
      * @param name 単語名
-     * @param kana 読み方
      * @param field 分野名
      * @param mean 意味
      * @return SQLiteへの反映許可フラグ
      */
-    private boolean isCommittable(String name, String kana, String field, String mean){
+    private boolean isCommittable(String name, String field, String mean){
         boolean updatePermit = true;
         if (!existWordFlag) {
             boolean noNameChanged, noFieldChanged, noMeanChanged;
@@ -264,29 +265,8 @@ public class EditWordInfoActivity extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
-            /*
-            else if(isPastParam(name, kana, field, mean)) {
-                updatePermit = false;
-            }*/
         }
         return updatePermit;
-    }
-
-    /**
-     * SQLite へ反映しようとしている情報が過去のデータから更新されたか判別する
-     * @param name 単語名
-     * @param kana 読み方
-     * @param field 分野名
-     * @param mean 意味
-     * @return データ更新の有無. true ならデータ更新をしていない. false ならデータ更新がされている.
-     */
-    private boolean isPastParam(String name, String kana, String field, String mean){
-        boolean noNameChanged, noKanaChanged, noFieldChanged, noMeanChanged;
-        noNameChanged = name.equals(defaultWord.getName());
-        noKanaChanged = kana.equals(defaultWord.getKana());
-        noFieldChanged = field.equals(defaultWord.getField());
-        noMeanChanged = mean.equals(defaultWord.getMean());
-        return noNameChanged && noKanaChanged && noFieldChanged && noMeanChanged;
     }
 
     /**
@@ -312,10 +292,10 @@ public class EditWordInfoActivity extends AppCompatActivity {
         if(requestCode == REQUEST_EDIT_MEAN_CODE){
             if(resultCode == RESULT_OK) {
                 String mean;
-                if(data.getStringExtra(EXTRA_STRING_MEAN).equals("")) {
+                if(data.getStringExtra(EditWordMeanActivity.EXTRA_STRING_MEAN).equals("")) {
                     mean = "";
                 }else {
-                    mean = data.getStringExtra(EXTRA_STRING_MEAN);
+                    mean = data.getStringExtra(EditWordMeanActivity.EXTRA_STRING_MEAN);
                 }
                 ((TextView) findViewById(R.id.input_mean)).setText(mean);
             }

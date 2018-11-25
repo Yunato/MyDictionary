@@ -31,8 +31,8 @@ public class NavigationDrawer extends AppCompatActivity
     /** 識別コード */
     public static String status;
     public static final String STATUS_MEAN = "MyDictionary_MEAN";
-    public static final String STATUS_SEARCH = "MyDictionary_RESEARCH";
-    static boolean fragmentSwitchFlag = true;
+    private static final String STATUS_SEARCH = "MyDictionary_RESEARCH";
+    private boolean fragmentSwitchFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

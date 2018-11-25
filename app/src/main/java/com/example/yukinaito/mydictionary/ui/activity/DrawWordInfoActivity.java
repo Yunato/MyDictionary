@@ -22,6 +22,10 @@ public class DrawWordInfoActivity extends AppCompatActivity {
     /** 要求コード  */
     private static final int REQUEST_EDIT = 1;
 
+    /** 識別子 */
+    public static final String EXTRA_STRING_DATA_ID = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_DATA_ID";
+    public static final String EXTRA_BOOLEAN_UPDATE = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_BOOLEAN_UPDATE";
+
     /** 変更有無フラグ  */
     private boolean updateFlag = false;
 
@@ -83,7 +87,7 @@ public class DrawWordInfoActivity extends AppCompatActivity {
     /** 呼び出し元へ渡す単語情報の変更の有無情報を添え, Activity を終了する */
     private void closeActivity(){
         Intent intent = new Intent();
-        intent.putExtra(SelectWordFragment.EXTRA_BOOLEAN_UPDATE, updateFlag);
+        intent.putExtra(EXTRA_BOOLEAN_UPDATE, updateFlag);
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -101,7 +105,7 @@ public class DrawWordInfoActivity extends AppCompatActivity {
             closeActivity();
         }else if(id == R.id.edit_action) {
             Intent intent = new Intent(getApplicationContext(), EditWordInfoActivity.class);
-            intent.putExtra(SelectWordFragment.EXTRA_STRING_DATA_ID, getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID));
+            intent.putExtra(EXTRA_STRING_DATA_ID, getIntent().getStringExtra(SelectWordFragment.EXTRA_STRING_DATA_ID));
             startActivityForResult(intent, REQUEST_EDIT);
             return true;
         }
@@ -120,7 +124,7 @@ public class DrawWordInfoActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_EDIT && resultCode == RESULT_OK){
-            updateFlag = true;
+            updateFlag = data.getBooleanExtra(EditWordInfoActivity.EXTRA_UPDATE_REQUEST, false);
             setInformation();
         }
     }

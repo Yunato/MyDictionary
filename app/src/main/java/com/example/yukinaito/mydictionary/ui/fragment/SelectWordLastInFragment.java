@@ -3,10 +3,8 @@ package com.example.yukinaito.mydictionary.ui.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +25,7 @@ public class SelectWordLastInFragment extends ListFragment {
     private static final int REQUEST_ADD = 2;
 
     /** 識別子 */
-    public static final String EXTRA_STRING_DATA_ID = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_STRING_DATA_ID";
-    public static final String EXTRA_BOOLEAN_UPDATE = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_BOOLEAN_UPDATE";
+    private static final String EXTRA_STRING_DATA_ID = SelectWordFragment.EXTRA_STRING_DATA_ID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,7 +105,7 @@ public class SelectWordLastInFragment extends ListFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_DRAW_INFO){
             if(resultCode == NavigationDrawer.RESULT_OK) {
-                if(data.getBooleanExtra(EXTRA_BOOLEAN_UPDATE, false)) {
+                if(data.getBooleanExtra(DrawWordInfoActivity.EXTRA_BOOLEAN_UPDATE, false)) {
                     setAdapter();
                 }
             }

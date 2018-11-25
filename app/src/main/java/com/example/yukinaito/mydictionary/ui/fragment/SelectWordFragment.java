@@ -26,7 +26,6 @@ public class SelectWordFragment extends ListFragment {
 
     /** 識別子 */
     public static final String EXTRA_STRING_DATA_ID = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_STRING_DATA_ID";
-    public static final String EXTRA_BOOLEAN_UPDATE = "com.example.yukinaito.mydictionary.ui.fragment.EXTRA_BOOLEAN_UPDATE";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,7 +109,7 @@ public class SelectWordFragment extends ListFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_DRAW_INFO){
             if(resultCode == NavigationDrawer.RESULT_OK) {
-                if(data.getBooleanExtra(EXTRA_BOOLEAN_UPDATE, false)) {
+                if(data.getBooleanExtra(DrawWordInfoActivity.EXTRA_BOOLEAN_UPDATE, false)) {
                     setAdapter();
                 }
             }

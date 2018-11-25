@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import com.example.yukinaito.mydictionary.R;
 
 public class EditWordMeanActivity extends AppCompatActivity {
+    /** 識別子 */
+    public static final String EXTRA_STRING_MEAN = "com.example.yukinaito.mydictionary.ui.activity.EXTRA_STRING_MEAN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class EditWordMeanActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id == R.id.action_finish) {
             Intent intent = new Intent();
-            intent.putExtra(EditWordInfoActivity.EXTRA_STRING_MEAN, ((EditText)findViewById(R.id.input_mean)).getText().toString());
+            intent.putExtra(EXTRA_STRING_MEAN, ((EditText)findViewById(R.id.input_mean)).getText().toString());
             setResult(RESULT_OK, intent);
             finish();
             return true;
